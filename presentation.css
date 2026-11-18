@@ -166,11 +166,12 @@ body { background: var(--exhibit-paper); }
 .touch-tile .touch-label strong,
 .touch-tile .touch-label small { display: block; }
 .touch-label strong { font-family: var(--serif); font-size: clamp(18px, 2.35vw, 35px); line-height: 1.07; }
-.touch-tile[data-id="3"] .touch-label strong { font-size: clamp(23px, 4vw, 59px); }
+.touch-tile[data-id="3"] .touch-label strong { font-size: clamp(23px, 4vw, 59px); text-wrap: balance; }
 .touch-label small { color: #e0eaea; font-size: 12px; margin-top: 6px; }
 .touch-number, .touch-arrow, .touch-feature { position: absolute; top: 13px; display: grid; place-items: center; min-height: 31px; padding: 0 8px; }
 .touch-number { left: 13px; color: #212e30; background: var(--exhibit-cream); font-size: 12px; font-weight: 800; }
 .touch-arrow { right: 13px; color: #fff; background: #092630b8; font-size: 16px; }
+.touch-arrow .icon { width: 16px; height: 16px; }
 .touch-feature { display: flex; align-items: center; gap: 6px; left: 51px; color: #212e30; background: var(--exhibit-coral); font-size: 11px; font-weight: 750; }
 .touch-feature .icon { width: 13px; height: 13px; }
 .touch-tile:is(:hover, :focus-visible) .touch-arrow { background: var(--exhibit-coral); color: #212e30; }
