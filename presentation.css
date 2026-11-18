@@ -1,0 +1,252 @@
+:root {
+  --coast-deep: #09363a;
+  --coast-night: #092a31;
+  --coast-jade: #176762;
+  --coast-light: #f8f5eb;
+  --coast-sand: #ffdfaa;
+  --coast-ease: cubic-bezier(.22,.67,.27,1);
+}
+
+body { background: var(--coast-light); }
+
+.site-header {
+  background: #fbf9f0f5;
+  box-shadow: 0 2px 18px #0b393b12;
+}
+
+.site-header::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  pointer-events: none;
+  background: linear-gradient(90deg, #ce9a4f, #237a6a);
+  transform: scaleX(var(--journey-progress, 0));
+  transform-origin: left center;
+}
+
+.hero {
+  min-height: clamp(620px, 82svh, 840px);
+  grid-template-columns: minmax(0, 1.25fr) minmax(275px, .75fr);
+  gap: clamp(24px, 4vw, 68px);
+  overflow: hidden;
+  background: var(--coast-night);
+}
+
+.hero-photo { object-position: 62% 57%; }
+
+.hero-shade {
+  background:
+    linear-gradient(90deg, #08282dfc, #0a343be8 25%, #0c343ab3 49%, #103c4636 83%),
+    linear-gradient(0deg, #082930d9 0%, transparent 40%);
+}
+
+.hero-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 78% 26%, #fff0c23d, transparent 47%);
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-eyebrow > span { width: 29px; height: 1px; background: var(--coast-sand); }
+
+.hero h1 {
+  font-size: clamp(58px, 7vw, 105px);
+  letter-spacing: -.054em;
+  line-height: 1;
+  text-shadow: 0 7px 35px #001c2a45;
+}
+.hero h1 > span { display: block; }
+.hero h1 em { color: var(--coast-sand); }
+.hero .hero-desc { margin-block: 22px; font-size: clamp(14px, 1.25vw, 17px); }
+.hero-actions { gap: 12px; }
+.hero-actions .btn { border-radius: 999px; padding-inline: 20px; }
+.hero-actions .btn-gold { box-shadow: 0 8px 25px #071f2d55; }
+
+.hero-itinerary {
+  width: min(418px, 100%);
+  background: linear-gradient(155deg, #123d3fdc, #092a31f3);
+  border: 1px solid #ffedc76b;
+  border-radius: 24px;
+  padding: clamp(17px, 2.3vw, 28px);
+  box-shadow: 0 21px 56px #001f2b73, inset 0 1px #fff5d925;
+}
+.hero-itinerary h2 { padding-bottom: 12px; margin-bottom: 4px; }
+.hero-itinerary button {
+  padding-inline: 7px;
+  border-radius: 8px;
+}
+.hero-itinerary button:is(:hover, :focus-visible) { background-color: #edfaf31b; }
+.hero-itinerary button > b { display: inline-block; }
+.hero-itinerary button > span {
+  background: #f9deb116;
+  color: var(--coast-sand);
+  border: 1px solid #f9deb15c;
+}
+.hero-itinerary button:is(:hover, :focus-visible) > span {
+  color: var(--coast-night);
+  background: var(--coast-sand);
+}
+
+#journeys { padding-block: clamp(52px, 7vw, 106px); }
+.section-heading h2 em { color: var(--coast-jade); }
+
+.route-card {
+  border: 1px solid #dddfd0;
+  border-radius: 19px;
+  box-shadow: 0 10px 32px #27433a12;
+}
+.route-image { position: relative; overflow: hidden; }
+.route-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, #072c3470, transparent 54%, #09293224);
+}
+.route-number {
+  display: inline-block;
+  z-index: 1;
+  background: #0b3339eb;
+  color: #ffe5b9;
+  border-color: #e8d2a17a;
+}
+.route-body { border-top: 3px solid #bb9258; }
+.route-living .route-body { border-color: #57958c; }
+.route-today .route-body { border-color: #789d57; }
+
+.map-section {
+  color: #fff9ea;
+  background: radial-gradient(ellipse at 5% 0%, #1b5955, transparent 60%), var(--coast-night);
+}
+.map-section .section-heading h2 em { color: var(--coast-sand); }
+.map-section :is(.section-intro, .map-footnote, .map-footnote a) { color: #dbefe5; }
+.map-section .eyebrow.light { color: var(--coast-sand); }
+.map-section .filter.active {
+  border-color: var(--coast-sand);
+  background: var(--coast-sand);
+  color: var(--coast-night);
+}
+.map-section :is(.filter, .search input):focus-visible { outline-color: var(--coast-sand); }
+.map-canvas {
+  border: 1px solid #e8d6ac;
+  box-shadow: 0 16px 38px #041f2e72;
+}
+.map-route {
+  stroke: #885d2c;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.map-pin.active {
+  border-color: #8e612b;
+  box-shadow: 0 0 0 3px #efd29a, 0 12px 24px #143f4f32;
+}
+.journey-editorial {
+  background: #fff9eb;
+  color: #183b42;
+  border-color: #f0d8a6;
+  box-shadow: 0 16px 38px #041f2e52;
+}
+
+.point-card { border-radius: 16px; box-shadow: 0 8px 28px #173d4212; }
+.story-section { background: linear-gradient(125deg, #e3f0e7, #faf5e6); }
+.story-visual, .new-gallery button { box-shadow: 0 14px 29px #153e4220; }
+.closing { background: radial-gradient(ellipse at top, #206a62, #0a3037 74%); }
+.experience-dialog { border: 1px solid #e0c98e; }
+.experience-head::after { background: linear-gradient(0deg, #092d35ed, #092d3520); }
+.step-tab.active, .step-tab[aria-selected="true"] { box-shadow: inset 0 -3px #c59651; }
+
+@keyframes presentation-rise {
+  from { opacity: 0; translate: 0 24px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes presentation-shore {
+  from { opacity: .22; translate: -5% 0; }
+  to { opacity: .85; translate: 0 0; }
+}
+@keyframes presentation-ripple {
+  from { opacity: .52; box-shadow: 0 0 0 0 #ffe1a7ad; }
+  to { opacity: 0; box-shadow: 0 0 0 13px #ffe1a700; }
+}
+@keyframes presentation-route {
+  from { stroke-dashoffset: 80; opacity: .25; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-content { animation: none; }
+  .hero-light { animation: presentation-shore 2.65s var(--coast-ease) both; }
+  .hero :is(.hero-eyebrow, h1 > span, .hero-desc, .hero-actions, .hero-detail) {
+    animation: presentation-rise .72s var(--coast-ease) var(--arrive, 0ms) both;
+  }
+  .hero h1 > span:nth-child(1) { --arrive: 90ms; }
+  .hero h1 > span:nth-child(2) { --arrive: 175ms; }
+  .hero h1 > span:nth-child(3) { --arrive: 260ms; }
+  .hero-desc { --arrive: 340ms; }
+  .hero-actions { --arrive: 410ms; }
+  .hero-detail { --arrive: 470ms; }
+  .hero-itinerary button {
+    animation: presentation-rise .55s var(--coast-ease) calc(230ms + var(--entry, 0ms)) both;
+    transition: background-color .23s ease;
+  }
+  .hero-itinerary button:nth-of-type(2) { --entry: 65ms; }
+  .hero-itinerary button:nth-of-type(3) { --entry: 130ms; }
+  .hero-itinerary button:nth-of-type(4) { --entry: 195ms; }
+  .hero-itinerary button:nth-of-type(5) { --entry: 260ms; }
+  .hero-itinerary button > b { transition: translate .23s ease; }
+  .hero-itinerary button:is(:hover, :focus-visible) > b { translate: 3px -3px; }
+  .map-canvas.reveal-visible .map-route { animation: presentation-route 1.65s var(--coast-ease) both; }
+  .map-pin.active:not(.filtered)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    animation: presentation-ripple .85s var(--coast-ease) both;
+  }
+  .point-enter .step-content { animation: presentation-rise .43s var(--coast-ease) both; }
+  .map-pin:active, .hero-itinerary button:active { filter: brightness(.9); }
+
+  @media (hover: hover) {
+    .route-card.reveal-visible:hover, .point-card.reveal-visible:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 18px 36px #173e4030;
+    }
+    .route-card:hover .route-image img, .point-card:hover .point-card-image img {
+      transform: scale(1.075);
+    }
+  }
+}
+
+@media (max-width: 1050px) {
+  .hero { min-height: 620px; }
+  .hero h1 { font-size: clamp(51px, 6.4vw, 76px); }
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    gap: 29px;
+    padding-top: 52px;
+  }
+  .hero h1 { font-size: clamp(47px, 10.2vw, 75px); }
+  .hero-photo { object-position: 56% 44%; }
+  .hero-shade {
+    background: linear-gradient(120deg, #082a32ef, #123d46c7 48%, #092b32b5),
+                linear-gradient(0deg, #092a31f0, transparent 58%);
+  }
+  .hero-itinerary { width: 100%; padding: 17px; }
+  .hero-itinerary h2 { padding-bottom: 5px; }
+  .hero-itinerary button { min-height: 51px; }
+}
+
+@media (max-width: 420px) {
+  .hero h1 { font-size: clamp(40px, 11.5vw, 48px); }
+  .hero-actions .btn { padding-inline: 14px; }
+}
