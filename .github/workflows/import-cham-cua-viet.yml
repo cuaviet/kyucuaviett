@@ -125,7 +125,9 @@ jobs:
             if [[ "$path" == "./.nojekyll" ]]; then
               touch "$path"
             else
-              curl --fail --silent --show-error --location --retry 3 --max-time 90 --output "$path" "$SOURCE_URL/${path#./}"
+              entry="${path#./}"
+              [[ "$entry" != "index.html" ]] || entry=""
+              curl --fail --silent --show-error --location --retry 3 --max-time 90 --output "$path" "$SOURCE_URL/$entry"
             fi
           done < "$RUNNER_TEMP/site.sha256"
           python3 - <<'PY'
