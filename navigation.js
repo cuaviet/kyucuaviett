@@ -198,6 +198,35 @@ function initPlayer(container) {
   });
 }
 
+const groupPhotoAlbums = {
+  1: [
+    ['3985', 'Khu dân cư và đường giao nhau nhìn từ trên cao.'],
+    ['3986', 'Cổng chào với hình sóng biển ở khu du lịch Cửa Việt.']
+  ],
+  2: [
+    ['4016', 'Các chiến sĩ dâng hương tại nơi tưởng niệm. Ảnh hoạt động tri ân hiện nay.']
+  ],
+  3: [
+    ['3994', 'Các chiến sĩ và người dân trên tàu. Ảnh minh họa cho những câu chuyện về người gắn bó với vùng biển.']
+  ],
+  4: [
+    ['3959', 'Những đội đua thuyền đi qua dưới chân cầu.'],
+    ['4006', 'Thuyền thúng và tàu cá bên bờ.']
+  ],
+  5: [
+    ['3961', 'Toàn cảnh khu cổng chào ven biển nhìn từ trên cao.'],
+    ['3992', 'Sân khấu và không gian sự kiện ven biển về đêm.']
+  ]
+};
+
+function groupPhotoAlbum(id) {
+  const figures = groupPhotoAlbums[id].map(([photo, caption]) => {
+    const path = 'assets/anh-nhom/img-' + photo + '.webp';
+    return `<figure><a href="${path}" target="_blank" rel="noopener noreferrer" aria-label="Xem ảnh lớn: ${esc(caption)}"><img src="${path}" alt="${esc(caption)}" loading="lazy"></a><figcaption>${esc(caption)}</figcaption></figure>`;
+  }).join('');
+  return `<section class="interview-photo-section" aria-labelledby="group-photo-heading"><h4 id="group-photo-heading">Ảnh do nhóm dự án cung cấp</h4><p>Chọn ảnh để xem lớn.</p><div class="station-gallery">${figures}</div></section>`;
+}
+
 stepMarkup = function (point) {
   const { id } = point;
   if (currentStep === 3) {
@@ -228,6 +257,7 @@ stepMarkup = function (point) {
       <p class="station-source">Theo tài liệu Chạm 05 – Hoàn thiện.</p></div>`;
   }
   const markup = originalStationMarkup(point);
+  if (currentStep === 2 && groupPhotoAlbums[id]) return markup + groupPhotoAlbum(id);
   if (currentStep === 0) {
     return markup + `<div class="station-quicklinks" aria-label="Lối tắt trong chạm"><button class="btn btn-outline" data-action="step" data-step="2">Xem hình ảnh</button><button class="btn btn-outline" data-action="step" data-step="3">Xem video lời kể</button><button class="btn btn-outline" data-action="step" data-step="4">Đọc nội dung</button></div>`;
   }
