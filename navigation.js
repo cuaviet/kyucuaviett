@@ -4,7 +4,21 @@ const stepPaths = ['bat-dau', 'thu-doan', 'hinh-anh', 'nghe', 'kham-pha', 'ghi-n
 const stationHash = (id, step) => '#cham-' + id + (step ? '/' + stepPaths[step] : '');
 const homeHash = () => location.hash.match(/^#cham-[1-5](?:\/[^/]+)?$/);
 const resumeKey = 'cham-cua-viet-last-step';
+const compactSteps = matchMedia('(max-width: 800px)');
 let returnHash = '#memory-map';
+let stationOpener = null;
+
+function pauseStationVideos() {
+  experience.querySelectorAll('video').forEach(video => video.pause());
+}
+
+document.addEventListener('click', event => {
+  if (experience.open || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const opener = event.target.closest('[data-action="select"], [data-action="open-point"], [data-action="continue"], a[href^="#cham-"]');
+  if (!opener || opener.closest('dialog')) return;
+  stationOpener = opener;
+  if (opener.matches('a')) returnHash = location.hash;
+}, true);
 
 function lastStep() {
   try {
@@ -25,9 +39,8 @@ function writeStationAddress() {
 const showOriginalPoint = openPoint;
 openPoint = function (id, step = 0) {
   if (!points.some(point => point.id === id)) return;
-  experience.querySelectorAll('video').forEach(video => video.pause());
   if (!homeHash()) {
-    returnHash = location.hash || '#memory-map';
+    returnHash = location.hash;
     history.pushState(null, '', stationHash(id, step));
   }
   showOriginalPoint(id);
@@ -42,10 +55,18 @@ openPoint = function (id, step = 0) {
 };
 
 function revealActiveStep() {
-  if (matchMedia('(max-width: 650px)').matches) {
-    $('.step-tab.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
+  const nav = $('.step-nav', experience);
+  const active = $('.step-tab.active', experience);
+  if (!nav || !active) return;
+  nav.setAttribute('aria-orientation', compactSteps.matches ? 'horizontal' : 'vertical');
+  if (compactSteps.matches && nav.scrollWidth > nav.clientWidth) {
+    const tab = active.getBoundingClientRect();
+    const rail = nav.getBoundingClientRect();
+    nav.scrollLeft += tab.left - rail.left + (tab.width - rail.width) / 2;
   }
 }
+
+compactSteps.addEventListener?.('change', revealActiveStep);
 
 function openAddress() {
   const requested = homeHash()?.[0].match(/^#cham-([1-5])(?:\/([a-z-]+))?$/);
@@ -60,13 +81,21 @@ function openAddress() {
 window.addEventListener('hashchange', openAddress);
 experience.addEventListener('close', () => {
   if (experience.open) return;
-  if (homeHash()) history.replaceState(null, '', returnHash);
-  experience.querySelectorAll('video').forEach(video => video.pause());
+  if (homeHash()) history.replaceState(null, '', returnHash || location.pathname + location.search);
+  pauseStationVideos();
+  const opener = stationOpener;
+  stationOpener = null;
+  if (opener?.isConnected) opener.focus({ preventScroll: true });
+  else if (opener?.dataset.id) {
+    const className = opener.matches('.map-pin') ? '.map-pin' : '.point-card';
+    $(className + '[data-id="' + opener.dataset.id + '"]')?.focus({ preventScroll: true });
+  }
 });
+window.addEventListener('pagehide', pauseStationVideos);
 
 const openOriginalUtility = showUtility;
 showUtility = function (title, markup) {
-  experience.querySelectorAll('video').forEach(video => video.pause());
+  pauseStationVideos();
   openOriginalUtility(title, markup);
 };
 
@@ -137,24 +166,33 @@ function topicMarkup(items) {
     `<details><summary>${esc(title)}</summary><p>${esc(description)}</p></details>`).join('') + '</div>';
 }
 
-const mediaCatalog = fetch('media-catalog.json').then(response => {
-  if (!response.ok) throw new Error('Không tải được danh sách video.');
-  return response.json();
-});
-mediaCatalog.catch(() => {});
+let mediaCatalog;
+function loadMediaCatalog() {
+  if (!mediaCatalog) {
+    mediaCatalog = fetch('media-catalog.json').then(response => {
+      if (!response.ok) throw new Error('Không tải được danh sách video.');
+      return response.json();
+    }).catch(error => {
+      mediaCatalog = null;
+      throw error;
+    });
+  }
+  return mediaCatalog;
+}
 
 function formatTime(seconds) {
   return Math.floor(seconds / 60) + ':' + two(seconds % 60);
 }
 
 function mediaShell(key, title) {
-  return `<div class="station-video" data-video="${key}" data-video-title="${esc(title)}"></div>`;
+  return `<div class="station-video" data-video="${key}" data-video-title="${esc(title)}"><p role="status">Đang chuẩn bị video…</p></div>`;
 }
 
 function initPlayer(container) {
-  mediaCatalog.then(catalog => {
+  loadMediaCatalog().then(catalog => {
     if (!container.isConnected) return;
     const clips = catalog[container.dataset.video];
+    if (!Array.isArray(clips) || !clips.length) throw new Error("Không có video cho điểm chạm này.");
     const title = container.dataset.videoTitle;
     const choices = clips.length > 1 ? `<div class="station-chapters" role="group" aria-label="Chọn phần video">${clips.map((clip, i) =>
       `<button type="button" data-chapter="${i}" aria-pressed="${i === 0}">Phần ${i + 1}<small>${formatTime(clip.start)}–${formatTime(clip.end)}</small></button>`).join('')}</div>` : '';
@@ -166,20 +204,30 @@ function initPlayer(container) {
     const notice = $('.media-notice', container);
     const toggle = $('.video-toggle', container);
     let currentIndex = 0;
+    let playRequest = 0;
+
+    function playSelected() {
+      const request = ++playRequest;
+      video.play().catch(error => {
+        if (request === playRequest && video.isConnected && error.name !== "AbortError") notice.hidden = false;
+      });
+    }
 
     function select(index, play = false) {
       const clip = clips[index];
+      if (!clip) return;
+      playRequest++;
       currentIndex = index;
       video.pause();
       notice.hidden = true;
       video.poster = clip.poster;
       video.src = clip.path;
       $$('[data-chapter]', container).forEach((choice, i) => choice.setAttribute('aria-pressed', String(i === index)));
-      if (play) video.play().catch(() => {});
+      if (play) playSelected();
     }
 
     toggle.addEventListener('click', () => {
-      if (video.paused) video.play().catch(() => { notice.hidden = false; });
+      if (video.paused) playSelected();
       else video.pause();
     });
     video.addEventListener('play', () => { toggle.textContent = 'Tạm dừng'; });
@@ -194,7 +242,12 @@ function initPlayer(container) {
     $$('[data-chapter]', container).forEach(choice => choice.addEventListener('click', () =>
       select(Number(choice.dataset.chapter))));
   }).catch(() => {
-    if (container.isConnected) container.textContent = 'Danh sách video chưa tải được. Hãy làm mới trang và mở lại điểm chạm.';
+    if (!container.isConnected) return;
+    container.innerHTML = '<p class="media-notice" role="status">Danh sách video chưa tải được. <button type="button" class="btn btn-outline">Thử tải lại</button></p>';
+    $('button', container).addEventListener('click', () => {
+      container.innerHTML = '<p role="status">Đang chuẩn bị video…</p>';
+      initPlayer(container);
+    });
   });
 }
 
@@ -253,7 +306,7 @@ stepMarkup = function (point) {
       <figure class="station-monument"><img src="${stationAssets['5_image1']}" alt="Dải bờ biển Cửa Việt nhìn từ trên cao"><figcaption>Bờ biển Cửa Việt · Tài liệu Chạm 05.</figcaption></figure>
       <div class="station-topics">${creativeTopics.map(([title, description]) =>
         `<details><summary>${esc(title)}</summary><p>${esc(description)}</p><button class="btn btn-outline" data-action="project" data-type="${esc(title)}">Viết ý tưởng</button></details>`).join('')}</div>
-      <button class="btn btn-primary" data-action="step" data-step="7">Mở phiếu khảo sát ${icon('arrow')}</button>
+      <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở phiếu khảo sát ${icon('arrow')}</button>
       <p class="station-source">Theo tài liệu Chạm 05 – Hoàn thiện.</p></div>`;
   }
   const markup = originalStationMarkup(point);
@@ -266,7 +319,9 @@ stepMarkup = function (point) {
 
 const drawExperience = renderExperience;
 renderExperience = function (focus = false) {
+  pauseStationVideos();
   drawExperience(focus);
+  revealActiveStep();
   $$('[data-video]', experience).forEach(initPlayer);
 };
 
@@ -277,6 +332,14 @@ document.addEventListener('click', event => {
     writeStationAddress();
     experience.scrollTop = button.dataset.action === 'project' ? experience.scrollTop : 0;
     revealActiveStep();
+    if (button.hasAttribute('data-open-survey')) {
+      const survey = $('#station-survey', experience)?.closest('details');
+      if (survey) {
+        survey.open = true;
+        $('summary', survey)?.focus({ preventScroll: true });
+        survey.scrollIntoView({ block: 'start' });
+      }
+    }
   }
   if (button.dataset.action === 'bank-answer') {
     const replacement = `[data-action="bank-answer"][data-q="${button.dataset.q}"][data-value="${button.dataset.value}"]`;

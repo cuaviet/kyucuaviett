@@ -235,6 +235,33 @@ dialog::backdrop {
 }
 .experience-head .icon-btn { border-radius: 50%; }
 .experience-head .icon-btn:hover { color: #194754; background: #e7f7fc; }
+/* Keep the steps at hand while reading longer sections or viewing photos. */
+.experience-dialog { overscroll-behavior: contain; }
+.step-nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  align-self: start;
+  max-height: calc(92dvh - 12px);
+  overflow-y: auto;
+}
+.step-tab { min-height: 44px; }
+.timeline-entry:has(#station-survey) { scroll-margin-top: 16px; }
+
+@media (max-width: 800px) {
+  .step-nav {
+    align-self: stretch;
+    max-height: none;
+    padding-block: 7px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: 0;
+    border-bottom: 1px solid #d5e8e6;
+    background: #f3faf8;
+  }
+  .step-nav .step-tab { flex: 0 0 auto; white-space: nowrap; }
+  .timeline-entry:has(#station-survey) { scroll-margin-top: 72px; }
+}
 .step-tab, .step-content .btn { border-radius: var(--curve-control); }
 :is(.station-gallery, .interview-photo-grid) img, .station-monument img { border-radius: var(--curve-control); }
 .step-tab.active, .step-tab[aria-selected="true"] { box-shadow: inset 0 -3px #088782; }
