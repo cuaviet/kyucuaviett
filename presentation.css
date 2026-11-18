@@ -279,6 +279,10 @@ dialog::backdrop {
   from { transform: scale(1.075); }
   to { transform: scale(1); }
 }
+@keyframes scroll-reveal {
+  from { opacity: .24; translate: 0 var(--reveal-shift); }
+  to { opacity: 1; translate: 0 0; }
+}
 @keyframes exhibit-route {
   from { stroke-dashoffset: 80; opacity: .25; }
   to { stroke-dashoffset: 0; opacity: 1; }
@@ -291,18 +295,16 @@ dialog::backdrop {
   .cover-subtitle { --exhibit-delay: .13s; }
   .hero-desc, .hero-actions { --exhibit-delay: .16s; }
   .cover-frame .hero-photo { animation: exhibit-photo 2.1s var(--exhibit-ease) both; }
-  .touch-shelf:has(.section-heading.reveal-visible) .touch-tile {
-    animation: exhibit-rise .6s var(--exhibit-ease) var(--exhibit-delay, 0s) both;
+  [data-reveal-entry="from-bottom"] { --reveal-shift: 24px; }
+  [data-reveal-entry="from-top"] { --reveal-shift: -24px; }
+  [data-reveal-entry]:not(:focus-within) {
+    animation: scroll-reveal .56s var(--exhibit-ease) var(--reveal-delay, 0ms) backwards;
   }
-  .touch-tile:nth-child(2) { --exhibit-delay: .07s; }
-  .touch-tile:nth-child(3) { --exhibit-delay: .14s; }
-  .touch-tile:nth-child(4) { --exhibit-delay: .21s; }
-  .touch-tile:nth-child(5) { --exhibit-delay: .28s; }
   .touch-tile img, .touch-arrow { transition: transform .45s var(--exhibit-ease), background-color .2s ease; }
   .touch-tile:is(:hover, :focus-visible) img { transform: scale(1.065); }
   .touch-tile:is(:hover, :focus-visible) .touch-arrow { transform: translate(2px,-2px); }
   .touch-tile:active { filter: brightness(.9); }
-  .map-canvas.reveal-visible .map-route { animation: exhibit-route 1.65s var(--exhibit-ease) both; }
+  .map-canvas[data-reveal-entry] .map-route { animation: exhibit-route 1.65s var(--exhibit-ease) both; }
   .point-enter .step-content { animation: exhibit-rise .45s var(--exhibit-ease) both; }
 }
 

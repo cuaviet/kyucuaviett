@@ -253,13 +253,6 @@ dialog::backdrop { backdrop-filter: blur(4px); }
   to { transform: scale(1); filter: brightness(1); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .reveal-pending { opacity: 0; transform: translateY(28px); }
-  .reveal-visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity .7s ease var(--reveal-delay, 0ms), transform .7s cubic-bezier(.2,.65,.25,1) var(--reveal-delay, 0ms);
-  }
-  .reveal-pending:focus-within { opacity: 1; transform: none; }
   .experience-dialog[open].point-enter { animation: point-open .55s cubic-bezier(.2,.7,.2,1) both; }
   .point-enter .experience-head img { animation: point-image-open .9s ease-out both; }
   .point-enter .experience-head .eyebrow { animation: coast-arrive .55s .12s ease-out both; }

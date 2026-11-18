@@ -362,38 +362,59 @@ $('#story-shortcuts').innerHTML = '<p>Video lời kể theo điểm chạm</p><u
   `<li><a href="${stationHash(point.id, 3)}" aria-label="Video Chạm ${two(point.id)}: ${esc(point.title)}">Chạm ${two(point.id)}</a></li>`).join('') + '</ul>';
 openAddress();
 
-// Reveal individual items as visitors move through the page.
+// Replay entrances only after an item has fully left the viewport.
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 if ('IntersectionObserver' in window && !reducedMotion.matches) {
-  const revealSelector = '.section-heading, .route-card, .map-canvas, .journey-editorial, .point-card, .story-visual, .story-copy, .new-gallery button, .creation-options button, .passport-banner, .about-intro, .about-accordions details, .closing h2, .closing .btn';
-  const revealedItems = new WeakSet();
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.remove('reveal-pending');
-      entry.target.classList.add('reveal-visible');
-      revealedItems.add(entry.target);
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+  const revealSelector = '.section-heading, .route-card, .touch-tile, .map-canvas, .journey-editorial, .point-card, .story-visual, .story-copy, .new-gallery button, .creation-options button, .passport-banner, .about-intro, .about-accordions details, .closing h2, .closing .btn';
+  const observed = new WeakSet();
+  const entrySides = new WeakMap();
+
+  // The gap between the two observer boundaries avoids replay as an item moves at the edge.
+  const leaveObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting || !entry.target.isConnected) continue;
+      const { target, boundingClientRect, rootBounds } = entry;
+      entrySides.set(target, boundingClientRect.bottom <= (rootBounds?.top ?? 0) ? 'from-top' : 'from-bottom');
+      delete target.dataset.revealEntry;
+    }
+  }, { rootMargin: '36px 0px' });
+
+  const enterObserver = new IntersectionObserver(entries => {
+    for (const { isIntersecting, target } of entries) {
+      const side = entrySides.get(target);
+      if (!isIntersecting || !side || !target.isConnected) continue;
+      entrySides.delete(target);
+      if (!target.matches(':focus-within')) target.dataset.revealEntry = side;
+    }
+  }, { rootMargin: '-26px 0px' });
 
   function registerRevealItems(root) {
-    root.querySelectorAll(revealSelector).forEach((element, index) => {
-      if (revealedItems.has(element) || element.classList.contains('reveal-pending')) return;
-      if (element.getBoundingClientRect().top < window.innerHeight * .88) {
-        revealedItems.add(element);
-        return;
-      }
-      const siblings = element.parentElement.children;
-      const position = Array.prototype.indexOf.call(siblings, element);
-      element.style.setProperty('--reveal-delay', Math.min(position % 3, 2) * 90 + 'ms');
-      element.classList.add('reveal-pending');
-      revealObserver.observe(element);
+    root.querySelectorAll(revealSelector).forEach(element => {
+      if (observed.has(element)) return;
+      observed.add(element);
+      const rect = element.getBoundingClientRect();
+      if (rect.bottom <= 0) entrySides.set(element, 'from-top');
+      else if (rect.top >= window.innerHeight) entrySides.set(element, 'from-bottom');
+      const position = Array.prototype.indexOf.call(element.parentElement.children, element);
+      element.style.setProperty('--reveal-delay', (position % 3) * 60 + 'ms');
+      leaveObserver.observe(element);
+      enterObserver.observe(element);
     });
   }
   registerRevealItems(document);
-  new MutationObserver(() => registerRevealItems(document.getElementById('point-grid')))
-    .observe(document.getElementById('point-grid'), { childList: true });
+
+  const grid = document.getElementById('point-grid');
+  new MutationObserver(records => {
+    for (const record of records) {
+      for (const node of record.removedNodes) {
+        if (!observed.delete(node)) continue;
+        leaveObserver.unobserve(node);
+        enterObserver.unobserve(node);
+        entrySides.delete(node);
+      }
+    }
+    registerRevealItems(grid);
+  }).observe(grid, { childList: true });
 
   // Replay the entrance when a visitor opens or switches a point.
   const openPointWithMotion = openPoint;
