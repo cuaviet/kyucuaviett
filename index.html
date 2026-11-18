@@ -11,7 +11,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="site.css?v=4">
-  <link rel="stylesheet" href="presentation.css?v=1">
+  <link rel="stylesheet" href="presentation.css?v=2">
 </head>
 <body>
 <a class="skip-link" href="#main">Đến nội dung chính</a>
@@ -49,7 +49,6 @@
 
 <main id="main">
 <section class="hero" id="home" aria-labelledby="hero-heading">
-  <img class="hero-photo" src="assets/bien-cua-viet.webp" alt="Vùng nước xanh và bờ cát Cửa Việt nhìn từ trên cao" fetchpriority="high" width="1080" height="720">
   <div class="hero-shade"></div>
   <div class="hero-light" aria-hidden="true"></div>
   <div class="container hero-content">
@@ -59,10 +58,42 @@
     <div class="hero-actions"><a class="btn btn-gold" href="#memory-map">Bắt đầu khám phá <svg class="icon"><use href="#i-arrow"/></svg></a><button class="btn btn-glass" data-action="intro"><svg class="icon"><use href="#i-play"/></svg> Cửa Việt có gì?</button></div>
     <div class="hero-detail"><span><svg class="icon"><use href="#i-pin"/></svg> 5 điểm chạm</span><i></i><span>3 tuyến trải nghiệm</span></div>
   </div>
-  <aside class="hero-itinerary" aria-label="Hành trình 5 chạm"><h2>Hành trình 5 chạm</h2><button data-action="open-point" data-id="1"><span>01</span><div><strong>Cửa Việt – cửa biển của ký ức</strong><small>Không gian xưa và nay</small></div><b>↗</b></button><button data-action="open-point" data-id="2"><span>02</span><div><strong>Dấu ấn lịch sử Cửa Việt</strong><small>Lần theo dấu ấn thời gian</small></div><b>↗</b></button><button data-action="open-point" data-id="3"><span>03</span><div><strong>Người kể chuyện Cửa Việt</strong><small>Ký ức qua lời kể</small></div><b>↗</b></button><button data-action="open-point" data-id="4"><span>04</span><div><strong>Nhịp sống làng biển</strong><small>Nghề biển và cộng đồng</small></div><b>↗</b></button><button data-action="open-point" data-id="5"><span>05</span><div><strong>Cửa Việt trong mắt người trẻ</strong><small>Góc nhìn và sáng tạo</small></div><b>↗</b></button></aside>
-  <a class="photo-credit" href="https://nongnghiepmoitruong.vn/ve-cua-viet-giup-cac-runner-trai-nghiem-bien-xanh-cat-trang-nang-vang-i383664.html" target="_blank" rel="noopener noreferrer">Cửa Việt từ trên cao · Ảnh: Báo Nông nghiệp và Môi trường <span>↗</span></a>
+  <figure class="cover-frame">
+    <img class="hero-photo" src="assets/bien-cua-viet.webp" alt="Vùng nước xanh và bờ cát Cửa Việt nhìn từ trên cao" fetchpriority="high" width="1080" height="720">
+    <figcaption><a class="photo-credit" href="https://nongnghiepmoitruong.vn/ve-cua-viet-giup-cac-runner-trai-nghiem-bien-xanh-cat-trang-nang-vang-i383664.html" target="_blank" rel="noopener noreferrer">Cửa Việt từ trên cao · Ảnh: Báo Nông nghiệp và Môi trường <span>↗</span></a></figcaption>
+  </figure>
 </section>
 
+<section class="touch-shelf container" aria-labelledby="touch-heading">
+  <div class="section-heading"><h2 id="touch-heading">Hành trình <em>5 chạm</em></h2></div>
+  <div class="touch-tiles">
+    <button class="touch-tile" data-action="open-point" data-id="1">
+      <img src="assets/tu-lieu-62.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">01</span><span class="touch-arrow" aria-hidden="true">↗</span>
+      <span class="touch-label"><strong>Cửa Việt – cửa biển của ký ức</strong><small>Không gian xưa và nay</small></span>
+    </button>
+    <button class="touch-tile" data-action="open-point" data-id="2">
+      <img src="assets/tuong-dai-chien-thang.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">02</span><span class="touch-arrow" aria-hidden="true">↗</span>
+      <span class="touch-label"><strong>Dấu ấn lịch sử Cửa Việt</strong><small>Lần theo dấu ấn thời gian</small></span>
+    </button>
+    <button class="touch-tile" data-action="open-point" data-id="3">
+      <img src="assets/cau-cua-viet.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">03</span><span class="touch-arrow" aria-hidden="true">↗</span>
+      <span class="touch-label"><strong>Người kể chuyện Cửa Việt</strong><small>Ký ức qua lời kể</small></span>
+    </button>
+    <button class="touch-tile" data-action="open-point" data-id="4">
+      <img src="assets/cang-ca.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">04</span><span class="touch-arrow" aria-hidden="true">↗</span>
+      <span class="touch-label"><strong>Nhịp sống làng biển</strong><small>Nghề biển và cộng đồng</small></span>
+    </button>
+    <button class="touch-tile" data-action="open-point" data-id="5">
+      <img src="assets/bo-bien-cua-viet.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">05</span><span class="touch-arrow" aria-hidden="true">↗</span>
+      <span class="touch-label"><strong>Cửa Việt trong mắt người trẻ</strong><small>Góc nhìn và sáng tạo</small></span>
+    </button>
+  </div>
+</section>
 
 <section class="section container" id="journeys" aria-labelledby="journey-heading">
   <div class="section-heading"><div><p class="eyebrow">THEO DÒNG KÝ ỨC</p><h2 id="journey-heading">Bạn muốn chạm vào <em>điều gì?</em></h2></div><p class="section-intro">Mỗi tuyến dẫn đến các điểm chạm cùng chủ đề.</p></div>
