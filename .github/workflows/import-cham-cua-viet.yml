@@ -1,0 +1,144 @@
+name: Import Chạm Cửa Việt
+on:
+  push:
+    branches: [import-cham-cua-viet]
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_URL: https://chamcuaviet.enthusiasticpelican4.chatgpt.site
+    steps:
+      - name: Verify and import the existing website
+        shell: bash
+        run: |
+          cat > "$RUNNER_TEMP/site.sha256" <<'MANIFEST'
+          e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./.nojekyll
+          4798155e92e5e2995053d7b2ee3d43130e3757b6b6e871cf9bb4f77fdd32c66a  ./app.js
+          5584acf40c2c826bdd3e3fb6bca0460b7165ef460be3a0d38cbb75e7e2a3b0b1  ./assets/anh-chien-su-1973.webp
+          3005f1a850896dfed9b2ffd4f10df90d57c2e6595028bed3abea1866e94cdbdc  ./assets/anh-chup-ban-do.webp
+          8959a3ee8bb063c7e78ce7fa750c06dd7f567f5dfbae86516f839f1d65ece807  ./assets/be-vietnam-400.woff
+          0f45201ac689c55f89d465015ad0da1e22388476d75fe1d3292ef2d21266548d  ./assets/be-vietnam-500.woff
+          69a8d0e9569e3b3d56ca5836219dc47921fc82851cec328e505f06fd0b776b33  ./assets/be-vietnam-600.woff
+          0e0b2658c781d9bb36824ee9eae8b60d8e633a0fd75a32d981b5f2db212762b8  ./assets/be-vietnam-700.woff
+          a4098ce8265ef4297f479683e899bf83319325b3deb75e96c27cfa13ffc9a0e9  ./assets/be-vietnam-800.woff
+          d4aa0fc90b427f375e26671c37968843d6457e55cbc808cd210d01157bd347d0  ./assets/ben-cang-hien-nay.webp
+          42bc2971de6a7a8becc62b1fe070ccc7a415ffbb2a795be13a18691d820e8f35  ./assets/bien-cua-viet.webp
+          0bc5d74c38df070c76865f76352f8f77a13842e2f461474128814b1e2ac45a2d  ./assets/bo-bien-cua-viet.webp
+          be9796fa712eeccb3bb9703f4054a16202a7bbdc34f7b42d34207d8480395ee0  ./assets/cang-ca.webp
+          bc0f799140776c265ffeb35ffffaf603f33a1373830d5163dd41f424f025e4bf  ./assets/cang-cua-viet.webp
+          7649aa3c1f3a43e42e306515771e90c431103fca64f18450f91db246f98b4767  ./assets/cau-cua-viet.webp
+          ef4c70fa6f055ae58d83dfcfd48c85d7c9042d85afb265a9c99e9fd96ab6d183  ./assets/cham-2-anh-tu-lieu/IMG_3719.jpeg
+          061f673746c52cce2b9d32b3d0303f5ba9c43b624348640db833f8efd2610f4b  ./assets/cham-2-anh-tu-lieu/IMG_3720.jpeg
+          5f811744135ae18027a44b420302e1563e00a6f928a63517e66eca1a1b941f87  ./assets/cham-2-anh-tu-lieu/IMG_3721.jpeg
+          fc3165e267d27f1875b43e413c28d5e8255accf4595b739772f5685fd0b3ce4c  ./assets/cham-2-anh-tu-lieu/IMG_3722.jpeg
+          47dcaa65b9c7435783da41c006098e4540b98eff5e3613a29a678eca61cda40b  ./assets/cham-2-anh-tu-lieu/IMG_3723.jpeg
+          80eafd809941f4019d871a19dbba2ac026cf0fca71178c39a690ce6ad9b87f9b  ./assets/cham-2-anh-tu-lieu/IMG_3726.jpeg
+          d12f8ad7933424273f5fa3b0934458e664c63ea511d77a2e8e68e3e4dfacc9a7  ./assets/cham-2-anh-tu-lieu/IMG_3727.jpeg
+          775e201aa1e3665f55ddfb550f62db7fdfdf28aad6c15ea8187f033dd67bcc47  ./assets/cham-2-anh-tu-lieu/IMG_3728.jpeg
+          d46482c1c746fa14fdf68fd19fca4ea54ec4a80956898b06e35bdab1b0f4bfeb  ./assets/cham-2-anh-tu-lieu/IMG_3733.jpeg
+          b139897836e361bd207b3a098812bd2256160147defda29e9f62202a5259a7f8  ./assets/cham-3-anh-tu-lieu/anh-1.webp
+          a9e0ad1d9a2dcaa1d8bd0d195faf4d98895f252f270ea43876ac599c93951f41  ./assets/cham-3-anh-tu-lieu/anh-2.webp
+          50c3b420f2c211490298becc2c8efbb104f02792ff999044d63c66485472f201  ./assets/cham-3-anh-tu-lieu/anh-3.webp
+          41f5ab2f02b1aabee16430aa28f9728c7f87c8be5d2cf54142abd38d808201d0  ./assets/cham-3-anh-tu-lieu/anh-4.webp
+          abe5a49fd0ad1c5253be1cc0f5fa9edb98fe649db333fc8cb7c64c7985409ce4  ./assets/cham-3-anh-tu-lieu/anh-5.webp
+          9b65f0071042dbdf8013a932a5f07d9bd047ca191e680cae832426c015e16651  ./assets/cho-ca.webp
+          121fe7abcd5a9bd5481052e5067eee299aff14c1a3a0b1ccd4c59b7068846798  ./assets/cua-bien-tu-tren-cao.webp
+          2849a752e1506acb24e3037094118a805558f162e5d63a040822e95fecee83a7  ./assets/cua-song-thach-han.webp
+          198984678510aa43395eded589295fc0c0e853a0d34aae23dfb3e4b4e8f44801  ./assets/cua-viet-1967.webp
+          945494e75c6510c541a9eacb6680a9cb67a8deab4c219aceabb37d75b23b4a47  ./assets/le-hoi-lang-bien.webp
+          056eeaa73fbbc1451af625fb274d8bae0229bb6f5305f8837e8b2878ed97c0ed  ./assets/le-hoi.webp
+          c3a7b82684c536dac4614d21e913e76b056693d31c3b58656e874ca122e31f6b  ./assets/nhip-song-ben-ca.webp
+          47948971d1da02b4399dfde0273c10ee759eb65c9f2251c0c1c7264328f91097  ./assets/playfair-500.woff
+          57bbbbb518ec989614c14da625f3cefb82b68d99052e07fd7265b81698fb438b  ./assets/playfair-600.woff
+          0db4ee626c6d253849c82151d81dc99478bf613f5cd804265bb75c09a1c0111d  ./assets/playfair-700.woff
+          8087548aeda62d44847b3d829267cad923f299175492ec5b36b7fe0f5643ca92  ./assets/playfair-italic-500.woff
+          46b7bd2aae6e14745b6b8b256df2953f1694952bb96f239480c7b6e3e4b6362a  ./assets/playfair-italic-600.woff
+          8de8e36a4d2a1168f9a02c62fc7a42eba5b4e875f45aa6552665081f2e894799  ./assets/tau-thuyen.webp
+          08a3b4dac2020dcf924f8d660a60ec3cc5befcf74cd7194944f3936de0903252  ./assets/thuyen-danh-ca.webp
+          97b70d08117c2464f8e1740444e6cee9787e7a1c2a2a9b6460c56b1492b2b146  ./assets/thuyen-thung.webp
+          53928bbf55b579094f1a2bee084dedc1011ceb97d849dad564bdf1bdd5862c02  ./assets/thuyen-va-ngu-cu.webp
+          3261c26776447e18f9377eadff1b35ce076335d819089d24246b30c8a6d0ac90  ./assets/toan-canh-cua-viet.webp
+          b26facdca48783543fc07d327f9b5f36e2b4236d2e93b346516f6939e6dea126  ./assets/tu-lieu-22.webp
+          c0cea97bf44187f3916c3ced98bf8f316c3bbea5cc3b3e73766fb90060268e0a  ./assets/tu-lieu-31.webp
+          77501379bef058e70d586c055371a598a231d85fc0ae031e69bf539627f52948  ./assets/tu-lieu-32.webp
+          d76bad5406ac6db904706f05b51f1cfd5e4d734308f2f66da3066c1fcba81e95  ./assets/tu-lieu-33.webp
+          e104376909f8e67c0bf6110284db8220443c911eede4ec9ba0cbc0fffd1e2586  ./assets/tu-lieu-34.webp
+          4ef161589ffeda149ffa91a04c67f727ac672c73416fbdde6196400ee3c29995  ./assets/tu-lieu-35.webp
+          3ee8c1c0fa0b6299d02410cb1be0093da005abb0a6842326a29b1b19afdf115a  ./assets/tu-lieu-36.webp
+          ad6b178a57a33e28f3669f1362b2059022305ce623e16828e8b8c62d58dcdb6a  ./assets/tu-lieu-37.webp
+          69a424a864403c9979bf3625dfdd61495f08fa685068205a480899dcc82a6402  ./assets/tu-lieu-38.webp
+          964982224e5e76a1b3831b85c146c6f6e17fffb8352b6b05f50b1a790ca47f99  ./assets/tu-lieu-39.webp
+          44717c49ae2f427009a954e3aac337ab818cf326e7e9254eb39f1b4b99a252bd  ./assets/tu-lieu-40.webp
+          62b92c7885a1416fe4ede8536d465dff94de3c6585f493a85be154daf507cf4b  ./assets/tu-lieu-41.webp
+          c39a0f6db5189c89de1500100d8073ad59a0275d84d0d7afb235f286b5349977  ./assets/tu-lieu-44.webp
+          88dc5daf818840e0a942d2d90195b5c59cf344f07f16301583b59189296fad4d  ./assets/tu-lieu-47.webp
+          f144a4fdeaddb49ff82b63f340f3746494c2fae2d2ac0deb9680e683ebace7aa  ./assets/tu-lieu-51.webp
+          5ea6d64a3c6de04bcb748afd566319a79b78c6af4cffeba3e253c950f91b8bb6  ./assets/tu-lieu-52.webp
+          a384afa43603672464cf1b6e439915aaacdc8d91894ebfbfe8e2b0634dc17f5e  ./assets/tu-lieu-54.webp
+          7fd446f63abe0eddfbdded93fd16c19b8a404d71c7244b01f4bba00e0becdf21  ./assets/tu-lieu-57.webp
+          e2441d438a4def35bae4a585626f661b84cce76c0e1668485e8f9808e24b1460  ./assets/tu-lieu-58.webp
+          6ff213ba10675bc9ce3085bc88b8ae8bbae65ebdba99f6835a8148d6a2578e07  ./assets/tu-lieu-62.webp
+          e986f6ae864c0442f0bbe34e7b969731659bd2541256150fc0c19d06935b3285  ./assets/tuong-dai-chien-thang.webp
+          aa2b6c06705dbfb1767cab6f2e604b840000d5d725457d0b23d7f2e79ce78d3a  ./assets/tuong-dai-lich-su.webp
+          5f9afb1cd39309a89f70172ef025b2f4fdf24a125c924979d79eb30995533b38  ./base.css
+          af71f224c61eb19f0a5c1cd6a14b971afe8b3fc959ca7b9982c76c088f490f5a  ./index.html
+          22a0c73b435694f8776940768c5bf25aba82d43c8580e528dcec5756642dbb16  ./media-catalog.json
+          32c82748824e9a28b83cb828c15adf45758c1b79bb1a670cabb86c1d1c08a86c  ./media/cham-1-1.mp4
+          17205c013060df3fb8f368942313db264ca8c68348f6c436ea355e897c04efcc  ./media/cham-1-1.webp
+          3798fb78c314a21017aabf0c8c14d50ffd8979f1803e93b23580c7efada01ea3  ./media/cham-1-2.mp4
+          3547f716fb216e8b0f2d44a09db23d9c8e5d19510457ad8049ae513545930b0e  ./media/cham-1-2.webp
+          1c1155c041a5f47169f1eff776af6f0fa2eed9cca45a75ff82f4757e6003e61a  ./media/cham-2-1.mp4
+          eb88244ac8820d3b3b4cb2170455713aea3aabe1716a69b89380d781636a0519  ./media/cham-2-1.webp
+          e99b3655b2285d1d956428fc4f4912921702367d6ffcca40d2fd308f111625c5  ./media/cham-2-2.mp4
+          4049b6766bc83204ea25f80700dfbb0e472d86f6d3d44fdf3101f85ed969127c  ./media/cham-2-2.webp
+          7c9d8ce67417f1e5cbe49dec9457b316c336f264cc65ae62e4a84b06fd2a7adb  ./media/cham-2-3.mp4
+          5129e428d3f9197b6b1f3e47891742201dde4c3244f85fb21c84ad3388e1f6c9  ./media/cham-2-3.webp
+          fd2da3af2428df80ae816bd45a82597843870615f0faa2ff2f27f301f7e2983f  ./media/cham-2-4.mp4
+          80e6299533a133968a6530fad1ef823e51d063cf9fa12d9b867acf519e0752b3  ./media/cham-2-4.webp
+          b02814b5b28cd49d3421d17eec03a1be729746a9a20bcf5ce528adb03f508441  ./media/cham-2-5.mp4
+          e6616920f77129dbb14ef7a4e32a653a1cb06107eae11b9588a91e695def22ef  ./media/cham-2-5.webp
+          498d79f7c9557805479a142fef4b70a4daf9c9ccfac26a3054da5d92e6fcaf47  ./media/cham-2-tu-lieu-1.mp4
+          c02d8e2a01ffd07a4cc919f7c26e9bae97656b6b2c84fa24cae0ff4a394bfa7b  ./media/cham-2-tu-lieu-1.webp
+          7cbe48805b10ffb2ec0f91bf2aed41d0f4d60634113bd413ec6baeb8a95e079f  ./media/cham-3-1.mp4
+          6e87fa314a34abd48a081d45149ea4829dadfdf8cfc9333cb2767b84cc1a73f8  ./media/cham-3-1.webp
+          eec4df2517be9ebbc5315e29bdcef48b295134753af399902e858c54025b5042  ./media/cham-3-2.mp4
+          7436de1d2882b8414c03461fed1211c11a70a7fe49fa2a22d01f8ee9a5e87f20  ./media/cham-3-2.webp
+          2cdcfa1b959c1d15e990fd1825fbf746fb24efab4a151e2a649d2fe28da6b794  ./media/cham-3-3.mp4
+          0f6c8c6c59b1dae78fc1dc11c6c8831cb79d24ca9c9238c4aa3f06000406b271  ./media/cham-3-3.webp
+          7c4b067768688083292c3b8ce1979dcd837581e9642fcd8d286f223bc1e96907  ./media/cham-4-1.mp4
+          a696c4ea41e30107d68db5a5f0f5c1ae4f90f5b3733c92cc5a167be78d83dce5  ./media/cham-4-1.webp
+          dab584eaeda242e952c5c9b2310992a382b969ec84ba95c40a988d085f39eadc  ./media/cham-5-1.mp4
+          92a4b3670ca0103929985d12b156e8dce2b7d892ecc03afd42f94968bcc6a865  ./media/cham-5-1.webp
+          88fdd274f4fec8d6f454360fd7c4ec2cc725da52115ca94bfb51c52346b24991  ./navigation.js
+          b5f2fedd9636b4cb636d01d78e1067db6c2c793809aa5199748d0a46d07ccd27  ./site.css
+          MANIFEST
+          gh auth setup-git
+          git clone --no-tags --single-branch --branch main "https://github.com/$GITHUB_REPOSITORY.git" website
+          cd website
+          git switch -c cham-cua-viet-pages-ready 44dd416583d53b25865d9329529ac0b36a1f253e
+          while read -r digest path; do
+            mkdir -p "$(dirname "$path")"
+            if [[ "$path" == "./.nojekyll" ]]; then
+              touch "$path"
+            else
+              curl --fail --silent --show-error --location --retry 3 --max-time 90 --output "$path" "$SOURCE_URL/${path#./}"
+            fi
+          done < "$RUNNER_TEMP/site.sha256"
+          python3 - <<'PY'
+          from pathlib import Path
+          for name in ('index.html', 'app.js', 'navigation.js', 'base.css', 'media-catalog.json'):
+              path = Path(name)
+              data = path.read_bytes()
+              for prefix in (b'assets/', b'media/', b'media-catalog.json', b'app.js', b'navigation.js', b'base.css', b'site.css'):
+                  data = data.replace(b'/' + prefix, prefix)
+              data = data.replace(b'https://xanhx.vnmedia/', b'https://xanhx.vn/media/')
+              path.write_bytes(data)
+          PY
+          sha256sum -c "$RUNNER_TEMP/site.sha256"
+          git add .nojekyll index.html app.js navigation.js base.css site.css media-catalog.json assets media
+          git -c user.name=github-actions -c user.email=41898282+github-actions[bot]@users.noreply.github.com commit -m 'Cập nhật Chạm Cửa Việt với 5 điểm chạm'
+          git push origin HEAD:refs/heads/cham-cua-viet-pages-ready
