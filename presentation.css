@@ -273,6 +273,38 @@ dialog::backdrop {
   outline-offset: -3px;
 }
 .step-footer { border-color: var(--step-divider); }
+.station-location {
+  margin-block: 18px;
+  padding: clamp(14px, 3vw, 22px);
+  border: 1px solid var(--step-divider);
+  border-radius: var(--curve-control);
+  background: var(--step-nav-surface);
+}
+.station-location h4 { margin: 0 0 5px; font-size: clamp(17px, 2vw, 20px); }
+.station-location > p { margin: 0; color: var(--muted); line-height: 1.55; }
+.station-coordinates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 13px 0;
+}
+.station-coordinates > div {
+  padding: 8px clamp(7px, 2vw, 12px);
+  border: 1px solid var(--step-divider);
+  border-radius: 8px;
+  background: var(--exhibit-paper);
+}
+.station-coordinates dt { color: var(--muted); font-size: 13px; }
+.station-coordinates dd {
+  margin: 3px 0 0;
+  color: var(--exhibit-ink);
+  font-size: clamp(14px, 2vw, 17px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.station-location-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
+.station-location-links a { min-height: 44px; }
+.station-location-source { display: inline-flex; align-items: center; color: #11665e; font-size: 13px; text-decoration: underline; }
 .timeline-entry:has(#station-survey) { scroll-margin-top: 16px; }
 
 @media (width > 800px) {

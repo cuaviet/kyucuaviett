@@ -639,6 +639,53 @@ const questionBanks={
   }
 };
 const bankAnswers={};
+const stationLocations = {
+  1: {
+    name: 'Cửa sông Thạch Hãn', latitude: 16.90845, longitude: 107.19598,
+    description: 'Mốc ở cửa sông, nơi dòng Thạch Hãn đổ ra biển Đông.',
+    source: 'https://www.openstreetmap.org/way/479071435'
+  },
+  2: {
+    name: 'Tượng đài Chiến thắng Cửa Việt', latitude: 16.89580, longitude: 107.18894,
+    description: 'Tượng đài ở phía nam cửa sông, gắn với ký ức về trận Cửa Việt năm 1973.',
+    source: 'https://www.openstreetmap.org/node/12382425021'
+  },
+  3: {
+    name: 'Cầu Cửa Việt', latitude: 16.90102, longitude: 107.18511,
+    description: 'Mốc ở giữa cầu bắc qua sông Thạch Hãn, giúp bạn định vị không gian của những câu chuyện về Cửa Việt.',
+    source: 'https://www.openstreetmap.org/way/479124620'
+  },
+  4: {
+    name: 'Cảng cá Cửa Việt', latitude: 16.89841, longitude: 107.18789,
+    description: 'Khu bến cá ở bờ nam cửa sông là một góc quan sát tàu thuyền và nhịp sống nghề biển.',
+    source: 'https://www.openstreetmap.org/way/1447758473'
+  },
+  5: {
+    name: 'Bãi biển Cửa Việt', latitude: 16.91299, longitude: 107.18657,
+    description: 'Mốc ở dải bờ biển phía bắc cửa sông, gợi ý một góc để ghi lại Cửa Việt hôm nay.',
+    source: 'https://dulich.quangtri.gov.vn/vi/baibiencuaviet'
+  }
+};
+
+function stationLocationMarkup(id) {
+  const { name, latitude, longitude, description, source } = stationLocations[id];
+  const north = latitude.toFixed(5);
+  const east = longitude.toFixed(5);
+  const query = encodeURIComponent(`${north},${east}`);
+  return `<section class="station-location" aria-labelledby="station-location-title">
+    <h4 id="station-location-title">${name}</h4>
+    <p>${description}</p>
+    <dl class="station-coordinates">
+      <div><dt>Vĩ độ</dt><dd>${north}° Bắc</dd></div>
+      <div><dt>Kinh độ</dt><dd>${east}° Đông</dd></div>
+    </dl>
+    <div class="station-location-links">
+      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&amp;query=${query}" target="_blank" rel="noopener noreferrer">Mở Google Maps ${icon('external')}</a>
+      <a class="station-location-source" href="${source}" target="_blank" rel="noopener noreferrer">Nguồn tọa độ</a>
+    </div>
+  </section>`;
+}
+
 const baseStepMarkup=stepMarkup;
 stepMarkup=function(p){
  if (currentStep === 0 && p.opening) {
@@ -646,9 +693,7 @@ stepMarkup=function(p){
     <img src="assets/cham-1-toan-canh-cua-viet.webp" width="1920" height="1079" alt="Cửa sông, hai bờ và tàu thuyền ở Cửa Việt nhìn từ trên cao">
     <figcaption>Toàn cảnh Cửa Việt nhìn từ trên cao.</figcaption>
   </figure>` : '';
-  return `<h3>${p.title}</h3>${locationPhoto}${p.opening.map(t => `<p>${esc(t)}</p>`).join('')}
-    <div class="info-box"><p>Vị trí minh họa theo chủ đề trên sơ đồ. Tìm khu vực thực tế qua liên kết dưới đây.</p></div>
-    <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Cua+Viet+Quang+Tri" target="_blank" rel="noopener noreferrer">Mở bản đồ Cửa Việt ↗</a>`;
+  return `<h3>${p.title}</h3>${locationPhoto}${stationLocationMarkup(p.id)}${p.opening.map(t => `<p>${esc(t)}</p>`).join('')}`;
  }
  if(currentStep===1||currentStep===5)return bankMarkup(p,currentStep===1?'guess':'memory');
  if(currentStep===2 && p.id<=2)return `<h3>Kéo để chạm quá khứ.</h3><p>${p.id===1?'Quan sát tàu thuyền trong ảnh tư liệu năm 1967 và cảng Cửa Việt trong ảnh đương đại. Đây là hai địa điểm, góc chụp khác nhau trong khu vực Cửa Việt; không phải ảnh trước – sau của cùng một vị trí.':'Quan sát ảnh chiến sự tại Cửa Việt tháng 1/1973 và ảnh cảng Cửa Việt hiện nay. Hai ảnh ghi lại hai thời điểm khác nhau; hãy chú ý sự thay đổi của tàu thuyền và không gian cảng.'}</p><div class="compare-wrap ${p.id===1?'compare-cham-one':''}"><img src="${p.id===1?chamOneToday:(p.id===2?chamTwoToday:docAssets.present)}" alt="${p.id===1?'Cảng Cửa Việt nhìn từ trên cao':(p.id===2?'Toàn cảnh Cửa Việt hiện nay · ảnh do bạn cung cấp':'Toàn cảnh Cửa Việt hiện nay')}"><div class="compare-top"><img src="${p.id===1?chamOneOriginal:docAssets.past}" alt="${p.id===1?'Tàu thuyền tại Cửa Việt năm 1967':'Ảnh tư liệu chiến sự Cửa Việt tháng 1 năm 1973'}"></div><span class="compare-label">${p.id===1?'TƯ LIỆU · 1967':'TƯ LIỆU · 1973'}</span><span class="compare-label right">CỬA VIỆT HIỆN NAY</span><span class="compare-handle"></span><input id="compare-range" type="range" min="0" max="100" value="50" aria-label="So sánh ảnh tư liệu và hiện tại"></div><div class="compare-help"><label for="compare-range">Kéo để khám phá hai ảnh</label><span id="compare-value">50%</span></div><p class="source-note">${p.id===1?'Ảnh cảng Cửa Việt: Ngọc Tân / <a href="https://baodautu.vn/quang-tri-co-them-3-cang-bien-duoc-ap-dung-thi-thuc-dien-tu-e-visa-d451059.html" target="_blank" rel="noopener noreferrer">Báo Đầu tư</a> (bài viết tháng 12/2025; không ghi ngày chụp).':'Ảnh chiến sự: xe tăng T-54 và bộ đội cơ động ở Cửa Việt, tháng 1/1973; tư liệu do Báo Dân Việt đăng trong bài “Trận Cửa Việt: Vòng cung Kursk trong Chiến tranh Việt Nam”. Ảnh hiện nay: toàn cảnh Cửa Việt do nhóm dự án cung cấp.'}</p>`;
@@ -690,7 +735,7 @@ stepMarkup=function(p){
  }
  if(currentStep===1||currentStep===5)return bankMarkup(p,currentStep===1?'guess':'memory');
  const d=stationDocuments[p.id][currentStep+1];let content=d.html;
- if(currentStep===0){content+=documentPhotos(d.photos)+`<a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Cua+Viet+Quang+Tri" target="_blank" rel="noopener noreferrer">Xem khu vực Cửa Việt ↗</a>`;if(p.id===3)content+=`<figure class="station-monument"><img src="assets/cau-cua-viet.webp" alt="Cây cầu bắc qua vùng cửa biển Cửa Việt"><figcaption>Cây cầu qua vùng cửa biển Cửa Việt · Ảnh do bạn cung cấp.</figcaption></figure>`;}
+ if(currentStep===0){content+=stationLocationMarkup(p.id)+documentPhotos(d.photos);if(p.id===3)content+=`<figure class="station-monument"><img src="assets/cau-cua-viet.webp" alt="Cây cầu bắc qua vùng cửa biển Cửa Việt"><figcaption>Cây cầu qua vùng cửa biển Cửa Việt · Ảnh do bạn cung cấp.</figcaption></figure>`;}
  if(currentStep===2){if(p.id!==3)content+=stationCompare(p);if(p.id===4)content+='<h4>Bộ ảnh trong tài liệu</h4><div class="station-gallery">'+documentPhotos(d.photos)+'</div>';}
  if(currentStep===3){content+=documentPhotos(d.photos)+`<div class="info-box"><p>Chưa có video phỏng vấn đính kèm trong file Word. Các câu hỏi trên là gợi ý để thực hiện phỏng vấn.</p></div><label class="listen-field">Chọn video của bạn<input type="file" id="interview-file" accept="video/*"></label><div id="interview-player"></div><p class="source-note">Video chỉ phát trên thiết bị này; không tải lên hay công khai. Chọn tư liệu đã được người kể đồng ý cho sử dụng.</p>`;}
  if(currentStep===4)content+='<div class="station-gallery">'+documentPhotos(d.photos)+'</div>';
