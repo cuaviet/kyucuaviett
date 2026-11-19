@@ -641,7 +641,15 @@ const questionBanks={
 const bankAnswers={};
 const baseStepMarkup=stepMarkup;
 stepMarkup=function(p){
- if(currentStep===0 && p.opening)return `<h3>${p.title}</h3>${p.opening.map(t=>`<p>${esc(t)}</p>`).join('')}<div class="info-box"><p>Vị trí minh họa theo chủ đề trên sơ đồ. Tìm khu vực thực tế qua liên kết dưới đây.</p></div><a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Cua+Viet+Quang+Tri" target="_blank" rel="noopener noreferrer">Mở bản đồ Cửa Việt ↗</a>`;
+ if (currentStep === 0 && p.opening) {
+  const locationPhoto = p.id === 1 ? `<figure class="station-monument">
+    <img src="assets/cham-1-toan-canh-cua-viet.webp" width="1920" height="1079" alt="Cửa sông, hai bờ và tàu thuyền ở Cửa Việt nhìn từ trên cao">
+    <figcaption>Toàn cảnh Cửa Việt nhìn từ trên cao.</figcaption>
+  </figure>` : '';
+  return `<h3>${p.title}</h3>${locationPhoto}${p.opening.map(t => `<p>${esc(t)}</p>`).join('')}
+    <div class="info-box"><p>Vị trí minh họa theo chủ đề trên sơ đồ. Tìm khu vực thực tế qua liên kết dưới đây.</p></div>
+    <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Cua+Viet+Quang+Tri" target="_blank" rel="noopener noreferrer">Mở bản đồ Cửa Việt ↗</a>`;
+ }
  if(currentStep===1||currentStep===5)return bankMarkup(p,currentStep===1?'guess':'memory');
  if(currentStep===2 && p.id<=2)return `<h3>Kéo để chạm quá khứ.</h3><p>${p.id===1?'Quan sát tàu thuyền trong ảnh tư liệu năm 1967 và cảng Cửa Việt trong ảnh đương đại. Đây là hai địa điểm, góc chụp khác nhau trong khu vực Cửa Việt; không phải ảnh trước – sau của cùng một vị trí.':'Quan sát ảnh chiến sự tại Cửa Việt tháng 1/1973 và ảnh cảng Cửa Việt hiện nay. Hai ảnh ghi lại hai thời điểm khác nhau; hãy chú ý sự thay đổi của tàu thuyền và không gian cảng.'}</p><div class="compare-wrap ${p.id===1?'compare-cham-one':''}"><img src="${p.id===1?chamOneToday:(p.id===2?chamTwoToday:docAssets.present)}" alt="${p.id===1?'Cảng Cửa Việt nhìn từ trên cao':(p.id===2?'Toàn cảnh Cửa Việt hiện nay · ảnh do bạn cung cấp':'Toàn cảnh Cửa Việt hiện nay')}"><div class="compare-top"><img src="${p.id===1?chamOneOriginal:docAssets.past}" alt="${p.id===1?'Tàu thuyền tại Cửa Việt năm 1967':'Ảnh tư liệu chiến sự Cửa Việt tháng 1 năm 1973'}"></div><span class="compare-label">${p.id===1?'TƯ LIỆU · 1967':'TƯ LIỆU · 1973'}</span><span class="compare-label right">CỬA VIỆT HIỆN NAY</span><span class="compare-handle"></span><input id="compare-range" type="range" min="0" max="100" value="50" aria-label="So sánh ảnh tư liệu và hiện tại"></div><div class="compare-help"><label for="compare-range">Kéo để khám phá hai ảnh</label><span id="compare-value">50%</span></div><p class="source-note">${p.id===1?'Ảnh cảng Cửa Việt: Ngọc Tân / <a href="https://baodautu.vn/quang-tri-co-them-3-cang-bien-duoc-ap-dung-thi-thuc-dien-tu-e-visa-d451059.html" target="_blank" rel="noopener noreferrer">Báo Đầu tư</a> (bài viết tháng 12/2025; không ghi ngày chụp).':'Ảnh chiến sự: xe tăng T-54 và bộ đội cơ động ở Cửa Việt, tháng 1/1973; tư liệu do Báo Dân Việt đăng trong bài “Trận Cửa Việt: Vòng cung Kursk trong Chiến tranh Việt Nam”. Ảnh hiện nay: toàn cảnh Cửa Việt do nhóm dự án cung cấp.'}</p>`;
  let html=baseStepMarkup(p);
