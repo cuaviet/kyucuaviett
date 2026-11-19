@@ -212,21 +212,26 @@ dialog::backdrop {
 }
 .experience-head {
   height: auto;
-  min-height: 185px;
-  padding: clamp(22px, 4vw, 39px);
-  justify-content: center;
-  background: linear-gradient(115deg, #fffdf4, #eafaff);
-  color: var(--exhibit-ink);
+  min-height: clamp(220px, 23vw, 260px);
+  padding: clamp(24px, 4vw, 39px);
+  justify-content: flex-end;
+  isolation: isolate;
+  background: #12343e;
+  color: #fff;
 }
-.experience-head::after { display: none; }
 .experience-head img {
-  inset: 0 0 0 auto;
-  width: 49%;
-  opacity: 1;
-  mask-image: linear-gradient(90deg, transparent, #000 20%);
+  object-position: center var(--cover-focus-y, 52%);
 }
-.experience-head .eyebrow { color: #116d6b; max-width: 51%; }
-.experience-head h2 { max-width: 53%; color: var(--exhibit-ink); }
+.experience-head[data-point="1"] { --cover-focus-y: 70%; }
+.experience-head[data-point="2"] { --cover-focus-y: 46%; }
+.experience-head[data-point="3"] { --cover-focus-y: 62%; }
+.experience-head::after {
+  background: linear-gradient(90deg, #07232cdb 0%, #07232cbf 38%, #07232c33 76%, transparent),
+              linear-gradient(0deg, #07232c66, transparent 72%);
+  pointer-events: none;
+}
+.experience-head .eyebrow { color: #d7fff2; }
+.experience-head h2 { max-width: 66%; color: inherit; }
 .experience-head .icon-btn {
   color: #194754;
   background: #fff;
@@ -327,9 +332,11 @@ dialog::backdrop {
   .touch-tile, .touch-tile:nth-child(n+3) { grid-column: auto; }
   .touch-tile:nth-child(3) { grid-column: 1 / -1; min-height: 0; }
   .touch-label strong { font-size: clamp(18px, 4.4vw, 30px); }
-  .experience-head { padding: 131px 20px 17px; min-height: 0; }
-  .experience-head img { width: 100%; inset: 0 0 auto; height: 115px; mask-image: none; }
-  .experience-head h2, .experience-head .eyebrow { max-width: 100%; }
+  .experience-head { padding: clamp(100px, 19vw, 140px) 20px 22px; }
+  .experience-head::after {
+    background: linear-gradient(0deg, #07232cf5 0%, #07232cd1 42%, transparent 88%);
+  }
+  .experience-head h2 { max-width: 100%; }
 }
 @media (max-width: 420px) {
   .hero-eyebrow { margin-bottom: 8px; }
