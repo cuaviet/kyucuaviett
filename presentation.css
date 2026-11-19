@@ -240,8 +240,12 @@ dialog::backdrop {
 }
 .experience-head .icon-btn { border-radius: 50%; }
 .experience-head .icon-btn:hover { color: #194754; background: #e7f7fc; }
-/* Keep the steps at hand while reading longer sections or viewing photos. */
-.experience-dialog { overscroll-behavior: contain; }
+.experience-dialog {
+  --step-nav-surface: #f1f7f4;
+  --step-divider: #d9e7e1;
+  background: var(--exhibit-paper);
+  overscroll-behavior: contain;
+}
 .step-nav {
   position: sticky;
   top: 0;
@@ -249,10 +253,41 @@ dialog::backdrop {
   align-self: start;
   max-height: calc(92dvh - 12px);
   overflow-y: auto;
+  background: var(--step-nav-surface);
+  border: 0;
 }
-.step-tab { min-height: 44px; }
+.step-tab { min-height: 44px; color: #3d6158; }
+.step-tab > span { color: #496a60; border-color: #c1d5cd; }
+.step-tab:hover:not(.active) { background: #e3f0eb; }
+.step-tab:is(.active, [aria-selected="true"]) {
+  color: #184b41;
+  background: #dceee7;
+  box-shadow: inset 0 -3px var(--exhibit-teal);
+}
+.step-tab.active > span { background: #28675a; border-color: #28675a; }
+.step-content :is(.station-topics details, .read-prompt, .station-table th) {
+  background: var(--step-nav-surface);
+}
+.step-content:focus-visible {
+  outline: 2px solid var(--exhibit-teal);
+  outline-offset: -3px;
+}
+.step-footer { border-color: var(--step-divider); }
 .timeline-entry:has(#station-survey) { scroll-margin-top: 16px; }
 
+@media (width > 800px) {
+  .experience-layout { grid-template-columns: 225px minmax(0, 1fr); }
+  /* Stretch the rail background through the panel while the menu stays sticky. */
+  .experience-layout::before {
+    content: '';
+    grid-area: 1 / 1;
+    background: var(--step-nav-surface);
+    border-inline-end: 1px solid var(--step-divider);
+    pointer-events: none;
+  }
+  .step-nav { grid-area: 1 / 1; margin-inline-end: 1px; }
+  .step-content { grid-area: 1 / 2; }
+}
 @media (max-width: 800px) {
   .step-nav {
     align-self: stretch;
@@ -260,16 +295,13 @@ dialog::backdrop {
     padding-block: 7px;
     overflow-x: auto;
     overflow-y: hidden;
-    border-right: 0;
-    border-bottom: 1px solid #d5e8e6;
-    background: #f3faf8;
+    border-bottom: 1px solid var(--step-divider);
   }
-  .step-nav .step-tab { flex: 0 0 auto; white-space: nowrap; }
+  .step-nav .step-tab { flex: 0 0 auto; white-space: nowrap; border-color: var(--step-divider); }
   .timeline-entry:has(#station-survey) { scroll-margin-top: 72px; }
 }
 .step-tab, .step-content .btn { border-radius: var(--curve-control); }
 :is(.station-gallery, .interview-photo-grid) img, .station-monument img { border-radius: var(--curve-control); }
-.step-tab.active, .step-tab[aria-selected="true"] { box-shadow: inset 0 -3px #088782; }
 
 
 @keyframes exhibit-rise {
