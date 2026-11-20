@@ -123,7 +123,6 @@ function chamTwoPhotoGallery() {
 
 function chamThreePhotoGallery() {
   const photos = [
-    ['anh-2.webp', 'Hình ảnh các bằng khen và giấy chứng nhận trong nhà'],
     ['anh-3.webp', 'Hình ảnh tư liệu về các bằng khen được lưu giữ'],
     ['anh-4.webp', 'Hình ảnh các giấy khen được lưu giữ'],
     ['anh-5.webp', 'Hình ảnh nhóm học sinh chụp cùng người kể chuyện']
