@@ -336,6 +336,20 @@ dialog::backdrop {
 :is(.station-gallery, .interview-photo-grid) img, .station-monument img { border-radius: var(--curve-control); }
 .station-topic-photos { margin-block: 16px; }
 .station-topic-photos img { display: block; width: 100%; height: auto; }
+.station-table--photos :is(th, td) { min-width: 0; }
+.station-table--photos th[scope="row"] {
+  width: 32%;
+  background: transparent;
+  color: inherit;
+  vertical-align: middle;
+}
+.station-table--photos td a { display: block; width: min(100%, 440px); }
+.station-table--photos img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--curve-control);
+}
 @media (max-width: 600px) {
   .station-body .station-topic-photos { grid-template-columns: minmax(0, 1fr); }
 }
