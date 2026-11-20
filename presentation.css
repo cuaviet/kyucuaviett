@@ -353,6 +353,7 @@ dialog::backdrop {
 @media (max-width: 600px) {
   .station-body .station-topic-photos { grid-template-columns: minmax(0, 1fr); }
 }
+.station-body .station-food-photos { grid-template-columns: minmax(0, 4fr) minmax(0, 3fr); }
 
 
 @keyframes exhibit-rise {
