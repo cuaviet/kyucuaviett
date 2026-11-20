@@ -334,6 +334,11 @@ dialog::backdrop {
 }
 .step-tab, .step-content .btn { border-radius: var(--curve-control); }
 :is(.station-gallery, .interview-photo-grid) img, .station-monument img { border-radius: var(--curve-control); }
+.station-topic-photos { margin-block: 16px; }
+.station-topic-photos img { display: block; width: 100%; height: auto; }
+@media (max-width: 600px) {
+  .station-body .station-topic-photos { grid-template-columns: minmax(0, 1fr); }
+}
 
 
 @keyframes exhibit-rise {
