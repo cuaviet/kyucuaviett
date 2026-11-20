@@ -122,18 +122,17 @@ function chamTwoPhotoGallery() {
 }
 
 function chamThreePhotoGallery() {
-  const descriptions = [
-    'Hình ảnh các bằng khen và giấy chứng nhận',
-    'Hình ảnh các bằng khen và giấy chứng nhận trong nhà',
-    'Hình ảnh tư liệu về các bằng khen được lưu giữ',
-    'Hình ảnh các giấy khen được lưu giữ',
-    'Hình ảnh nhóm học sinh chụp cùng người kể chuyện'
+  const photos = [
+    ['anh-2.webp', 'Hình ảnh các bằng khen và giấy chứng nhận trong nhà'],
+    ['anh-3.webp', 'Hình ảnh tư liệu về các bằng khen được lưu giữ'],
+    ['anh-4.webp', 'Hình ảnh các giấy khen được lưu giữ'],
+    ['anh-5.webp', 'Hình ảnh nhóm học sinh chụp cùng người kể chuyện']
   ];
   return `<section class="interview-photo-section" aria-labelledby="cham-three-photo-heading">
     <h4 id="cham-three-photo-heading">Hình ảnh tư liệu</h4>
     <p>Hình ảnh do nhóm dự án cung cấp. Chọn ảnh để xem lớn.</p>
-    <div class="interview-photo-grid">${descriptions.map((description, index) =>
-      `<a href="assets/cham-3-anh-tu-lieu/anh-${index + 1}.webp" target="_blank" rel="noopener noreferrer" aria-label="Xem lớn: ${esc(description)}"><img src="assets/cham-3-anh-tu-lieu/anh-${index + 1}.webp" alt="${esc(description)}" loading="lazy"></a>`).join('')}</div>
+    <div class="interview-photo-grid">${photos.map(([name, description]) =>
+      `<a href="assets/cham-3-anh-tu-lieu/${name}" target="_blank" rel="noopener noreferrer" aria-label="Xem lớn: ${esc(description)}"><img src="assets/cham-3-anh-tu-lieu/${name}" alt="${esc(description)}" loading="lazy"></a>`).join('')}</div>
   </section>`;
 }
 
