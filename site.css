@@ -262,6 +262,10 @@ dialog::backdrop { backdrop-filter: blur(4px); }
 }
 
 /* Show both full photographs in Chạm 5 while keeping the comparison slider. */
+.aerial-comparison {
+  margin-top: 28px;
+}
+
 .compare-wrap.compare-cham-five {
   width: 100%;
   max-width: 800px;

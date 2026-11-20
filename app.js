@@ -89,7 +89,22 @@ case'sources':showSources();break;
 case'privacy':showUtility('Hành trình này là của bạn',`<p>Dấu hộ chiếu và cảm nhận được lưu bằng bộ nhớ của trình duyệt trên thiết bị đang dùng. Trang không yêu cầu tên, số điện thoại hoặc tài khoản riêng để ghi cảm nhận.</p><p>Ghi chép không tự động gửi cho giáo viên, nhóm nghiên cứu hoặc hiển thị với người khác. Bạn có thể dùng “Tải nhật ký” trong hộ chiếu để giữ một bản riêng. Xóa dữ liệu trình duyệt hoặc chuyển sang thiết bị khác có thể khiến tiến trình không còn.</p><p>Các liên kết bài báo và Google Maps mở trang bên ngoài; dịch vụ đó có chính sách riêng. Trang không yêu cầu quyền truy cập vị trí, micro hoặc camera.</p><p>Phông chữ được đóng gói cùng giao diện, không cần tải từ dịch vụ phông chữ bên ngoài khi sử dụng.</p>`);break;
 case'top':window.scrollTo({top:0,behavior:'smooth'});break;
 }});
-document.addEventListener('input',e=>{if(e.target.id==='point-search'){searchQuery=e.target.value;applyFilter(filterRoute);}if(e.target.id==='compare-range'){const n=e.target.value;$('.compare-top').style.clipPath=`inset(0 ${100-n}% 0 0)`;$('.compare-handle').style.left=n+'%';$('#compare-value').textContent=n+'%';e.target.setAttribute('aria-valuetext',n+' phần trăm ảnh bên trái');}if(e.target.id==='memory-note')$('#note-length').textContent=e.target.value.length;});
+document.addEventListener('input', e => {
+  const input = e.target;
+  if (input.id === 'point-search') {
+    searchQuery = input.value;
+    applyFilter(filterRoute);
+  }
+  if (input.matches('.compare-wrap input[type="range"]')) {
+    const comparison = input.closest('.compare-wrap');
+    const percent = input.value;
+    comparison.querySelector('.compare-top').style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+    comparison.querySelector('.compare-handle').style.left = `${percent}%`;
+    comparison.nextElementSibling.querySelector('span').textContent = `${percent}%`;
+    input.setAttribute('aria-valuetext', `${percent} phần trăm ảnh bên trái`);
+  }
+  if (input.id === 'memory-note') $('#note-length').textContent = input.value.length;
+});
 document.addEventListener('submit',e=>{if(e.target.id!=='note-form')return;e.preventDefault();const t=$('#memory-note').value.trim();if(t.length<3){toast('Hãy viết ít nhất 3 ký tự để lưu cảm nhận.');$('#memory-note').focus();return;}state.notes[currentPoint]={text:t.slice(0,800),at:new Date().toISOString()};const ok=persist();$('#note-feedback').innerHTML='<div class="note-saved">'+(ok?'Đã lưu cảm nhận của bạn. Bạn có thể xem và tải trong Hộ chiếu.':'Cảm nhận đang được giữ trong phiên này. Hãy tải nhật ký để lưu một bản.')+'</div>';});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mapFocusTimer!==null){resetMapFocus(true);return;}const t=e.target.closest('.step-tab');if(!t)return;let n=currentStep;switch(e.key){case'ArrowDown':case'ArrowRight':n=(currentStep+1)%8;break;case'ArrowUp':case'ArrowLeft':n=(currentStep+7)%8;break;case'Home':n=0;break;case'End':n=7;break;default:return;}e.preventDefault();stopNarration();currentStep=n;renderExperience();$('.step-tab.active').focus({preventScroll:true});$('.step-tab.active').scrollIntoView({block:'nearest',inline:'nearest'});});
 $$('dialog').forEach(d=>{d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog(d);});d.addEventListener('close',()=>{if(d===experience&&mapFocusOwnerOpen&&!experience.open)resetMapFocus(true);stopNarration();if(!$$('dialog[open]').length)document.body.classList.remove('dialog-open');});});
@@ -686,8 +701,8 @@ function stationLocationMarkup(id) {
   </section>`;
 }
 
-function photoComparison(past, present, wide = false) {
-  return `<div class="compare-wrap ${wide ? 'compare-cham-one' : ''}"><img src="${present.src}" alt="${present.alt}"><div class="compare-top"><img src="${past.src}" alt="${past.alt}"></div><span class="compare-label">${past.label}</span><span class="compare-label right">${present.label}</span><span class="compare-handle"></span><input id="compare-range" type="range" min="0" max="100" value="50" aria-label="So sánh ảnh tư liệu và hiện tại"></div><div class="compare-help"><label for="compare-range">Kéo để khám phá hai ảnh</label><span id="compare-value">50%</span></div>`;
+function photoComparison(past, present, wide = false, rangeId = 'compare-range') {
+  return `<div class="compare-wrap ${wide ? 'compare-cham-one' : ''}"><img src="${present.src}" alt="${present.alt}"><div class="compare-top"><img src="${past.src}" alt="${past.alt}"></div><span class="compare-label">${past.label}</span><span class="compare-label right">${present.label}</span><span class="compare-handle"></span><input id="${rangeId}" type="range" min="0" max="100" value="50" aria-label="So sánh ảnh tư liệu và hiện tại"></div><div class="compare-help"><label for="${rangeId}">Kéo để khám phá hai ảnh</label><span>50%</span></div>`;
 }
 
 const baseStepMarkup=stepMarkup;
@@ -745,7 +760,15 @@ stationDocuments["3"]["3"].html=`<h3>Thuyền cá Cửa Việt xưa và nay</h3>
   {src: 'assets/thuyen-va-ngu-cu.webp', alt: 'Thuyền gỗ và ngư cụ ở Cửa Việt trước đây', label: 'QUÁ KHỨ'},
   {src: 'assets/thuyen-danh-ca.webp', alt: 'Tàu cá ở cửa biển Cửa Việt hiện nay', label: 'HIỆN TẠI'},
   true
-)}`;
+)}<section class="aerial-comparison" aria-labelledby="aerial-comparison-title">
+  <h3 id="aerial-comparison-title">Toàn cảnh Cửa Việt xưa và nay</h3>
+  ${photoComparison(
+    {src: 'assets/cua-bien-tu-tren-cao.webp', alt: 'Cửa sông và những con tàu nhìn từ trên cao', label: 'QUÁ KHỨ'},
+    {src: 'assets/toan-canh-cua-viet.webp', alt: 'Khu dân cư, cảng và bờ biển Cửa Việt nhìn từ trên cao', label: 'HIỆN TẠI'},
+    true,
+    'compare-aerial-range'
+  )}
+</section>`;
 const previousStationMarkup=stepMarkup;
 function documentPhotos(items){return items.join('').replace(/@([\w]+)@/g,(_,key)=>stationAssets[key]);}
 function stationCompare(p){const pair=p.id===4?['4_image3','4_image11']:['5_image2','5_image3'];return `<div class="compare-wrap ${p.id===5?'compare-cham-five':''}"><img src="${stationAssets[pair[1]]}" alt="Ảnh thứ hai trong tư liệu"><div class="compare-top"><img src="${stationAssets[pair[0]]}" alt="Ảnh thứ nhất trong tư liệu"></div><span class="compare-label">${p.id===5?'XƯA · THEO TÀI LIỆU':'NGHỀ BIỂN · ẢNH TƯ LIỆU'}</span><span class="compare-label right">${p.id===5?'NAY · THEO TÀI LIỆU':'TÀU THUYỀN · GÓC NHÌN KHÁC'}</span><span class="compare-handle"></span><input id="compare-range" type="range" min="0" max="100" value="50" aria-label="Kéo để so sánh hai ảnh"></div><div class="compare-help"><label for="compare-range">Kéo để quan sát</label><span id="compare-value">50%</span></div><p class="source-note">Ảnh từ file Chạm ${two(p.id)}; chưa có ngày chụp và tác giả đầy đủ. Hai ảnh không cùng góc chụp.</p>`;}
