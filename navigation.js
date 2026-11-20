@@ -107,9 +107,7 @@ const chamTwoPhotos = [
   ['IMG_3722.jpeg', 'Ảnh huân chương kháng chiến'],
   ['IMG_3721.jpeg', 'Ảnh kỷ niệm chương chiến sĩ cách mạng bị địch bắt tù, đày'],
   ['IMG_3720.jpeg', 'Ảnh huân chương độc lập'],
-  ['IMG_3719.jpeg', 'Ảnh tập thể được lưu giữ trong khung'],
-  ['IMG_3726.jpeg', 'Ảnh tư liệu các giấy chứng nhận dũng sĩ'],
-  ['IMG_3727.jpeg', 'Ảnh các giấy chứng nhận dũng sĩ chụp trực diện']
+  ['IMG_3719.jpeg', 'Ảnh tập thể được lưu giữ trong khung']
 ];
 
 function chamTwoPhotoGallery() {
