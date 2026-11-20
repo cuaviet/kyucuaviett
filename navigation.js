@@ -284,10 +284,6 @@ function initPlayer(container) {
 }
 
 const groupPhotoAlbums = {
-  1: [
-    ['3985', 'Khu dân cư và đường giao nhau nhìn từ trên cao.'],
-    ['3986', 'Cổng chào với hình sóng biển ở khu du lịch Cửa Việt.']
-  ],
   2: [
     ['4016', 'Các chiến sĩ dâng hương tại nơi tưởng niệm. Ảnh hoạt động tri ân hiện nay.']
   ],
