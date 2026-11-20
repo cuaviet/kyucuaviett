@@ -646,9 +646,9 @@ const stationLocations = {
     source: 'https://www.openstreetmap.org/way/479071435'
   },
   2: {
-    name: 'Tượng đài Chiến thắng Cửa Việt', latitude: 16.89580, longitude: 107.18894,
-    description: 'Tượng đài ở phía nam cửa sông, gắn với ký ức về trận Cửa Việt năm 1973.',
-    source: 'https://www.openstreetmap.org/node/12382425021'
+    name: 'Đài Chiến thắng Đặc công Hải quân', latitude: 16.90801, longitude: 107.18477,
+    description: 'Đài tưởng niệm nằm trên đường Quốc Phòng, ở bờ Bắc cửa biển Cửa Việt.',
+    source: 'https://vn.trip.com/travel-guide/attraction/gio-linh-district/city-142840731?poiType=3'
   },
   3: {
     name: 'Cầu Cửa Việt', latitude: 16.90102, longitude: 107.18511,
@@ -730,7 +730,7 @@ function stationCompare(p){const pair=p.id===4?['4_image3','4_image11']:['5_imag
 stepMarkup=function(p){
  if(p.id<3){
   let html=previousStationMarkup(p);
-  if(p.id===2 && currentStep===0) html+=`<figure class="station-monument"><img src="assets/tuong-dai-lich-su.webp" width="1151" height="634" alt="Tượng đài Chiến thắng Cửa Việt nhìn từ sân phía trước" loading="lazy" decoding="async"><figcaption>Tượng đài Chiến thắng Cửa Việt.</figcaption></figure>`;
+  if(p.id===2 && currentStep===0) html+=`<figure class="station-monument"><img src="https://media-cdn.xanhx.vn/storage/newsportal/2025/5/7/31352/Chien-Cong-Hien-Hach.jpg" width="1181" height="886" alt="Đài Chiến thắng Đặc công Hải quân ở bờ Bắc Cửa Việt." loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Đài Chiến thắng Đặc công Hải quân ở bờ Bắc Cửa Việt. · <a href="https://xanhx.vn/ky-su/nhung-chien-cong-hien-hach-tren-chien-truong-quang-tri-31352.html" target="_blank" rel="noopener noreferrer">Đ.T / XANH EWEC</a></figcaption></figure>`;
   return html;
  }
  if(currentStep===1||currentStep===5)return bankMarkup(p,currentStep===1?'guess':'memory');
