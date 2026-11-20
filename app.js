@@ -730,7 +730,7 @@ function stationCompare(p){const pair=p.id===4?['4_image3','4_image11']:['5_imag
 stepMarkup=function(p){
  if(p.id<3){
   let html=previousStationMarkup(p);
-  if(p.id===2 && currentStep===0) html+=`<figure class="station-monument"><img src="assets/tuong-dai-chien-thang.webp" alt="Tượng đài Chiến thắng Cửa Việt"><figcaption>Tượng đài Chiến thắng Cửa Việt · Ảnh do bạn cung cấp.</figcaption></figure>`;
+  if(p.id===2 && currentStep===0) html+=`<figure class="station-monument"><img src="assets/tuong-dai-lich-su.webp" width="1151" height="634" alt="Tượng đài Chiến thắng Cửa Việt nhìn từ sân phía trước" loading="lazy" decoding="async"><figcaption>Tượng đài Chiến thắng Cửa Việt.</figcaption></figure>`;
   return html;
  }
  if(currentStep===1||currentStep===5)return bankMarkup(p,currentStep===1?'guess':'memory');
