@@ -144,9 +144,28 @@ const interviewPrompts = [
   'Bạn muốn giới thiệu Cửa Việt với người lần đầu đến đây bằng câu chuyện nào?'
 ];
 const geographicTopics = [
-  ['Sông Thạch Hãn', 'Dòng sông dẫn nước từ đất liền về Cửa Việt rồi đổ ra biển Đông. Đường thủy gắn vùng cửa biển với các địa bàn ở phía trong.'],
-  ['Cảng Cửa Việt', 'Vị trí ở cửa sông giúp cảng kết nối vận tải đường biển, vận chuyển hàng hóa và dịch vụ phục vụ kinh tế địa phương.'],
-  ['Biển Đông và cư dân ven biển', 'Khai thác thủy sản, dịch vụ và du lịch là những hoạt động giúp nhận ra nhịp sống hôm nay ở vùng cửa biển.']
+  ['Sông Thạch Hãn', 'Dòng sông dẫn nước từ đất liền về Cửa Việt rồi đổ ra biển Đông. Đường thủy gắn vùng cửa biển với các địa bàn ở phía trong.', {
+    src: 'assets/cua-song-thach-han.webp',
+    width: 1200,
+    height: 675,
+    caption: 'Cửa sông Thạch Hãn tại Cửa Việt nhìn từ trên cao.'
+  }],
+  ['Cảng Cửa Việt', 'Vị trí ở cửa sông giúp cảng kết nối vận tải đường biển, vận chuyển hàng hóa và dịch vụ phục vụ kinh tế địa phương.', {
+    src: 'https://cdn.congluan.vn/images/eK-uuSns_cDGy6VYdfZhUFXXZk7nVbY8TrzVSIE-c5k/anh-41.jpg.avif',
+    width: 1000,
+    height: 586,
+    caption: 'Hoạt động bốc xếp hàng hóa tại cảng Cửa Việt.',
+    source: 'https://congluan.vn/quang-tri-hang-chuc-ho-dan-song-mon-vi-du-an-mo-rong-cang-cua-viet-post326674.html',
+    credit: 'V.T / Nhà báo và Công luận'
+  }],
+  ['Biển Đông và cư dân ven biển', 'Khai thác thủy sản, dịch vụ và du lịch là những hoạt động giúp nhận ra nhịp sống hôm nay ở vùng cửa biển.', {
+    src: 'assets/nhip-song-ben-ca.webp',
+    width: 1200,
+    height: 800,
+    caption: 'Người dân đưa cá lên bờ tại cảng cá Bắc Cửa Việt.',
+    source: 'https://vov.vn/kinh-te/ngu-dan-quang-tri-ron-rang-phien-bien-cuoi-nam-post1148171.vov',
+    credit: 'VOV'
+  }]
 ];
 const geographyTimeline = [
   ['Thời chúa Nguyễn', 'Tài liệu Chạm 01 ghi lại việc Nguyễn Hoàng đi qua vùng cửa biển trên đường đến Ái Tử năm 1558, cùng vai trò giao thương của bến thuyền.'],
@@ -161,8 +180,23 @@ const creativeTopics = [
 ];
 
 function topicMarkup(items) {
-  return '<div class="station-topics">' + items.map(([title, description]) =>
-    `<details><summary>${esc(title)}</summary><p>${esc(description)}</p></details>`).join('') + '</div>';
+  return '<div class="station-topics">' + items.map(([title, description, photo]) => {
+    let figure = '';
+    if (photo) {
+      const src = esc(photo.src);
+      const caption = esc(photo.caption);
+      const credit = photo.source
+        ? ` · <a href="${esc(photo.source)}" target="_blank" rel="noopener noreferrer">${esc(photo.credit)}</a>`
+        : '';
+      figure = `<figure class="station-monument">
+        <a href="${src}" target="_blank" rel="noopener noreferrer" aria-label="Xem ảnh lớn: ${caption}">
+          <img src="${src}" width="${photo.width}" height="${photo.height}" alt="${caption}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+        </a>
+        <figcaption>${caption}${credit}</figcaption>
+      </figure>`;
+    }
+    return `<details><summary>${esc(title)}</summary><p>${esc(description)}</p>${figure}</details>`;
+  }).join('') + '</div>';
 }
 
 let mediaCatalog;
