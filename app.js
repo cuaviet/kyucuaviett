@@ -592,6 +592,50 @@ const questionBanks={
         ],
         "correct": 4,
         "explain": "Cảnh quan, lịch sử, ẩm thực và những trải nghiệm cùng tạo nên sức hấp dẫn của Cửa Việt."
+      },
+      {
+        "q": "Điều gì giúp những ký ức về Cửa Việt tiếp tục sống trong lòng thế hệ trẻ?",
+        "options": [
+          "Chỉ lưu giữ những bức ảnh cũ.",
+          "Lắng nghe, tìm hiểu và chia sẻ những câu chuyện của quê hương.",
+          "Chỉ quan tâm đến diện mạo Cửa Việt hôm nay.",
+          "Để những câu chuyện xưa dần bị lãng quên."
+        ],
+        "correct": 1,
+        "explain": "Lắng nghe, tìm hiểu và chia sẻ những câu chuyện của quê hương giúp ký ức Cửa Việt tiếp tục được lưu giữ và trao truyền."
+      },
+      {
+        "q": "Nếu muốn giới thiệu vẻ đẹp Cửa Việt đến bạn bè gần xa, bạn sẽ lựa chọn cách nào ý nghĩa nhất?",
+        "options": [
+          "Chỉ đăng những bức ảnh đẹp lên mạng xã hội.",
+          "Chia sẻ những thông tin chưa được kiểm chứng.",
+          "Sáng tạo video, hình ảnh và câu chuyện chân thực về quê hương.",
+          "Chỉ giới thiệu những địa điểm vui chơi."
+        ],
+        "correct": 2,
+        "explain": "Những video, hình ảnh và câu chuyện chân thực giúp lan tỏa vẻ đẹp Cửa Việt một cách sinh động và có trách nhiệm."
+      },
+      {
+        "q": "Theo bạn, hành động nào thể hiện tình yêu và trách nhiệm của người trẻ đối với biển Cửa Việt?",
+        "options": [
+          "Giữ gìn môi trường biển, trân trọng và quảng bá những giá trị quê hương.",
+          "Chỉ đến biển để vui chơi, chụp ảnh.",
+          "Cho rằng bảo vệ biển là trách nhiệm của người lớn.",
+          "Không quan tâm đến những thay đổi của quê hương."
+        ],
+        "correct": 0,
+        "explain": "Giữ gìn môi trường biển, trân trọng và quảng bá các giá trị quê hương là những việc làm thiết thực của người trẻ."
+      },
+      {
+        "q": "Để Cửa Việt vừa phát triển hiện đại, vừa giữ được bản sắc quê hương, thế hệ trẻ cần làm gì?",
+        "options": [
+          "Chỉ chú trọng phát triển các hoạt động du lịch.",
+          "Thay thế hoàn toàn những nét văn hóa truyền thống.",
+          "Chỉ lưu giữ ký ức mà không cần đổi mới.",
+          "Kết hợp gìn giữ di sản, bảo vệ môi trường và sáng tạo những giá trị mới."
+        ],
+        "correct": 3,
+        "explain": "Phát triển bền vững cần kết hợp gìn giữ di sản, bảo vệ môi trường và sáng tạo những giá trị mới."
       }
     ],
     "memory": [
