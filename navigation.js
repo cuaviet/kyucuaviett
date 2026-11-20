@@ -167,9 +167,9 @@ const geographicTopics = [
   }]
 ];
 const geographyTimeline = [
-  ['Thời chúa Nguyễn', 'Tài liệu Chạm 01 ghi lại việc Nguyễn Hoàng đi qua vùng cửa biển trên đường đến Ái Tử năm 1558, cùng vai trò giao thương của bến thuyền.'],
-  ['Thời kỳ chiến tranh', 'Cảng là đầu mối giao thông đường thủy và địa bàn có ý nghĩa chiến lược. Tư liệu về tháng 1/1973 được trình bày tại Chạm 02.'],
-  ['Từ thời kỳ đổi mới đến nay', 'Hoạt động cảng biển, nghề cá, hậu cần thủy sản, dịch vụ và du lịch góp phần thay đổi diện mạo vùng cửa biển.']
+  ['Thời chúa Nguyễn', 'Năm 1558, đoàn thuyền của Nguyễn Hoàng đi qua Cửa Việt trước khi ông lập dinh ở Ái Tử. Từ cửa biển này, thuyền bè có thể theo sông Thạch Hãn vào sâu trong đất liền.'],
+  ['Thời kỳ chiến tranh', 'Trong chiến tranh, cảng Cửa Việt giữ vị trí quan trọng trên tuyến đường thủy nối biển với vùng đất phía trong. Cuối tháng 1/1973, nơi đây diễn ra trận Cửa Việt, một dấu mốc trong lịch sử Quảng Trị.'],
+  ['Từ thời kỳ đổi mới đến nay', 'Sau mỗi chuyến biển, ngư dân đưa hải sản về bến bán cho thương lái. Cùng với nghề cá, vận tải biển và du lịch mở thêm cơ hội làm ăn cho người dân Cửa Việt.']
 ];
 const creativeTopics = [
   ['Cửa Việt qua ống kính trẻ', 'Chọn một góc biển hoặc một hoạt động đời thường. Chụp ảnh và viết chú thích ghi địa điểm, thời gian, điều bạn muốn giới thiệu.'],
@@ -322,8 +322,8 @@ stepMarkup = function (point) {
     return `<div class="station-body"><h3>Nơi dòng sông gặp biển</h3><p>Cửa Việt nằm ở phía đông Quảng Trị, nơi sông Thạch Hãn đổ ra biển Đông. Chọn từng chủ đề để tìm hiểu mối liên hệ giữa dòng sông, cảng và đời sống cư dân ven biển.</p>
       ${topicMarkup(geographicTopics)}<figure class="station-monument"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa sông và bờ biển Cửa Việt từ trên cao"><figcaption>Toàn cảnh Cửa Việt · Ảnh do nhóm dự án cung cấp.</figcaption></figure>
       <h4>Cửa Việt qua các thời kỳ</h4>${topicMarkup(geographyTimeline)}
-      <div class="read-prompt">${point.prompt}</div><div class="station-quicklinks"><a class="btn btn-outline" href="${stationHash(2, 4)}">Tìm hiểu lịch sử ở Chạm 02</a></div>
-      <p class="station-source">Theo tài liệu Chạm 01 – Hoàn thiện.</p></div>`;
+      <div class="read-prompt">Điều gì về Cửa Việt khiến bạn nhớ nhất? Bạn muốn gìn giữ nét đẹp nào của vùng cửa biển?</div>
+      <div class="station-quicklinks"><a class="btn btn-outline" href="${stationHash(2, 4)}">Tìm hiểu lịch sử ở Chạm 02</a></div></div>`;
   }
   if (currentStep === 4 && id === 2) {
     const copy = originalStationMarkup(point).split('<section class="discovery-video">')[0];
