@@ -169,6 +169,33 @@ const geographyTimeline = [
   ['Thời kỳ chiến tranh', 'Trong chiến tranh, cảng Cửa Việt giữ vị trí quan trọng trên tuyến đường thủy nối biển với vùng đất phía trong. Cuối tháng 1/1973, nơi đây diễn ra trận Cửa Việt, một dấu mốc trong lịch sử Quảng Trị.'],
   ['Từ thời kỳ đổi mới đến nay', 'Sau mỗi chuyến biển, ngư dân đưa hải sản về bến bán cho thương lái. Cùng với nghề cá, vận tải biển và du lịch mở thêm cơ hội làm ăn cho người dân Cửa Việt.']
 ];
+/* Chạm 05: form ảnh là nội dung chính của từng mục, không cần JavaScript bổ sung để vẽ lên. */
+function chamFivePhotoForm(category) {
+  return `<div class="creative-photo-area" data-photo-category="${category}">
+    <form class="creative-photo-form" data-photo-category="${category}">
+      <label for="creative-photo-file-${category}">Tải ảnh lên</label>
+      <input id="creative-photo-file-${category}" type="file" name="photo" accept="image/jpeg,image/png,image/webp" required>
+      <div class="creative-photo-preview" aria-live="polite"></div>
+      <label for="creative-photo-name-${category}">Tên của bạn</label>
+      <input id="creative-photo-name-${category}" type="text" name="name" minlength="2" maxlength="40" required autocomplete="nickname" placeholder="Nhập tên hoặc biệt danh">
+      <label for="creative-photo-caption-${category}">Ghi chú dưới ảnh</label>
+      <textarea id="creative-photo-caption-${category}" name="caption" rows="3" minlength="5" maxlength="220" required placeholder="Viết vài dòng về hình ảnh của bạn…"></textarea>
+      <label class="creative-photo-consent"><input type="checkbox" name="consent" required>
+        <span>Tôi đồng ý chia sẻ ảnh, tên hiển thị và ghi chú sau khi giáo viên duyệt.</span>
+      </label>
+      <p class="creative-photo-tip">Ảnh JPG, PNG hoặc WebP, tối đa 12 MB trước khi nén. Không đăng ảnh người khác nếu chưa được đồng ý.</p>
+      <input class="creative-photo-trap" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-primary creative-photo-submit" type="submit" disabled>Lưu ảnh và ghi chú</button>
+      <p class="creative-photo-status" role="status">Đang kiểm tra kết nối lưu ảnh trực tuyến…</p>
+    </form>
+    <div class="creative-photo-gallery">
+      <h4>Ảnh đã được chia sẻ</h4>
+      <div class="creative-photo-items" data-photos-gallery="${category}"></div>
+      <div class="creative-photo-personal" data-photos-mine="${category}"></div>
+    </div>
+  </div>`;
+}
+
 const creativeTopics = [
   ['Cửa Việt qua ống kính trẻ', 'Chọn một góc biển hoặc một hoạt động đời thường. Chụp ảnh và viết chú thích ghi địa điểm, thời gian, điều bạn muốn giới thiệu.'],
   ['Cửa Việt qua sắc màu nghệ thuật', 'Thử phác một tranh, poster, bài thơ hoặc bài viết ngắn về chi tiết khiến mình nhớ nhất.'],
@@ -327,8 +354,8 @@ stepMarkup = function (point) {
   if (currentStep === 4 && id === 5) {
     return `<div class="station-body"><h3>Bốn không gian sáng tạo</h3>
       <figure class="station-monument"><img src="${stationAssets['5_image1']}" alt="Dải bờ biển Cửa Việt nhìn từ trên cao"><figcaption>Bờ biển Cửa Việt · Góc nhìn hôm nay.</figcaption></figure>
-      <div class="station-topics">${creativeTopics.map(([title, description], index) =>
-        `<details><summary>${esc(title)}</summary><p>${esc(description)}</p><div data-community-photo-slot="${index}"></div></details>`).join('')}</div>
+      <div class="station-topics">${creativeTopics.map(([title], index) =>
+        `<details ${index === 0 ? 'open' : ''}><summary>${esc(title)}</summary>${chamFivePhotoForm(index)}</details>`).join('')}</div>
       <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở phiếu khảo sát ${icon('arrow')}</button>
       <p class="station-source">Chọn một chủ đề, chia sẻ hình ảnh bạn thực hiện và ghi lại lời chú thích về Cửa Việt.</p></div>`;
   }
