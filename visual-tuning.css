@@ -1,0 +1,115 @@
+/* CHẠM CỬA VIỆT — tinh chỉnh màu và kiểu chữ, 21/11/2026.
+ * Lớp CSS riêng: không sửa HTML tương tác, Firebase hay nội dung.
+ * Sử dụng font Be Vietnam Pro + Playfair Display đã có trong dự án.
+ */
+:root {
+  --ink: #173d49;
+  --muted: #526970;
+  --green: #17656a;
+  --teal: #1a8183;
+  --dark: #113b46;
+  --cream: #f7faf8;
+  --gold: #e9c88e;
+  --line: #dae7e2;
+  --exhibit-ink: #163e49;
+  --exhibit-navy: #153d48;
+  --exhibit-teal: #177d79;
+  --exhibit-cream: #fffaf3;
+  --exhibit-coral: #efd0a0;
+  --step-nav-surface: #eff7f4;
+  --step-divider: #d4e5de;
+}
+
+body {
+  color: var(--ink);
+  font-family: 'Be Vietnam Pro', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+:is(h1, h2, .section-heading h2, .step-content h3, .experience-head h2, .community-heading h2) {
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: -.024em;
+}
+
+:is(.desktop-nav, .brand, .btn, .step-tab, .station-topics summary,
+    .community-form, .community-entry, .creative-photo-form,
+    .community-edit-form, input, textarea, button) {
+  font-family: 'Be Vietnam Pro', Arial, sans-serif;
+}
+
+.site-header { background: #fffffffa; border-bottom-color: #dce9e4; }
+.desktop-nav a { color: #214e59; font-weight: 600; }
+.desktop-nav a:hover { color: #147776; }
+.brand { color: #173f4b; }
+
+:where(.section-intro, .section-heading p, .story-copy > p, .about-intro > p) {
+  color: var(--muted);
+  line-height: 1.8;
+}
+.section-heading h2 { font-weight: 600; }
+.hero h1 { letter-spacing: -.045em; }
+.hero h1 > span { color: #187a7c; }
+.cover-subtitle { color: #2e626d; }
+
+.btn-primary, .step-content .btn-primary,
+.community-form .btn-primary, .community-touch-form .btn-primary {
+  background: #17676c;
+  border-color: #17676c;
+  color: #fff;
+  font-weight: 700;
+}
+.btn-primary:hover:not(:disabled),
+.step-content .btn-primary:hover:not(:disabled) {
+  background: #10565b;
+  border-color: #10565b;
+}
+.btn-outline { color: #20515a; border-color: #bdd7cf; }
+.btn-outline:hover:not(:disabled) { background: #edf7f2; border-color: #83b7ab; }
+:where(a, button, input, textarea, summary):focus-visible {
+  outline-color: #b67c35;
+}
+
+:is(.touch-shelf, .map-section, .story-section) { color: var(--ink); }
+.map-section { background: #edf5f3; }
+.touch-tile, .route-card, .point-card { border-color: #d8e5e0; }
+.touch-label strong { color: #183f4a; font-weight: 700; }
+.step-nav, .experience-dialog { color: var(--ink); }
+.step-tab { color: #305d61; font-weight: 600; }
+.step-tab:is(.active, [aria-selected="true"]) {
+  background: #d9eeea;
+  color: #124d52;
+  box-shadow: inset 0 -3px #20847f;
+}
+.step-tab.active > span { background: #216965; border-color: #216965; }
+.step-content h3 { color: #173f4a; line-height: 1.3; }
+.step-content :is(p, li) { color: #49636b; line-height: 1.8; }
+.station-topics details { background: #f1f8f5; border-color: #d8e6df; }
+.station-topics summary { color: #204d53; }
+
+.community-section { background: #fafbf8; border-color: #dde8e0; }
+.community-heading h2 { color: #17444c; }
+.community-entry { color: #224851; }
+.community-entry p { color: #34535b; line-height: 1.8; }
+.community-form :is(input, textarea),
+.community-edit-form :is(input, textarea),
+.creative-photo-form :is(input:not([type="checkbox"]), textarea) {
+  border-color: #b8d2c8;
+  color: #1d434b;
+  background: #fff;
+}
+.creative-photo-form :is(label, h4), .community-form label { color: #214a50; }
+.creative-photo-form label:not(.creative-photo-consent) { font-size: 13px; }
+.creative-photo-form input[type="text"],
+.creative-photo-form textarea { font-size: 14px; }
+.community-touch-recent h4 { color: #1c4c53; }
+.image-source-credit { color: #557077; }
+
+@media (max-width: 750px) {
+  body { font-size: 15px; line-height: 1.72; }
+  .step-tab { font-size: 13px; }
+  .step-content h3 { line-height: 1.32; }
+  .step-content :is(p, li, label, textarea) { line-height: 1.72; }
+  .creative-photo-form :is(input, textarea) { font-size: 14px; }
+}
