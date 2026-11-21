@@ -21,6 +21,9 @@
   const PAGE_SIZE = 30;
   const COOLDOWN_MS = 120000;
   const cooldownKey = 'cham_cua_viet_last_public_memory';
+  // Nút sửa chỉ hiển thị với tác giả đã đăng nhập bằng phiên Firebase Anonymous gốc.
+  // Quyền thực sự do Firestore Security Rules kiểm tra.
+  let viewerUid = null;
 
   function statusText(el, message, isError) {
     if (!el) return;
@@ -58,6 +61,24 @@
     const paragraph = document.createElement('p');
     paragraph.textContent = touchPrefix ? rawMessage.slice(touchPrefix[0].length) : rawMessage;
     article.append(top, paragraph);
+    if (data.editedAt) {
+      const edited = document.createElement('small');
+      edited.className = 'community-edited-label';
+      edited.textContent = 'Đã chỉnh sửa · ' + dateText(data.editedAt);
+      article.append(edited);
+    }
+    if (viewerUid && data.authorUid === viewerUid) {
+      const actions = document.createElement('div');
+      actions.className = 'community-entry-actions';
+      const edit = document.createElement('button');
+      edit.type = 'button';
+      edit.className = 'community-edit-btn';
+      edit.dataset.communityEdit = snapshot.id;
+      edit.textContent = 'Chỉnh sửa';
+      edit.setAttribute('aria-label', 'Chỉnh sửa cảm nhận đã đăng của bạn');
+      actions.append(edit);
+      article.append(actions);
+    }
     return article;
   }
 
@@ -85,10 +106,13 @@
         if (typeof auth.authStateReady === 'function') await auth.authStateReady();
         if (!auth.currentUser) await firebaseAuth.signInAnonymously(auth);
         firebaseReady = true;
+        viewerUid = auth.currentUser ? auth.currentUser.uid : null;
         sendButton.disabled = false;
+        paintFeed();
         statusText(status, 'Tên và nội dung bạn đăng sẽ hiển thị công khai để mọi người cùng đọc.', false);
       } catch (error) {
         firebaseReady = false;
+        viewerUid = null;
         sendButton.disabled = true;
         statusText(status, 'Chưa thể đăng bài. Hãy bật Anonymous trong Firebase Authentication rồi thử tải lại trang.', true);
         console.warn('Anonymous Firebase sign-in failed:', error.code || error.message);
@@ -100,6 +124,100 @@
     let newest = [];
     let older = [];
     let canLoadMore = false;
+
+    // Cửa sổ sửa nội dung luôn nằm ngoài khung Chạm để không mất bản sửa khi chuyển bước.
+    const editDialog = document.createElement('dialog');
+    editDialog.className = 'community-edit-dialog';
+    editDialog.setAttribute('aria-labelledby', 'community-edit-title');
+    editDialog.innerHTML = `
+      <form class="community-edit-form" id="community-edit-form">
+        <h3 id="community-edit-title">Chỉnh sửa cảm nhận của bạn</h3>
+        <p class="community-edit-intro">Sửa lỗi chính tả, tên hiển thị hoặc nội dung. Bài viết được cập nhật tại vị trí cũ, không đăng thêm bài mới.</p>
+        <label for="community-edit-name">Tên hiển thị</label>
+        <input id="community-edit-name" type="text" minlength="2" maxlength="40" required autocomplete="nickname">
+        <label for="community-edit-message">Câu chuyện hoặc cảm nhận</label>
+        <textarea id="community-edit-message" minlength="10" maxlength="600" rows="6" required></textarea>
+        <p class="community-edit-status" role="status"></p>
+        <div class="community-edit-actions">
+          <button class="btn btn-outline" type="button" id="community-edit-cancel">Hủy</button>
+          <button class="btn btn-primary" type="submit" id="community-edit-save">Lưu chỉnh sửa</button>
+        </div>
+      </form>`;
+    document.body.append(editDialog);
+    const editForm = editDialog.querySelector('#community-edit-form');
+    const editName = editDialog.querySelector('#community-edit-name');
+    const editMessage = editDialog.querySelector('#community-edit-message');
+    const editStatus = editDialog.querySelector('.community-edit-status');
+    const editSave = editDialog.querySelector('#community-edit-save');
+    let editingId = null;
+    let editingPrefix = '';
+    editDialog.querySelector('#community-edit-cancel').addEventListener('click', () => editDialog.close());
+    editDialog.addEventListener('close', () => {
+      editingId = null;
+      editingPrefix = '';
+      statusText(editStatus, '', false);
+    });
+
+    // Chỉ mở bài của chính tác giả đang đăng nhập trên trình duyệt này.
+    document.addEventListener('click', event => {
+      const button = event.target.closest('[data-community-edit]');
+      if (!button) return;
+      const entry = newest.concat(older).find(item => item.id === button.dataset.communityEdit);
+      const user = auth.currentUser;
+      if (!entry || !user || entry.data().authorUid !== user.uid) return;
+      const data = entry.data();
+      const message = String(data.message || '');
+      const prefixMatch = message.match(/^\[Chạm (0[1-5])\]\s*/);
+      editingPrefix = prefixMatch ? prefixMatch[0] : '';
+      editingId = entry.id;
+      editName.value = String(data.name || '');
+      editMessage.value = editingPrefix ? message.slice(editingPrefix.length) : message;
+      editMessage.maxLength = 600 - editingPrefix.length;
+      statusText(editStatus, '', false);
+      editSave.disabled = false;
+      if (!editDialog.open) editDialog.showModal();
+      editName.focus();
+    });
+
+    editForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!editingId || !auth.currentUser) return;
+      const name = cleanText(editName.value);
+      const newContent = String(editMessage.value || '').normalize('NFC').trim();
+      if (name.length < 2 || name.length > 40) {
+        statusText(editStatus, 'Tên hiển thị cần có từ 2 đến 40 ký tự.', true);
+        return;
+      }
+      if (newContent.length < 10 || (editingPrefix + newContent).length > 600) {
+        statusText(editStatus, 'Nội dung cần có từ 10 ký tự và không vượt quá 600 ký tự.', true);
+        return;
+      }
+      const entry = newest.concat(older).find(item => item.id === editingId);
+      if (!entry || entry.data().authorUid !== auth.currentUser.uid) {
+        statusText(editStatus, 'Không tìm thấy bài viết thuộc phiên đăng nhập của bạn.', true);
+        return;
+      }
+      editSave.disabled = true;
+      statusText(editStatus, 'Đang lưu bản chỉnh sửa…', false);
+      try {
+        await firebaseStore.updateDoc(
+          firebaseStore.doc(db, 'public_memories', editingId),
+          {
+            name: name,
+            message: editingPrefix + newContent,
+            editedAt: firebaseStore.serverTimestamp()
+          }
+        );
+        editDialog.close();
+        statusText(feedStatus, 'Đã chỉnh sửa cảm nhận thành công. Nội dung mới sẽ hiển thị cho mọi người.', false);
+      } catch (error) {
+        statusText(editStatus, 'Chưa sửa được bài. Hãy kiểm tra kết nối và bảo đảm Firebase Rules mới đã được Publish.', true);
+        console.warn('Shared memory edit failed:', error.code || error.message);
+      } finally {
+        editSave.disabled = false;
+      }
+    });
+
     function paintFeed() {
       feed.replaceChildren();
       const seen = new Set();
