@@ -57,11 +57,22 @@
   stepMarkup = function (point) {
     const original = priorStepMarkup(point);
     if (!point || point.id !== 5 || currentStep !== 4) return original;
+    // Chỉ giữ tiêu đề bốn chủ đề và phần tải ảnh / tên / ghi chú.
+    // Chấp nhận cả giao diện cũ trong thời gian GitHub Pages cập nhật bộ nhớ đệm.
     let category = 0;
-    const updated = original.replace(
-      /(<button class="btn btn-outline" data-action="project" data-type="[^"]+">Viết ý tưởng<\/button>)(<\/details>)/g,
-      function (match, projectButton, closeDetails) {
-        return projectButton + formMarkup(category++) + closeDetails;
+    let updated = original.replace(
+      /<div data-community-photo-slot="([0-3])"><\/div>/g,
+      function (match, id) {
+        category++;
+        return formMarkup(Number(id));
+      }
+    );
+    if (category === TOPICS.length) return updated;
+    category = 0;
+    updated = original.replace(
+      /(<details><summary>[^<]+<\/summary>)<p>[^<]*<\/p><button class="btn btn-outline" data-action="project" data-type="[^"]+">Viết ý tưởng<\/button>(<\/details>)/g,
+      function (match, heading, closeDetails) {
+        return heading + formMarkup(category++) + closeDetails;
       }
     );
     return category === TOPICS.length ? updated : original;
