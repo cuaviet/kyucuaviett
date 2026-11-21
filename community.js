@@ -115,6 +115,7 @@
         firebaseReady = true;
         viewerUid = auth.currentUser ? auth.currentUser.uid : null;
         sendButton.disabled = false;
+        watchOwnPosts();
         paintFeed();
         statusText(status, 'Tên và nội dung bạn đăng sẽ hiển thị công khai để mọi người cùng đọc.', false);
       } catch (error) {
@@ -130,6 +131,8 @@
     const collectionRef = firebaseStore.collection(db, 'public_memories');
     let newest = [];
     let older = [];
+    let ownPosts = [];
+    let ownPostsListener = null;
     let canLoadMore = false;
 
     // Cửa sổ sửa nội dung luôn nằm ngoài khung Chạm để không mất bản sửa khi chuyển bước.
@@ -169,7 +172,7 @@
     document.addEventListener('click', event => {
       const button = event.target.closest('[data-community-edit]');
       if (!button) return;
-      const entry = newest.concat(older).find(item => item.id === button.dataset.communityEdit);
+      const entry = allLoadedPosts().find(item => item.id === button.dataset.communityEdit);
       const user = auth.currentUser;
       if (!entry || !user || entry.data().authorUid !== user.uid) return;
       const data = entry.data();
@@ -216,7 +219,7 @@
     document.addEventListener('click', event => {
       const button = event.target.closest('[data-community-delete]');
       if (!button) return;
-      const entry = newest.concat(older).find(item => item.id === button.dataset.communityDelete);
+      const entry = allLoadedPosts().find(item => item.id === button.dataset.communityDelete);
       const user = auth.currentUser;
       if (!entry || !user || entry.data().authorUid !== user.uid) return;
       deletingId = entry.id;
@@ -231,7 +234,7 @@
     deleteConfirm.addEventListener('click', async () => {
       if (!deletingId || !auth.currentUser || deleteConfirm.disabled) return;
       const docId = deletingId;
-      const entry = newest.concat(older).find(item => item.id === docId);
+      const entry = allLoadedPosts().find(item => item.id === docId);
       if (!entry || entry.data().authorUid !== auth.currentUser.uid) {
         statusText(deleteStatus, 'Bạn chỉ được xóa bài đăng của chính mình trên trình duyệt này.', true);
         return;
@@ -242,6 +245,7 @@
         await firebaseStore.deleteDoc(firebaseStore.doc(db, 'public_memories', docId));
         newest = newest.filter(item => item.id !== docId);
         older = older.filter(item => item.id !== docId);
+        ownPosts = ownPosts.filter(item => item.id !== docId);
         deleteDialog.close();
         paintFeed();
         statusText(feedStatus, 'Đã xóa bài viết thành công khỏi Bảng ký ức chung.', false);
@@ -266,7 +270,7 @@
         statusText(editStatus, 'Nội dung cần có từ 10 ký tự và không vượt quá 600 ký tự.', true);
         return;
       }
-      const entry = newest.concat(older).find(item => item.id === editingId);
+      const entry = allLoadedPosts().find(item => item.id === editingId);
       if (!entry || entry.data().authorUid !== auth.currentUser.uid) {
         statusText(editStatus, 'Không tìm thấy bài viết thuộc phiên đăng nhập của bạn.', true);
         return;
@@ -291,6 +295,33 @@
         editSave.disabled = false;
       }
     });
+
+    function allLoadedPosts() {
+      const seen = new Set();
+      return newest.concat(older, ownPosts).filter(item => {
+        if (seen.has(item.id)) return false;
+        seen.add(item.id);
+        return true;
+      });
+    }
+
+    function watchOwnPosts() {
+      const uid = auth.currentUser && auth.currentUser.uid;
+      if (!uid || ownPostsListener) return;
+      const ownQuery = firebaseStore.query(
+        collectionRef,
+        firebaseStore.where('authorUid', '==', uid),
+        firebaseStore.limit(150)
+      );
+      ownPostsListener = firebaseStore.onSnapshot(
+        ownQuery,
+        snapshot => {
+          ownPosts = snapshot.docs;
+          paintTouchFeed();
+        },
+        error => console.warn('Unable to load your older memories:', error.code || error.message)
+      );
+    }
 
     function paintFeed() {
       feed.replaceChildren();
@@ -336,12 +367,21 @@
       const touchStatus = panel.querySelector('#community-touch-feed-status');
       if (!touchFeed) return;
       touchFeed.replaceChildren();
-      const seen = new Set();
-      const recent = newest.concat(older).filter(item => {
-        if (seen.has(item.id)) return false;
-        seen.add(item.id);
-        return String(item.data().message || '').startsWith(prefix);
-      }).slice(0, 8);
+      const related = allLoadedPosts().filter(item =>
+        String(item.data().message || '').startsWith(prefix)
+      );
+      // Hiển thị bài của chính người đăng trước để họ luôn tìm được nút sửa/xóa,
+      // kể cả khi bài đã cũ và không còn trong 30 ký ức mới nhất.
+      const byCreatedAt = (a, b) => {
+        const dateA = a.data().createdAt;
+        const dateB = b.data().createdAt;
+        const timeA = dateA && typeof dateA.toMillis === 'function' ? dateA.toMillis() : 0;
+        const timeB = dateB && typeof dateB.toMillis === 'function' ? dateB.toMillis() : 0;
+        return timeB - timeA;
+      };
+      const mine = related.filter(item => viewerUid && item.data().authorUid === viewerUid).sort(byCreatedAt);
+      const others = related.filter(item => !viewerUid || item.data().authorUid !== viewerUid).sort(byCreatedAt);
+      const recent = mine.slice(0, 12).concat(others.slice(0, 8));
       if (recent.length) {
         recent.forEach(item => touchFeed.append(renderCard(item)));
         statusText(touchStatus, 'Các chia sẻ gần đây tại Chạm ' + String(touchId).padStart(2, '0'), false);
@@ -356,8 +396,17 @@
 
     const stepRoot = document.getElementById('experience-content');
     if (stepRoot && typeof MutationObserver !== 'undefined') {
-      const boardObserver = new MutationObserver(() => paintTouchFeed());
-      boardObserver.observe(stepRoot, { childList: true });
+      let lastTouchPanel = null;
+      // Chỉ cập nhật khi Bước 7 được mở/thay thế. Không quan sát lại những
+      // thẻ bài mình tự thêm, tránh vòng lặp render làm đơ trang.
+      const boardObserver = new MutationObserver(() => {
+        const activePanel = stepRoot.querySelector('#community-touch');
+        if (activePanel !== lastTouchPanel) {
+          lastTouchPanel = activePanel;
+          if (activePanel) paintTouchFeed();
+        }
+      });
+      boardObserver.observe(stepRoot, { childList: true, subtree: true });
     }
     activatePosting();
 
