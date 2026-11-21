@@ -29,17 +29,19 @@
 - Firebase có hạn mức dùng miễn phí cho Cloud Firestore. Kiểm tra https://firebase.google.com/docs/firestore/quotas.
 - Không thay thế bảng khảo sát nghiên cứu và không ghi tự động nội dung công khai vào thống kê Umami.
 
-## Chia sẻ trực tiếp trong 5 Chạm (Bước 7)
+## Cập nhật Bước 7 của cả 5 Chạm – chỉ một biểu mẫu cảm nhận
 
-Website có hai cách lưu riêng biệt ở **Bước 7 – Ký ức của bạn** trong mỗi Chạm:
+**Ô “Cảm nhận của bạn” ở Bước 7 đã được thay trực tiếp**; không tạo biểu mẫu mới ở dưới và không còn nút lưu riêng trong bước này. Câu hỏi gợi mở riêng của từng Chạm được giữ nguyên.
 
-- **Lưu cảm nhận của tôi:** giữ nguyên tính năng trước đây, lưu riêng trên trình duyệt cho Hộ chiếu ký ức. Không đưa lên cơ sở dữ liệu chung.
-- **Lưu và chia sẻ với mọi người:** tính năng mới bên dưới, nhập **tên hiển thị/biệt danh**, **nội dung** và tích ô đồng ý công khai. Firebase lưu lời nhắn kèm nhãn **Chạm 01–05**; các bài mới nhất của đúng Chạm hiển thị ngay phía dưới biểu mẫu. Bảng ký ức chung ở trang chủ hiển thị lời nhắn từ tất cả các Chạm.
+Thứ tự người dùng nhìn thấy: **Tên của bạn → Cảm nhận của bạn → Đồng ý công khai → Lưu và chia sẻ cảm nhận**. Khi lưu thành công, bài viết được đưa lên Cloud Firestore và hiện trong khu vực **“Những cảm nhận được chia sẻ ở Chạm XX”** ở ngay bên dưới. Tất cả các bài cũng có thể xem tại Bảng ký ức chung ở trang chủ. Cùng một collection `public_memories` và Firestore Rules; không tạo collection mới.
 
-Chia sẻ ở 5 Chạm sử dụng cùng tập dữ liệu `public_memories` và cùng Firestore Rules hiện tại, **không phải tạo thêm collection hoặc sửa Rules**. Trong ứng dụng, nhãn Chạm được đưa vào đầu trường `message`, không phải trường riêng.
+**Dữ liệu cá nhân cũ**: các cảm nhận đã lưu trước lần cập nhật này vẫn nằm trong dữ liệu trình duyệt và có thể xem trong **Hộ chiếu ký ức**. Nút “Lưu cảm nhận của tôi” trước đây được thay bằng “Lưu và chia sẻ cảm nhận”; người dùng phải đánh dấu đồng ý trước khi công khai, không tự đăng các ghi chép cũ.
 
-Để kiểm tra: mở một Chạm, vào Bước 7, cuộn qua ô Lưu cảm nhận cá nhân đến phần Chia sẻ công khai. Nhập biệt danh, nội dung tối thiểu 10 ký tự, tích đồng ý và lưu. Sau đó mở Chạm đó trên điện thoại khác để xác nhận bài đã xuất hiện. Nếu nút Lưu công khai không bật, kiểm tra **Authentication → Sign-in method → Anonymous** đã bật hay chưa.
+**Điều kiện hoạt động**: Authentication → Sign-in method → **Anonymous phải Enabled**; Firestore → Rules phải là bản đã được Publish; kết nối mạng hoạt động. Nếu chưa đủ điều kiện, biểu mẫu báo lỗi và không đưa thông báo lưu thành công.
 
-Lưu ý: danh sách ngay trong mỗi Chạm hiển thị các bài thuộc Chạm đó trong tập các bài gần đây đã tải; xem các lời nhắn lâu hơn qua **Bảng ký ức chung** ở trang chủ bằng nút **Xem thêm ký ức cũ**.
+**Kiểm tra**: mở Chạm 01 → Bước 7, nhìn thấy một ô nhập tên và một ô nhập cảm nhận (không có hai biểu mẫu). Điền biệt danh, nội dung tối thiểu 10 ký tự, tích đồng ý, gửi. Xác nhận xuất hiện trong danh sách. Mở cửa sổ ẩn danh/thiết bị khác để xem. Lặp lại ở Chạm 02–05.
+
+Lưu ý: phần Bước 7 chỉ hiển thị một số bài mới nhất thuộc từng Chạm. Các bài cũ hơn có thể tìm qua **Bảng ký ức chung** ở trang chủ bằng nút **Xem thêm ký ức cũ**.
+
 
 File triển khai: `community-config.js`, `community-touch.js`, `community.js`, `community.css`, `firestore.rules`.
