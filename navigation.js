@@ -326,11 +326,11 @@ stepMarkup = function (point) {
   }
   if (currentStep === 4 && id === 5) {
     return `<div class="station-body"><h3>Bốn không gian sáng tạo</h3>
-      <figure class="station-monument"><img src="${stationAssets['5_image1']}" alt="Dải bờ biển Cửa Việt nhìn từ trên cao"><figcaption>Bờ biển Cửa Việt · Tài liệu Chạm 05.</figcaption></figure>
+      <figure class="station-monument"><img src="${stationAssets['5_image1']}" alt="Dải bờ biển Cửa Việt nhìn từ trên cao"><figcaption>Bờ biển Cửa Việt · Góc nhìn hôm nay.</figcaption></figure>
       <div class="station-topics">${creativeTopics.map(([title, description]) =>
         `<details><summary>${esc(title)}</summary><p>${esc(description)}</p><button class="btn btn-outline" data-action="project" data-type="${esc(title)}">Viết ý tưởng</button></details>`).join('')}</div>
       <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở phiếu khảo sát ${icon('arrow')}</button>
-      <p class="station-source">Theo tài liệu Chạm 05 – Hoàn thiện.</p></div>`;
+      <p class="station-source">Từ vẻ đẹp thiên nhiên đến những câu chuyện đời thường, hãy kể về Cửa Việt bằng ý tưởng và cảm nhận của chính bạn.</p></div>`;
   }
   const markup = originalStationMarkup(point);
   if (currentStep === 2 && groupPhotoAlbums[id]) return markup + groupPhotoAlbum(id);
