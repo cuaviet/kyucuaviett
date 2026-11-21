@@ -77,6 +77,13 @@
       edit.textContent = 'Chỉnh sửa';
       edit.setAttribute('aria-label', 'Chỉnh sửa cảm nhận đã đăng của bạn');
       actions.append(edit);
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'community-delete-btn';
+      remove.dataset.communityDelete = snapshot.id;
+      remove.textContent = 'Xóa';
+      remove.setAttribute('aria-label', 'Xóa cảm nhận đã đăng của bạn');
+      actions.append(remove);
       article.append(actions);
     }
     return article;
@@ -177,6 +184,73 @@
       editSave.disabled = false;
       if (!editDialog.open) editDialog.showModal();
       editName.focus();
+    });
+
+
+    // Xác nhận xóa độc lập để tránh mất bài khi bấm nhầm.
+    const deleteDialog = document.createElement('dialog');
+    deleteDialog.className = 'community-edit-dialog community-delete-dialog';
+    deleteDialog.setAttribute('aria-labelledby', 'community-delete-title');
+    deleteDialog.innerHTML = `
+      <div class="community-edit-form">
+        <h3 id="community-delete-title">Xóa bài viết này?</h3>
+        <p class="community-edit-intro">Bài sẽ bị xóa vĩnh viễn khỏi Bảng ký ức chung và các điểm Chạm. Hành động này không thể hoàn tác.</p>
+        <p class="community-delete-preview" id="community-delete-preview"></p>
+        <p class="community-edit-status" id="community-delete-status" role="status"></p>
+        <div class="community-edit-actions">
+          <button class="btn btn-outline" id="community-delete-cancel" type="button">Giữ lại</button>
+          <button class="btn btn-primary community-delete-confirm" id="community-delete-confirm" type="button">Xóa bài viết</button>
+        </div>
+      </div>`;
+    document.body.append(deleteDialog);
+    let deletingId = null;
+    const deleteStatus = deleteDialog.querySelector('#community-delete-status');
+    const deleteConfirm = deleteDialog.querySelector('#community-delete-confirm');
+    deleteDialog.querySelector('#community-delete-cancel').addEventListener('click', () => deleteDialog.close());
+    deleteDialog.addEventListener('close', () => {
+      deletingId = null;
+      deleteConfirm.disabled = false;
+      statusText(deleteStatus, '', false);
+    });
+
+    document.addEventListener('click', event => {
+      const button = event.target.closest('[data-community-delete]');
+      if (!button) return;
+      const entry = newest.concat(older).find(item => item.id === button.dataset.communityDelete);
+      const user = auth.currentUser;
+      if (!entry || !user || entry.data().authorUid !== user.uid) return;
+      deletingId = entry.id;
+      const summary = String(entry.data().message || '').replace(/^\[Chạm (0[1-5])\]\s*/, '').trim();
+      deleteDialog.querySelector('#community-delete-preview').textContent = summary.slice(0, 180) + (summary.length > 180 ? '…' : '');
+      statusText(deleteStatus, '', false);
+      deleteConfirm.disabled = false;
+      if (!deleteDialog.open) deleteDialog.showModal();
+      deleteConfirm.focus();
+    });
+
+    deleteConfirm.addEventListener('click', async () => {
+      if (!deletingId || !auth.currentUser || deleteConfirm.disabled) return;
+      const docId = deletingId;
+      const entry = newest.concat(older).find(item => item.id === docId);
+      if (!entry || entry.data().authorUid !== auth.currentUser.uid) {
+        statusText(deleteStatus, 'Bạn chỉ được xóa bài đăng của chính mình trên trình duyệt này.', true);
+        return;
+      }
+      deleteConfirm.disabled = true;
+      statusText(deleteStatus, 'Đang xóa bài viết trên Firebase…', false);
+      try {
+        await firebaseStore.deleteDoc(firebaseStore.doc(db, 'public_memories', docId));
+        newest = newest.filter(item => item.id !== docId);
+        older = older.filter(item => item.id !== docId);
+        deleteDialog.close();
+        paintFeed();
+        statusText(feedStatus, 'Đã xóa bài viết thành công khỏi Bảng ký ức chung.', false);
+      } catch (error) {
+        statusText(deleteStatus, 'Chưa xóa được bài. Hãy kiểm tra kết nối hoặc Publish Firestore Rules mới rồi thử lại.', true);
+        console.warn('Shared memory delete failed:', error.code || error.message);
+      } finally {
+        deleteConfirm.disabled = false;
+      }
     });
 
     editForm.addEventListener('submit', async event => {
