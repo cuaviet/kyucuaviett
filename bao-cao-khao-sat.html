@@ -21,7 +21,7 @@ small,.muted { color:#607675; } .note { border-left:3px solid #bd9560;padding:8p
 .status { min-height:24px; } .question { margin-top:18px; padding:18px; border:1px solid #dce8e4; border-radius:12px;background:#fff; }
 .question h3 { margin:0 0 7px;font-size:18px;line-height:1.4; } table { border-collapse:collapse;width:100%;font-size:14px; }
 th,td { border-bottom:1px solid #e4eae6;padding:9px 7px;text-align:left;vertical-align:middle; } td:not(:first-child),th:not(:first-child){text-align:right;}
-td:first-child { overflow-wrap:anywhere; max-width:370px; } .barbox { display:flex;gap:4px;min-width:84px; } .bar { height:8px;border-radius:5px; }
+td:first-child { overflow-wrap:anywhere; max-width:370px; } .barbox { display:block;width:110px;max-width:100%;padding-top:5px; } .bar { height:6px;border-radius:5px;margin:3px 0; }
 .bar.pre { background:#b8a17b; }.bar.post { background:#226c68; }
 .legend { display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0; } .dot { width:10px;height:10px;display:inline-block;border-radius:50%; }
 kbd {background:#e8efed;padding:1px 5px;border-radius:4px}
@@ -121,7 +121,11 @@ function compare(question,i,j){
    const n1=a.map.get(key)||0,n2=b.map.get(key)||0;
    const p1=a.n?100*n1/a.n:0,p2=b.n?100*n2/b.n:0;
    const tr=element('tr');
-   tr.append(element('td',key),element('td',n1+' ('+p1.toFixed(1)+'%)'),element('td',n2+' ('+p2.toFixed(1)+'%)'),element('td',(p2-p1>0?'+':'')+(p2-p1).toFixed(1)));
+   const answerCell=element('td',key), bars=element('div',undefined,'barbox');
+   const beforeBar=element('div',undefined,'bar pre'),afterBar=element('div',undefined,'bar post');
+   beforeBar.style.width=p1.toFixed(1)+'%';afterBar.style.width=p2.toFixed(1)+'%';
+   bars.append(beforeBar,afterBar);answerCell.append(bars);
+   tr.append(answerCell,element('td',n1+' ('+p1.toFixed(1)+'%)'),element('td',n2+' ('+p2.toFixed(1)+'%)'),element('td',(p2-p1>0?'+':'')+(p2-p1).toFixed(1)));
    body.append(tr);
    reportRows.push({question,answer:key,before:n1,after:n2,prePct:p1.toFixed(1),postPct:p2.toFixed(1),delta:(p2-p1).toFixed(1)});
  }
