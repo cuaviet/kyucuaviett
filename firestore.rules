@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Bài đăng chung: mọi người được xem; chỉ đăng bài mới bằng đăng nhập ẩn danh.
+    // Người dùng không thể tự sửa/xóa bài của người khác bằng website.
+    match /public_memories/{memoryId} {
+      allow get, list: if true;
+      allow create: if request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'anonymous'
+        && request.resource.data.keys().hasOnly(['name', 'message', 'authorUid', 'createdAt'])
+        && request.resource.data.keys().hasAll(['name', 'message', 'authorUid', 'createdAt'])
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.name.size() <= 40
+        && request.resource.data.message is string
+        && request.resource.data.message.size() >= 10
+        && request.resource.data.message.size() <= 600
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
