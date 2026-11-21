@@ -19,6 +19,42 @@ service cloud.firestore {
         && request.resource.data.createdAt == request.time;
       allow update, delete: if false;
     }
+    // Bốn chủ đề ảnh của Chạm 05.
+    // Ảnh được lưu ở dạng WebP/JPEG đã nén, giới hạn kích thước.
+    // Người đăng chỉ được tạo bản ghi pending, không tự phê duyệt.
+    // Giáo viên phê duyệt từ Firebase Console (Admin SDK bypasses Rules).
+    match /community_photos/{photoId} {
+      allow get, list: if resource.data.status == 'approved'
+        || (request.auth != null && resource.data.authorUid == request.auth.uid);
+      allow create: if request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'anonymous'
+        && request.resource.data.keys().hasOnly([
+          'category', 'name', 'caption', 'imageData', 'authorUid', 'status', 'createdAt'
+        ])
+        && request.resource.data.keys().hasAll([
+          'category', 'name', 'caption', 'imageData', 'authorUid', 'status', 'createdAt'
+        ])
+        && request.resource.data.category is int
+        && request.resource.data.category >= 0
+        && request.resource.data.category <= 3
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.name.size() <= 40
+        && request.resource.data.caption is string
+        && request.resource.data.caption.size() >= 5
+        && request.resource.data.caption.size() <= 220
+        && request.resource.data.imageData is string
+        && request.resource.data.imageData.size() >= 100
+        && request.resource.data.imageData.size() <= 220000
+        && request.resource.data.imageData.matches('^data:image/(webp|jpeg);base64,.*
+  }
+}
+)
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
     match /{document=**} {
       allow read, write: if false;
     }
