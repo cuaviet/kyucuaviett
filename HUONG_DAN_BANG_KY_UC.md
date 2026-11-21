@@ -45,3 +45,37 @@ Lưu ý: phần Bước 7 chỉ hiển thị một số bài mới nhất thuộ
 
 
 File triển khai: `community-config.js`, `community-touch.js`, `community.js`, `community.css`, `firestore.rules`.
+
+## Ảnh học sinh ở bốn không gian sáng tạo của Chạm 05
+
+Trong **Chạm 05 → Khám phá**, mỗi chủ đề hiện có vẫn giữ nút **Viết ý tưởng** và được bổ sung trực tiếp một biểu mẫu **Chọn ảnh → Tên hiển thị → Ghi chú dưới ảnh → Đồng ý công khai → Lưu ảnh và ghi chú**. Hỗ trợ JPG/PNG/WebP, từng lần một ảnh tối đa 12 MB trước khi nén. Ảnh được nén xuống WebP/JPEG với chuỗi dữ liệu tối đa 220.000 ký tự để lưu trực tiếp vào **Cloud Firestore** (không phải Cloud Storage). Nhờ vậy dự án Spark không bắt buộc nâng cấp Blaze chỉ để thử nghiệm tính năng ảnh.
+
+Bốn chủ đề có giá trị `category` cố định:
+- `0`: Cửa Việt qua ống kính trẻ
+- `1`: Cửa Việt qua sắc màu nghệ thuật
+- `2`: Cửa Việt – Điểm hẹn du lịch
+- `3`: Cửa Việt xanh trong tương lai
+
+Dữ liệu trong collection **`community_photos`**, mỗi tài liệu gồm: `category` (số), `name` (tên/biệt danh), `caption` (ghi chú), `imageData` (ảnh đã nén), `authorUid` (người gửi ẩn danh), `status` (`pending` hoặc `approved`), `createdAt`.
+
+### Bắt buộc: Cập nhật Firestore Rules lần nữa
+
+Mã quy tắc đã mở rộng để hỗ trợ collection ảnh và **giữ nguyên rules cũ cho các bài viết `public_memories`**. Vì bạn đã đăng Rules trước khi bổ sung tính năng ảnh, cần:
+
+1. Vào Firebase Console → Firestore Database → **Rules**.
+2. Mở file `firestore.rules` MỚI NHẤT trong GitHub, **sao chép toàn bộ**, thay thế nội dung Rules đang có.
+3. Nhấn **Publish**. Nếu không Publish, biểu mẫu ảnh sẽ bị từ chối và báo lỗi, không thể lưu.
+4. Vào Firebase **Authentication → Sign-in method**, bảo đảm **Anonymous** đã bật.
+
+### Cách giáo viên duyệt ảnh
+
+1. Học sinh chọn ảnh, nhập biệt danh và chú thích, tích đồng ý rồi nhấn **Lưu ảnh và ghi chú**.
+2. Hệ thống lưu ngay trên Firestore ở trạng thái **`pending`**. Người gửi có thể xem lại trong mục **Ảnh bạn đã gửi, đang chờ duyệt**, kể cả khi tải lại trang trên cùng trình duyệt đã giữ phiên đăng nhập ẩn danh.
+3. Giáo viên vào **Firestore Database → Data → community_photos**, chọn bài mới, kiểm tra **ảnh**, tên và chú thích.
+4. Để hiển thị công khai, thay đổi trường `status` từ chuỗi `pending` thành chuỗi **`approved`**, rồi **Save**.
+5. Sau khi người xem tải lại website, ảnh duyệt sẽ xuất hiện kèm **tên và ghi chú ngay bên dưới**. Muốn gỡ một ảnh, giáo viên sửa `status` thành `pending` hoặc xóa tài liệu từ Firebase Console.
+
+**Quyền riêng tư:** Mọi người chỉ được đọc ảnh `approved`; người gửi chỉ được xem bản `pending` của chính mình. Người dùng không thể tự ý duyệt, sửa hoặc xóa thông qua mã web. Giáo viên có quyền quản trị trong Firebase Console.
+
+**Giới hạn và sao lưu:** Đây là phương án lưu **ảnh nhỏ** để trình diễn KHKT, không phù hợp cho thư viện hàng nghìn ảnh độ phân giải lớn. Không thể đảm bảo lưu “mãi mãi” nếu dịch vụ bị hủy hoặc dữ liệu bị xóa; nên định kỳ sao lưu bản gốc ảnh ở một nơi riêng. Firebase Storage dành cho ảnh gốc dung lượng lớn hiện yêu cầu Blaze; **không nâng cấp chỉ vì tính năng ảnh này**. Ảnh đã lưu chỉ được hiển thị cho mọi người sau khi giáo viên duyệt.
+
