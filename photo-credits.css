@@ -85,3 +85,25 @@ button[data-action="gallery"] > .image-source-gallery a { pointer-events: none; 
   .image-source-overlay { font-size: 8px; max-width: calc(100% - 12px); padding: 3px 5px; }
   .experience-head > .image-source-overlay { max-width: 80%; font-size: 8px; }
 }
+
+/* Nguồn đặt ngay dưới khung ảnh, không che nội dung ảnh. */
+.image-source-under {
+  display: block;
+  margin: 0;
+  padding: 5px 11px 7px;
+  background: #f7faf7;
+  color: #526960;
+  font-size: 10px;
+  text-align: left;
+  line-height: 1.5;
+  border-bottom: 1px solid #e3eae4;
+}
+.touch-tile > .image-source-under,
+.point-card > .image-source-under { padding-left: 10px; padding-right: 10px; }
+.experience-head + .image-source-under { padding: 7px 32px; }
+.editorial-image + .image-source-under { padding: 7px 17px; }
+.image-source-under a { color: #23635c; }
+@media (max-width: 700px) {
+  .image-source-under { font-size: 9px; }
+  .experience-head + .image-source-under { padding: 6px 15px; }
+}
