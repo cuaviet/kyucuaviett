@@ -327,8 +327,8 @@ stepMarkup = function (point) {
   if (currentStep === 4 && id === 5) {
     return `<div class="station-body"><h3>Bốn không gian sáng tạo</h3>
       <figure class="station-monument"><img src="${stationAssets['5_image1']}" alt="Dải bờ biển Cửa Việt nhìn từ trên cao"><figcaption>Bờ biển Cửa Việt · Góc nhìn hôm nay.</figcaption></figure>
-      <div class="station-topics">${creativeTopics.map(([title], index) =>
-        `<details><summary>${esc(title)}</summary><div data-community-photo-slot="${index}"></div></details>`).join('')}</div>
+      <div class="station-topics">${creativeTopics.map(([title, description], index) =>
+        `<details><summary>${esc(title)}</summary><p>${esc(description)}</p><div data-community-photo-slot="${index}"></div></details>`).join('')}</div>
       <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở phiếu khảo sát ${icon('arrow')}</button>
       <p class="station-source">Chọn một chủ đề, chia sẻ hình ảnh bạn thực hiện và ghi lại lời chú thích về Cửa Việt.</p></div>`;
   }
