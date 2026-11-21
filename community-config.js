@@ -4,8 +4,8 @@
  * Khi chưa cấu hình, biểu mẫu công khai sẽ không xuất hiện.
  */
 window.CHAM_CUA_VIET_COMMUNITY = Object.freeze({
-  apiKey: '',
-  authDomain: '',
-  projectId: '',
-  appId: ''
+  apiKey: "AIzaSyCOhstBJ8trxuaixgUdtmICRVU5KfGRt1A",
+  authDomain: "cham-cua.firebaseapp.com",
+  projectId: "cham-cua",
+  appId: "1:977715774024:web:87c0fea6eaab509f16ce7d"
 });
