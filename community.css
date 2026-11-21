@@ -209,3 +209,21 @@
   .community-edit-form { padding: 18px; }
   .community-edit-actions .btn { flex: 1 1 120px; }
 }
+
+/* Bài viết của chính người đăng: nút Xóa có xác nhận trước khi gửi lên Firebase */
+.community-entry-actions { gap: 9px; flex-wrap: wrap; }
+.community-delete-btn {
+  border: 1px solid #e7c1b9; border-radius: 8px; padding: 7px 12px;
+  background: #fff8f6; color: #9a392d; font: inherit; font-size: 12px;
+  font-weight: 700; cursor: pointer;
+}
+.community-delete-btn:hover { background: #ffece7; border-color: #cd7a6c; }
+.community-delete-btn:focus-visible { outline: 3px solid #e49a8c; outline-offset: 2px; }
+.community-delete-preview {
+  border-left: 3px solid #d6e0d7; background: #f7f9f6;
+  padding: 10px 12px; margin: 4px 0; color: #425e55; font-size: 13px;
+  line-height: 1.6; overflow-wrap: anywhere; white-space: pre-wrap;
+}
+.community-delete-confirm { background: #9f3e34 !important; border-color: #9f3e34 !important; color: #fff !important; }
+.community-delete-confirm:hover { background: #842d25 !important; }
+.community-delete-dialog .community-edit-intro { color: #7d4b42; }
