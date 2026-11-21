@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Báo cáo khảo sát — CHẠM CỬA VIỆT</title>
+<style>
+:root { color-scheme:light; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; color:#173e40; background:#f6f8f5; }
+* { box-sizing:border-box; } body { margin:0; } main { max-width:1120px; margin:0 auto; padding:28px 18px 76px; }
+h1 { font-size:clamp(24px,4vw,40px); line-height:1.2; margin:8px 0 12px; } h2 { font-size:21px;margin:0 0 12px; }
+p { line-height:1.65; } a { color:#12605b; } .eyebrow { font-size:12px; text-transform:uppercase; font-weight:800; letter-spacing:.12em; }
+.card { background:white; border:1px solid #dce8e4; border-radius:17px; padding:22px; margin:20px 0; box-shadow:0 2px 13px #103d4009; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; } .metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.metric { border:1px solid #e3ece8; background:#f8faf8; padding:16px;border-radius:12px; }
+.metric strong { display:block; font-size:30px; } .metric small { color:#556d6e; }
+label { display:block; font-weight:700; margin:8px 0; } input[type=file],select { width:100%;padding:12px;border:1px solid #b7cbc7;border-radius:8px;font:inherit;background:white; }
+button { padding:11px 17px;border-radius:10px;background:#124f50;color:white;border:1px solid #124f50;font:inherit;font-weight:700;cursor:pointer;margin:5px 8px 5px 0; }
+button.secondary { color:#124f50; background:white; } button:disabled { opacity:.5;cursor:not-allowed; }
+small,.muted { color:#607675; } .note { border-left:3px solid #bd9560;padding:8px 14px;background:#fff9ef;border-radius:4px; }
+.status { min-height:24px; } .question { margin-top:18px; padding:18px; border:1px solid #dce8e4; border-radius:12px;background:#fff; }
+.question h3 { margin:0 0 7px;font-size:18px;line-height:1.4; } table { border-collapse:collapse;width:100%;font-size:14px; }
+th,td { border-bottom:1px solid #e4eae6;padding:9px 7px;text-align:left;vertical-align:middle; } td:not(:first-child),th:not(:first-child){text-align:right;}
+td:first-child { overflow-wrap:anywhere; max-width:370px; } .barbox { display:flex;gap:4px;min-width:84px; } .bar { height:8px;border-radius:5px; }
+.bar.pre { background:#b8a17b; }.bar.post { background:#226c68; }
+.legend { display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0; } .dot { width:10px;height:10px;display:inline-block;border-radius:50%; }
+kbd {background:#e8efed;padding:1px 5px;border-radius:4px}
+footer { margin-top:36px;color:#607675;font-size:13px; }
+@media(max-width:640px){ .grid,.metrics{grid-template-columns:1fr;} .card{padding:14px;} table{font-size:12px;} td,th{padding:8px 4px;} .barbox{display:none;} }
+@media print { .controls,button,footer{display:none!important;} body{background:white;} .card,.question{break-inside:avoid;box-shadow:none;} }
+</style>
+</head>
+<body>
+<main>
+<p class="eyebrow">CHẠM CỬA VIỆT · Báo cáo nghiên cứu KHKT</p>
+<h1>Tổng hợp khảo sát trước và sau trải nghiệm</h1>
+<p>Trang báo cáo <strong>độc lập</strong> với giao diện 5 Chạm. Nhập hai tệp CSV xuất từ Google Forms để xem thống kê và đối chiếu câu hỏi giống nhau. Các tệp được xử lý <strong>ngay trên trình duyệt</strong>, không tải lên GitHub, Umami hoặc máy chủ khác.</p>
+<section class="card controls">
+<h2>1. Nhập dữ liệu khảo sát</h2>
+<div class="grid">
+<div><label for="before">Phiếu TRƯỚC trải nghiệm (.csv)</label><input type="file" id="before" accept=".csv,text/csv"></div>
+<div><label for="after">Phiếu SAU trải nghiệm (.csv)</label><input type="file" id="after" accept=".csv,text/csv"></div>
+</div>
+<p class="muted">Trong Google Forms: Câu trả lời → Liên kết Google Sheets hoặc dấu ba chấm → tải tệp CSV. Chỉ sử dụng dữ liệu đã được phép thu thập; nên xóa cột định danh trước khi xuất dữ liệu.</p>
+<button id="analyze">Phân tích các câu hỏi trùng tên</button>
+<button class="secondary" id="export" disabled>Xuất bảng tổng hợp CSV</button>
+<button class="secondary" id="print" disabled>In báo cáo / Lưu PDF</button>
+<p id="status" class="status" role="status"></p>
+</section>
+<section class="card controls" id="manual-section" hidden>
+<h2>2. So sánh một cặp câu hỏi</h2>
+<p>Trường hợp câu hỏi trước/sau có tiêu đề khác nhau, hãy chọn thủ công đúng hai câu có <strong>nội dung và thang đo tương đương</strong>. Không ghép hai câu chỉ vì chúng có vị trí giống nhau trong biểu mẫu.</p>
+<div class="grid"><div><label for="pre-question">Câu hỏi TRƯỚC</label><select id="pre-question"></select></div><div><label for="post-question">Câu hỏi SAU</label><select id="post-question"></select></div></div>
+<button id="manual-analyze">Phân tích câu đã chọn</button>
+</section>
+<section id="report" aria-live="polite"></section>
+<div class="note"><strong>Lưu ý phương pháp:</strong> Số lượt gửi phiếu không đồng nhất với số người tham gia thực tế nếu một người gửi nhiều lần. Chênh lệch tỷ lệ trước–sau là mô tả, không tự chứng minh nguyên nhân hoặc hiệu quả can thiệp. Chỉ so sánh câu hỏi cùng nội dung, cách hỏi và phương án trả lời. Câu tự luận chỉ đếm số phản hồi, không hiển thị nội dung.</div>
+<footer>© 2026 CHẠM CỬA VIỆT · Báo cáo chỉ tồn tại trên thiết bị của người mở trang này. Không lưu bản khảo sát sau khi tải lại trang.</footer>
+</main>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+let pre = null, post = null, reportRows = [];
+const skip = /^(timestamp|dau thoi gian|thoi gian|email|email address|ho va ten|ho ten|ten hoc sinh|full name|name|lop|class|so dien thoai|sdt|phone|student id|ma hoc sinh|dia chi|address)$/;
+const normalize = s => String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+const safeField = s => {const t=String(s==null?'':s);const value=/^[=+\-@\t\r]/.test(t)?"'"+t:t;return '"'+value.replace(/"/g,'""')+'"';};
+function parseCSV(source) {
+  const text=source.replace(/^\uFEFF/,'');
+  const delimiter=(text.split(/\r?\n/,1)[0].match(/;/g)||[]).length > (text.split(/\r?\n/,1)[0].match(/,/g)||[]).length?';':',';
+  const rows=[];let row=[],cell='',quote=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(quote){
+      if(c==='"'&&text[i+1]==='"'){cell+='"';i++;}
+      else if(c==='"')quote=false;
+      else cell+=c;
+    } else if(c==='"')quote=true;
+    else if(c===delimiter){row.push(cell);cell='';}
+    else if(c==='\n'||c==='\r'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(v=>v.trim()))rows.push(row);row=[];cell='';}
+    else cell+=c;
+  }
+  row.push(cell);if(row.some(v=>v.trim()))rows.push(row);
+  if(rows.length<1)throw Error('Tệp CSV không có hàng tiêu đề.');
+  const headers=rows[0].map(s=>s.trim());
+  if(headers.length<2)throw Error('Tệp CSV cần ít nhất hai cột (một cột câu hỏi).');
+  return {headers,rows:rows.slice(1).filter(r=>r.some(x=>String(x||'').trim()))};
+}
+const acceptable=(header)=>!skip.test(normalize(header));
+function choices(data,index){
+  const values=data.rows.map(row=>String(row[index]||'').trim()).filter(Boolean);
+  const map=new Map();for(const v of values)map.set(v,(map.get(v)||0)+1);
+  const categories=[...map.keys()];
+  // Không tiết lộ câu tự luận hoặc các nhóm quá nhỏ.
+  const isCategorical=values.length>=5&&categories.length<=12&&
+    categories.every(v=>v.length<=110)&&
+    (categories.length <= Math.max(4,Math.floor(values.length*.65)));
+  return {n:values.length,map:isCategorical?map:new Map(),isCategorical};
+}
+function element(tag,text,cls){
+ const el=document.createElement(tag);
+ if(text!==undefined)el.textContent=text;
+ if(cls)el.className=cls;
+ return el;
+}
+function compare(question,i,j){
+ const a=choices(pre,i),b=choices(post,j);
+ const section=element('section',undefined,'question');
+ section.append(element('h3',question),element('p','Có câu trả lời: trước '+a.n+' / '+pre.rows.length+' phiếu; sau '+b.n+' / '+post.rows.length+' phiếu.','muted'));
+ const compareValid=a.isCategorical&&b.isCategorical;
+ if(!compareValid){
+   section.append(element('p','Không hiển thị nội dung câu trả lời: câu tự luận, quá ít phản hồi hoặc quá nhiều phương án khác nhau. Chỉ tổng hợp được số phiếu có trả lời.','muted'));
+   reportRows.push({question,answer:'[Có phản hồi]',before:a.n,after:b.n,prePct:'',postPct:'',delta:''});
+   return section;
+ }
+ const table=element('table'),head=element('thead'),hr=element('tr');
+ ['Phương án','Trước','Sau','Chênh lệch (điểm %)'].forEach(v=>hr.append(element('th',v)));
+ head.append(hr);table.append(head);
+ const body=element('tbody'),keys=new Set([...a.map.keys(),...b.map.keys()]);
+ for(const key of keys) {
+   const n1=a.map.get(key)||0,n2=b.map.get(key)||0;
+   const p1=a.n?100*n1/a.n:0,p2=b.n?100*n2/b.n:0;
+   const tr=element('tr');
+   tr.append(element('td',key),element('td',n1+' ('+p1.toFixed(1)+'%)'),element('td',n2+' ('+p2.toFixed(1)+'%)'),element('td',(p2-p1>0?'+':'')+(p2-p1).toFixed(1)));
+   body.append(tr);
+   reportRows.push({question,answer:key,before:n1,after:n2,prePct:p1.toFixed(1),postPct:p2.toFixed(1),delta:(p2-p1).toFixed(1)});
+ }
+ table.append(body);section.append(table);
+ return section;
+}
+function topStats(number){
+ const region=element('section',undefined,'card');
+ region.append(element('h2','Tổng quan'));
+ const grid=element('div',undefined,'metrics');
+ [['Phiếu trước',pre.rows.length],['Phiếu sau',post.rows.length],['Cặp câu hỏi so sánh',number]].forEach(([label,value])=>{
+   const div=element('div',undefined,'metric');div.append(element('small',label),element('strong',String(value)));grid.append(div);
+ });
+ region.append(grid);return region;
+}
+function analyzePair(pairs){
+ reportRows=[];const target=$('report');target.replaceChildren(topStats(pairs.length));
+ if(!pairs.length){target.append(element('p','Không tìm thấy tiêu đề câu hỏi giống nhau. Hãy chọn hai câu tương đương tại mục “So sánh một cặp câu hỏi”.'));return;}
+ for(const [label,i,j]of pairs)target.append(compare(label,i,j));
+ $('export').disabled=false;$('print').disabled=false;
+ $('status').textContent='Đã tổng hợp '+pairs.length+' cặp câu hỏi. Dữ liệu không rời khỏi trình duyệt.';
+}
+function populate(select,headers){
+ select.replaceChildren();
+ headers.forEach((s,i)=>{if(!acceptable(s))return;const o=element('option',s||'Cột '+(i+1));o.value=String(i);select.append(o);});
+}
+$('analyze').addEventListener('click',async()=>{
+ try{
+   if(!$('before').files[0]||!$('after').files[0])throw Error('Hãy chọn đủ hai tệp CSV.');
+   pre=parseCSV(await $('before').files[0].text());post=parseCSV(await $('after').files[0].text());
+   populate($('pre-question'),pre.headers);populate($('post-question'),post.headers);
+   $('manual-section').hidden=false;
+   const first=new Map();pre.headers.forEach((h,i)=>{if(acceptable(h)&&!first.has(normalize(h)))first.set(normalize(h),i);});
+   const pairs=[];post.headers.forEach((h,j)=>{const i=first.get(normalize(h));if(acceptable(h)&&i!==undefined)pairs.push([h,i,j]);});
+   analyzePair(pairs);
+ }catch(err){$('status').textContent='Không thể phân tích: '+err.message; $('export').disabled=true;$('print').disabled=true;}
+});
+$('manual-analyze').addEventListener('click',()=>{
+ if(!pre||!post)return;
+ const i=Number($('pre-question').value),j=Number($('post-question').value);
+ analyzePair([[pre.headers[i]+' / '+post.headers[j],i,j]]);
+});
+$('export').addEventListener('click',()=>{
+ const headers=['Câu hỏi','Phương án','Trước (n)','Sau (n)','Trước (%)','Sau (%)','Thay đổi (điểm %)'];
+ const rows=[headers,...reportRows.map(r=>[r.question,r.answer,r.before,r.after,r.prePct,r.postPct,r.delta])];
+ const csv='\uFEFF'+rows.map(row=>row.map(safeField).join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download='Tong-hop-khao-sat-Cham-Cua-Viet.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+$('print').addEventListener('click',()=>window.print());
+})();
+</script>
+</body>
+</html>
