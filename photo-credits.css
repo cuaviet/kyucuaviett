@@ -1,0 +1,87 @@
+/* Ghi nguồn ảnh – giữ bố cục gốc của website và các Chạm. */
+.image-source-credit {
+  display: block;
+  margin-top: 5px;
+  color: #5c7367;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  text-transform: none;
+}
+.image-source-credit a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.image-source-credit a:hover, .image-source-credit a:focus-visible {
+  color: #17685e;
+}
+figure figcaption .image-source-credit { margin-top: 4px; }
+.generated-photo-caption {
+  margin: 7px 0 12px;
+  text-align: left;
+  color: #5c7367;
+}
+.image-source-comparison {
+  margin: 7px 0 17px;
+  padding: 6px 1px;
+  font-size: 10px !important;
+  color: #65796d !important;
+}
+.image-source-overlay {
+  position: absolute;
+  z-index: 4;
+  left: 8px;
+  bottom: 6px;
+  max-width: calc(100% - 16px);
+  margin: 0;
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: rgba(13, 40, 39, .78);
+  color: #fff;
+  font-size: 9px;
+  line-height: 1.35;
+  pointer-events: none;
+}
+.image-source-overlay a { color: #fff; pointer-events: auto; }
+.touch-image, .route-image, .point-card-image,
+.experience-head, .editorial-image, .story-visual, .interview-photo-grid a {
+  position: relative;
+}
+.touch-image > .image-source-overlay,
+.route-image > .image-source-overlay,
+.point-card-image > .image-source-overlay { bottom: 5px; }
+.experience-head > .image-source-overlay {
+  bottom: 6px;
+  left: auto;
+  right: 7px;
+  max-width: 65%;
+}
+.story-visual > .image-source-overlay { bottom: 8px; }
+.editorial-image > .image-source-overlay { bottom: 8px; }
+.interview-photo-grid a > .image-source-overlay {
+  display: block;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  max-width: none;
+  font-size: 9px;
+}
+button[data-action="gallery"] > .image-source-gallery {
+  margin: 5px 7px 6px;
+  text-align: left;
+  color: #47645b;
+  font-size: 10px;
+  line-height: 1.4;
+}
+button[data-action="gallery"] > .image-source-gallery a { pointer-events: none; }
+.cover-frame figcaption .image-source-credit { color: inherit; }
+.cover-frame figcaption .image-source-credit a { color: inherit; }
+@media (max-width: 700px) {
+  .image-source-credit { font-size: 9px; }
+  .image-source-overlay { font-size: 8px; max-width: calc(100% - 12px); padding: 3px 5px; }
+  .experience-head > .image-source-overlay { max-width: 80%; font-size: 8px; }
+}
