@@ -29,4 +29,17 @@
 - Firebase có hạn mức dùng miễn phí cho Cloud Firestore. Kiểm tra https://firebase.google.com/docs/firestore/quotas.
 - Không thay thế bảng khảo sát nghiên cứu và không ghi tự động nội dung công khai vào thống kê Umami.
 
-File triển khai: `community-config.js`, `community.js`, `community.css`, `firestore.rules`.
+## Chia sẻ trực tiếp trong 5 Chạm (Bước 7)
+
+Website có hai cách lưu riêng biệt ở **Bước 7 – Ký ức của bạn** trong mỗi Chạm:
+
+- **Lưu cảm nhận của tôi:** giữ nguyên tính năng trước đây, lưu riêng trên trình duyệt cho Hộ chiếu ký ức. Không đưa lên cơ sở dữ liệu chung.
+- **Lưu và chia sẻ với mọi người:** tính năng mới bên dưới, nhập **tên hiển thị/biệt danh**, **nội dung** và tích ô đồng ý công khai. Firebase lưu lời nhắn kèm nhãn **Chạm 01–05**; các bài mới nhất của đúng Chạm hiển thị ngay phía dưới biểu mẫu. Bảng ký ức chung ở trang chủ hiển thị lời nhắn từ tất cả các Chạm.
+
+Chia sẻ ở 5 Chạm sử dụng cùng tập dữ liệu `public_memories` và cùng Firestore Rules hiện tại, **không phải tạo thêm collection hoặc sửa Rules**. Trong ứng dụng, nhãn Chạm được đưa vào đầu trường `message`, không phải trường riêng.
+
+Để kiểm tra: mở một Chạm, vào Bước 7, cuộn qua ô Lưu cảm nhận cá nhân đến phần Chia sẻ công khai. Nhập biệt danh, nội dung tối thiểu 10 ký tự, tích đồng ý và lưu. Sau đó mở Chạm đó trên điện thoại khác để xác nhận bài đã xuất hiện. Nếu nút Lưu công khai không bật, kiểm tra **Authentication → Sign-in method → Anonymous** đã bật hay chưa.
+
+Lưu ý: danh sách ngay trong mỗi Chạm hiển thị các bài thuộc Chạm đó trong tập các bài gần đây đã tải; xem các lời nhắn lâu hơn qua **Bảng ký ức chung** ở trang chủ bằng nút **Xem thêm ký ức cũ**.
+
+File triển khai: `community-config.js`, `community-touch.js`, `community.js`, `community.css`, `firestore.rules`.
