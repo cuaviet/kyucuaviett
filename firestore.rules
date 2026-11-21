@@ -34,7 +34,10 @@ service cloud.firestore {
         && request.resource.data.message.size() >= 10
         && request.resource.data.message.size() <= 600
         && request.resource.data.editedAt == request.time;
-      allow delete: if false;
+      // Xóa vĩnh viễn chỉ khi người dùng là tác giả bài đăng.
+      allow delete: if request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'anonymous'
+        && resource.data.authorUid == request.auth.uid;
     }
     // Bốn chủ đề ảnh của Chạm 05.
     // Ảnh được lưu ở dạng WebP/JPEG đã nén, giới hạn kích thước.
