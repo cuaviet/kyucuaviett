@@ -79,3 +79,20 @@ Mã quy tắc đã mở rộng để hỗ trợ collection ảnh và **giữ ngu
 
 **Giới hạn và sao lưu:** Đây là phương án lưu **ảnh nhỏ** để trình diễn KHKT, không phù hợp cho thư viện hàng nghìn ảnh độ phân giải lớn. Không thể đảm bảo lưu “mãi mãi” nếu dịch vụ bị hủy hoặc dữ liệu bị xóa; nên định kỳ sao lưu bản gốc ảnh ở một nơi riêng. Firebase Storage dành cho ảnh gốc dung lượng lớn hiện yêu cầu Blaze; **không nâng cấp chỉ vì tính năng ảnh này**. Ảnh đã lưu chỉ được hiển thị cho mọi người sau khi giáo viên duyệt.
 
+
+## Chỉnh sửa bài cảm nhận sau khi đã đăng
+
+**Áp dụng cho:** Bảng ký ức chung trên trang chủ và các bài đã gửi ở **Bước 7** trong cả năm Chạm.
+
+- Sau khi người dùng đăng bài thành công, bài của chính họ hiện nút **Chỉnh sửa**. Người khác đọc bài bình thường, không có nút này.
+- Nhấn **Chỉnh sửa** mở cửa sổ với **Tên hiển thị** và **Câu chuyện hoặc cảm nhận** đã viết. Có hai lựa chọn: **Hủy** và **Lưu chỉnh sửa**.
+- Khi lưu, web dùng Firestore `updateDoc` để thay nội dung **trên đúng tài liệu cũ**. Giữ nguyên tác giả, thời gian đăng gốc và nhãn Chạm nếu có. Dưới bài xuất hiện thời điểm **Đã chỉnh sửa**.
+- Người đăng cần dùng **cùng trình duyệt/cùng phiên Firebase Anonymous đã đăng bài**. Mở trên máy khác, xóa dữ liệu website hoặc đăng bằng trình duyệt ẩn danh mới có thể không nhận diện được tác giả; chỉ nhập lại cùng tên không trao quyền sửa.
+- Người khác không được chỉnh sửa bài vì Firestore Rules xác minh `authorUid == request.auth.uid` và chỉ cho đổi `name`, `message`, `editedAt`. Quyền xóa vẫn bị khóa.
+
+### Bắt buộc cập nhật Rules để bật chỉnh sửa thật
+
+Sau khi cập nhật GitHub, **Firestore trên Google không tự động nhận thay đổi**. Vào Firebase Console → Firestore Database → **Rules**, mở tệp `firestore.rules` mới nhất của repository, sao chép **toàn bộ** để thay thế bản cũ rồi nhấn **Publish**. Bản mới vẫn giữ mọi quyền đọc/ghi và cơ chế duyệt ảnh của `community_photos` đã có.
+
+Kiểm tra: mở website trên trình duyệt đã đăng bài, xem bài của mình, bấm **Chỉnh sửa**, sửa một chữ, bấm **Lưu chỉnh sửa**, tải lại trang. Bài sẽ có nội dung mới mà không phát sinh bản đăng thứ hai.
+
