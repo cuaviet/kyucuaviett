@@ -28,3 +28,23 @@
 .community-more { margin-top: 15px; }
 .community-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 @media (max-width: 760px) { .community-layout { grid-template-columns: 1fr; } .community-section { padding: 20px 15px; border-radius: 14px; } .community-form { padding: 16px; } }
+
+/* Lời nhắn công khai được đặt ngay sau phần "Lưu cảm nhận" ở mỗi điểm Chạm */
+.community-touch { margin: 28px 0 12px; padding: 21px; border: 1px solid #bfd7cc; border-radius: 15px; background: #f5f9f6; }
+.community-touch-heading { margin-bottom: 17px; }
+.community-touch-heading h3 { margin: 8px 0 8px; font-size: clamp(21px, 3vw, 27px); line-height: 1.25; color: #194d4b; }
+.community-touch-heading p:not(.eyebrow) { color: #526861; font-size: 14px; line-height: 1.7; }
+.community-touch-form { padding: 17px; }
+.community-touch-recent { margin-top: 22px; }
+.community-touch-recent h4 { font-size: 18px; line-height: 1.4; margin: 0 0 8px; color: #204b47; }
+.community-touch-recent > .community-note { margin-bottom: 11px; }
+.community-touch-tag { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 20px; color: #0c5b57; background: #e0f1ec; padding: 3px 9px; }
+.community-entry-top { justify-content: flex-start; }
+.community-entry-top time { margin-left: auto; }
+.community-touch .community-entry p { font-size: 14px; }
+.community-touch .community-feed { max-height: 560px; overflow-y: auto; }
+@media (max-width: 580px) {
+  .community-touch { padding: 13px; margin-top: 20px; }
+  .community-touch-form { padding: 13px; }
+  .community-entry-top time { margin-left: 0; }
+}
