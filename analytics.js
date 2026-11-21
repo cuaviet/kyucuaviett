@@ -216,6 +216,14 @@
     send('video_phat', { cham: id });
   }, true);
 
+  // navigation.js có thể chặn sự kiện "continue" ở capture phase.
+  // Theo dõi sau khi điều hướng hoàn tất để không bỏ sót lượt mở Chạm.
+  window.addEventListener('click', event => {
+    const button = event.target.closest && event.target.closest('[data-action="continue"]');
+    if (!button) return;
+    queueMicrotask(() => visitTouch(currentTouch()));
+  }, true);
+
   window.addEventListener('hashchange', () => {
     const match = location.hash.match(/^#cham-([1-5])(?:\/([a-z-]+))?/);
     if (match) visitTouch(Number(match[1]));
