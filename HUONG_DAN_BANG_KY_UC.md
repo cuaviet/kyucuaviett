@@ -96,3 +96,19 @@ Sau khi cập nhật GitHub, **Firestore trên Google không tự động nhận
 
 Kiểm tra: mở website trên trình duyệt đã đăng bài, xem bài của mình, bấm **Chỉnh sửa**, sửa một chữ, bấm **Lưu chỉnh sửa**, tải lại trang. Bài sẽ có nội dung mới mà không phát sinh bản đăng thứ hai.
 
+
+## Xóa bài viết đã đăng
+
+Chức năng **Xóa** xuất hiện bên cạnh **Chỉnh sửa** trên bài viết mà người đang sử dụng đã đăng bằng cùng phiên Firebase Anonymous. Áp dụng cho bài ở **Bảng ký ức chung** và các cảm nhận tại **Bước 7 của cả 5 Chạm**.
+
+1. Người đăng nhấn **Xóa** dưới bài của mình.
+2. Hệ thống mở hộp thoại **Xóa bài viết này?** có tóm tắt nội dung và cảnh báo xóa vĩnh viễn. Hai lựa chọn **Giữ lại** và **Xóa bài viết**.
+3. Nhấn **Giữ lại** đóng hộp thoại và không thay đổi gì. Nhấn **Xóa bài viết** thực hiện `deleteDoc` trên đúng tài liệu của người đăng trong collection `public_memories`.
+4. Khi xóa thành công, bài biến mất khỏi trang chủ và mọi Chạm. Lệnh xóa không thể hoàn tác; nên cân nhắc sao lưu trước nếu bài có giá trị nghiên cứu.
+
+**Bảo mật:** Chỉ người dùng có Firebase Anonymous UID trùng với `authorUid` của bài được xóa. Thay đổi tên hiển thị không giúp người khác chiếm quyền xóa. Người đã mất phiên đăng nhập ẩn danh cũ sẽ không thể tự xóa bài trên trình duyệt mới; giáo viên có quyền quản trị có thể xử lý qua Firestore Console.
+
+**Cần Publish Rules:** Mã `firestore.rules` mới đã thêm điều kiện cho `allow delete` trong `public_memories`, còn phần ảnh `community_photos` không thay đổi. Vào **Firebase → Firestore Database → Rules**, sao chép toàn bộ file `firestore.rules` bản mới nhất trên GitHub rồi nhấn **Publish**. Nếu chưa Publish, nút Xóa hiện nhưng máy chủ sẽ từ chối thao tác.
+
+**Kiểm tra:** Đăng một bài thử bằng một trình duyệt, xác nhận có nút **Chỉnh sửa** và **Xóa**. Bấm **Xóa → Giữ lại** và kiểm tra bài còn nguyên; mở lại **Xóa → Xóa bài viết**, tải lại trang và kiểm tra bài đã biến mất. Mở trên một thiết bị khác để kiểm chứng.
+
