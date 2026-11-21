@@ -144,9 +144,18 @@
       placeForFigure(img, meta, figure);
       return;
     }
-    const tile = img.closest('.touch-image, .route-image, .point-card-image, .experience-head, .editorial-image, .story-visual');
-    if (tile) {
-      addOverlay(img, meta, tile);
+    // Với thẻ ảnh chính, ghi nguồn thành một dòng NGAY DƯỚI ảnh.
+    const imageFrame = img.closest('.touch-image, .route-image, .point-card-image, .experience-head, .editorial-image');
+    if (imageFrame) {
+      if (!imageFrame.nextElementSibling || !imageFrame.nextElementSibling.classList.contains('image-source-under')) {
+        imageFrame.insertAdjacentElement('afterend', creditNode(meta, 'image-source-under'));
+      }
+      return;
+    }
+    // Những khung ảnh phủ nội dung chỉ có thể đặt dòng nguồn gọn sát mép dưới.
+    const overlay = img.closest('.story-visual');
+    if (overlay) {
+      addOverlay(img, meta, overlay);
       return;
     }
     const galleryButton = img.closest('button[data-action="gallery"]');
