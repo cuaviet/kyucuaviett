@@ -67,3 +67,107 @@
 .community-touch .community-touch-recent h4 { font-size: 15px; }
 .community-touch .community-feed { max-height: 470px; }
 .community-touch .community-entry { border-radius: 9px; }
+
+/* CHẠM 05 — bốn góc ảnh học sinh, đặt ngay trong từng chủ đề Khám phá */
+.creative-photo-area {
+  margin-top: 14px;
+  padding-top: 15px;
+  border-top: 1px solid #cfded5;
+}
+.creative-photo-form {
+  display: grid;
+  gap: 9px;
+  padding: 17px;
+  background: #fff;
+  border: 1px solid #d6e4da;
+  border-radius: 11px;
+}
+.creative-photo-form h4, .creative-photo-gallery h4 {
+  font-size: 17px;
+  line-height: 1.4;
+  color: #174d48;
+  font-weight: 700;
+  margin: 0 0 3px;
+}
+.creative-photo-form label:not(.creative-photo-consent) {
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+  color: #294e48;
+  margin-top: 5px;
+}
+.creative-photo-form input[type="text"],
+.creative-photo-form input[type="file"],
+.creative-photo-form textarea {
+  font: inherit;
+  width: 100%;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid #bacfc3;
+  background: #fff;
+  color: #21483d;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.creative-photo-form input[type="file"] { cursor: pointer; }
+.creative-photo-form textarea { resize: vertical; line-height: 1.6; min-height: 85px; }
+.creative-photo-form input:focus-visible,
+.creative-photo-form textarea:focus-visible { outline: 2px solid #479d91; outline-offset: 2px; }
+.creative-photo-preview:not(:empty) { padding: 7px 0; }
+.creative-photo-preview img {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  max-height: 250px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #eef5f1;
+  border: 1px solid #dce7df;
+}
+.creative-photo-consent { display: flex; align-items: flex-start; gap: 9px; line-height: 1.55; font-size: 12px; }
+.creative-photo-consent input { margin-top: 4px; width: 16px; height: 16px; flex: none; }
+.creative-photo-tip { font-size: 11px !important; color: #61766d; margin: 0 !important; line-height: 1.7 !important; }
+.creative-photo-trap { position: absolute; left: -10000px; width: 1px !important; height: 1px; opacity: 0; }
+.creative-photo-form .creative-photo-submit { justify-self: start; font-size: 12px; margin: 3px 0; }
+.creative-photo-submit[disabled] { opacity: .55; cursor: not-allowed; }
+.creative-photo-status {
+  font-size: 12px !important;
+  color: #35605a;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
+.creative-photo-status[data-error="true"] { color: #a44238; }
+.creative-photo-gallery { margin: 20px 0 5px; }
+.creative-photo-gallery h4 { font-size: 15px; margin: 0 0 12px; }
+.creative-photo-items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+.creative-photo-card {
+  min-width: 0;
+  margin: 0;
+  background: #fff;
+  border: 1px solid #d8e5dc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.creative-photo-card > img {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  background: #e4eee7;
+}
+.creative-photo-card figcaption { padding: 11px 12px 13px; }
+.creative-photo-card figcaption strong { display: block; font-size: 12px; color: #1c5047; margin-bottom: 5px; }
+.creative-photo-card figcaption p { font-size: 12px !important; line-height: 1.6 !important; color: #47635a; margin: 0 !important; overflow-wrap: anywhere; white-space: pre-wrap; }
+.creative-photo-empty { color: #647b70; font-size: 12px; line-height: 1.6; }
+.creative-photo-personal:not(:empty) { margin-top: 18px; border-top: 1px dashed #b9d0c3; padding-top: 15px; }
+.creative-photo-personal h5 { margin: 0 0 11px; font-size: 13px; color: #215a50; }
+.creative-photo-pending-label { display: block; font-size: 11px; color: #89572a; margin-top: 8px; }
+@media (max-width: 520px) {
+ .creative-photo-form { padding: 12px; }
+ .creative-photo-items { grid-template-columns: 1fr; }
+ .creative-photo-card > img { height: auto; max-height: 290px; object-fit: contain; }
+}
