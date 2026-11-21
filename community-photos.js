@@ -120,6 +120,10 @@
     const note = document.createElement('p');
     note.textContent = String(photo.caption || '').slice(0, 220);
     caption.append(author, note);
+    const submittedSource = document.createElement('small');
+    submittedSource.className = 'creative-photo-submitted-source';
+    submittedSource.textContent = 'Nguồn ảnh: Người tham gia gửi (theo tên hiển thị)';
+    caption.append(submittedSource);
     if (pending) {
       const label = document.createElement('small');
       label.className = 'creative-photo-pending-label';
