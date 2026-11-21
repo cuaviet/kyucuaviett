@@ -48,3 +48,22 @@
   .community-touch-form { padding: 13px; }
   .community-entry-top time { margin-left: 0; }
 }
+
+/* Bước 7: tích hợp trực tiếp vào ô "Cảm nhận", không tạo khung biểu mẫu mới */
+.community-touch { margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.community-touch .community-touch-form { display: block; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.community-touch .note-form label:not(.community-accept) { display: block; font-size: 11px; font-weight: 600; margin: 13px 0 6px; }
+.community-touch .note-form input:not([type="checkbox"]), .community-touch .note-form textarea {
+  display: block; width: 100%; min-width: 0; border: 1px solid #ccd8c2; border-radius: 7px;
+  padding: 12px; background: #fff; color: #254d40; font: inherit; font-size: 12px; line-height: 1.8;
+}
+.community-touch .note-form textarea { min-height: 110px; resize: vertical; }
+.community-touch .note-form label.community-accept { display: flex; align-items: flex-start; gap: 9px; margin: 12px 0 6px; font-size: 11px; font-weight: 400; line-height: 1.55; }
+.community-touch .note-form label.community-accept input[type="checkbox"] { display: inline-block; width: 17px; height: 17px; margin: 2px 0 0; padding: 0; flex: 0 0 17px; }
+.community-touch .community-note { font-size: 10px; margin: 6px 0 11px; line-height: 1.6; }
+.community-touch .note-form .btn { margin-top: 10px; font-size: 10px; }
+.community-touch .community-status { margin: 10px 0; font-size: 11px; }
+.community-touch .community-touch-recent { margin: 24px 0 3px; padding-top: 18px; border-top: 1px solid #dce5d7; }
+.community-touch .community-touch-recent h4 { font-size: 15px; }
+.community-touch .community-feed { max-height: 470px; }
+.community-touch .community-entry { border-radius: 9px; }
