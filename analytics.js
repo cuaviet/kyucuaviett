@@ -63,6 +63,8 @@
       if (!active() || !window.umami || typeof window.umami.track !== 'function') return;
       loaded = true;
       window.umami.track();
+      // Phân biệt lượt xem trang tạm đóng với hoạt động trải nghiệm 5 Chạm.
+      if (document.title.includes('Tạm đóng')) send('trang_tam_dong');
       queue.splice(0).forEach(event => window.umami.track(event.name, event.details));
       const current = currentTouch();
       if (validTouch(current)) visitTouch(current);
