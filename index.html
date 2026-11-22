@@ -2,29 +2,193 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow, noarchive">
-  <meta name="theme-color" content="#102f36">
-  <title>CHẠM CỬA VIỆT — Tạm ngừng truy cập</title>
-  <style>
-    :root { color-scheme: dark; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: linear-gradient(145deg,#091f28,#123e48 56%,#0b2832); color: #f6f3e9; padding: 24px; }
-    main { width: min(100%,620px); text-align: center; padding: 44px 24px; border: 1px solid rgba(255,255,255,.22); border-radius: 24px; background: rgba(255,255,255,.055); box-shadow: 0 24px 65px rgba(0,0,0,.22); }
-    .wave { display: block; font-size: 46px; line-height: 1; margin-bottom: 24px; }
-    h1 { margin: 0 0 14px; font-size: clamp(26px,5vw,40px); letter-spacing: .02em; }
-    p { font-size: clamp(16px,3vw,18px); line-height: 1.75; margin: 10px auto; max-width: 460px; }
-    .sub { color: #c6d7d5; font-size: 15px; margin-top: 28px; }
-  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="only light">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Khám phá lịch sử, văn hóa và con người Cửa Việt qua 5 điểm chạm tương tác, hình ảnh và những câu chuyện của quê hương.">
+  <title>CHẠM CỬA VIỆT — Khám phá lịch sử, văn hóa và con người</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23103e40'/%3E%3Cpath d='M12 27Q22 15 32 27T52 27M12 39Q22 27 32 39T52 39' fill='none' stroke='%23ecd8ab' stroke-width='5'/%3E%3C/svg%3E">
+  
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="site.css?v=6">
+  <link rel="stylesheet" href="community.css?v=6">
+  <link rel="stylesheet" href="photo-credits.css?v=2">
+  <link rel="stylesheet" href="presentation.css?v=18">
+  <link rel="stylesheet" href="visual-tuning.css?v=1">
 </head>
 <body>
-  <main aria-labelledby="title">
-    <span class="wave" aria-hidden="true">🌊</span>
-    <h1 id="title">CHẠM CỬA VIỆT</h1>
-    <p><strong>Website hiện đang tạm đóng.</strong></p>
-    <p>Trang web sẽ mở lại <strong>sau 10:00 sáng hôm nay, ngày 22/11/2026</strong>.</p>
-    <p>Vui lòng quay lại sau thời gian trên để tiếp tục khám phá lịch sử, văn hóa và con người Cửa Việt.</p>
-    <p class="sub">Cảm ơn bạn đã quan tâm và đồng hành.</p>
-  </main>
+<a class="skip-link" href="#main">Đến nội dung chính</a>
+<svg class="svg-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+  <symbol id="i-wave" viewBox="0 0 32 32"><path d="M3 13c5-8 10 8 15 0s8-2 11 0M3 22c5-8 10 8 15 0s8-2 11 0"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 20V4m-6 6 6-6 6 6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v18m4-13h4m-4 4h4"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 1 1 16 0v3"/><rect x="3" y="12" width="4" height="8" rx="2"/><rect x="17" y="12" width="4" height="8" rx="2"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 3c0 12-4 17-10 15S3 7 20 3ZM4 21 16 9"/></symbol>
+  <symbol id="i-anchor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v14M7 10h10M3 14c0 9 18 9 18 0M1 16l2-2 2 2m14 0 2-2 2 2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7m0-7L10 14M10 3H4v17h17v-6"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20 5c-3-3-7-1-8 1-1-2-5-4-8-1-5 5 2 11 8 15 6-4 13-10 8-15Z"/></symbol>
+</defs></svg>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="#home" aria-label="Chạm Cửa Việt — Trang đầu"><span class="brand-symbol"><svg><use href="#i-wave"/></svg></span><span>CHẠM CỬA VIỆT</span></a>
+    <nav class="desktop-nav" aria-label="Điều hướng chính"><a href="#touch-heading">5 điểm chạm</a><a href="#memory-map">Bản đồ ký ức</a><a href="#stories">Câu chuyện</a><a href="#about">Về dự án</a></nav>
+    <div class="nav-actions"><button class="btn btn-passport" data-action="passport" aria-label="Mở hộ chiếu của tôi"><svg class="icon"><use href="#i-book"/></svg><span>Hộ chiếu của tôi</span><b class="passport-count">0/5</b></button><button class="icon-btn menu-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-menu" data-action="menu"><svg class="icon"><use href="#i-menu"/></svg></button></div>
+  </div>
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Điều hướng điện thoại" hidden><a href="#touch-heading">5 điểm chạm</a><a href="#memory-map">Bản đồ ký ức</a><a href="#stories">Lắng nghe Cửa Việt</a><a href="#about">Về dự án</a></nav>
+</header>
+
+<main id="main">
+<section class="hero" id="home" aria-labelledby="hero-heading">
+  <div class="hero-shade"></div>
+  <div class="tide-lines" aria-hidden="true"></div>
+  <div class="container hero-content">
+    <p class="eyebrow hero-eyebrow"><span></span> CỬA VIỆT, QUẢNG TRỊ</p>
+    <h1 id="hero-heading"><span>Chạm</span> <strong>Cửa Việt</strong></h1>
+    <p class="hero-tagline">Chạm một địa điểm · nghe một ký ức · hiểu thêm một Cửa Việt</p><p class="hero-desc">Có những câu chuyện chỉ chờ bạn lắng nghe.<br> Cùng khám phá lịch sử, con người và nhịp sống<br class="desktop-break"> Cửa Việt — qua từng điểm chạm.</p>
+    <div class="hero-actions"><a class="btn btn-gold" href="#touch-heading">Khám phá 5 điểm chạm <svg class="icon"><use href="#i-arrow"/></svg></a><button class="btn btn-glass" data-action="intro"><svg class="icon"><use href="#i-play"/></svg> Cửa Việt có gì?</button></div>
+    <div class="hero-detail"><span><svg class="icon"><use href="#i-pin"/></svg> 5 điểm chạm</span></div>
+  </div>
+  <figure class="cover-frame">
+    <img class="hero-photo" src="assets/bo-bien-cua-viet.webp" alt="Sóng trắng và bãi cát Cửa Việt nhìn từ trên cao" fetchpriority="high" width="1300" height="866">
+    <figcaption><a class="photo-credit" href="#cham-5/kham-pha">Bờ biển Cửa Việt · Chạm 05: Góc nhìn hôm nay <span aria-hidden="true">↗</span></a></figcaption>
+  </figure>
+  <div class="cover-postcard" aria-hidden="true"><img src="assets/anh-nhom/img-3986.webp" alt="" width="960" height="662"></div>
+</section>
+
+<section class="touch-shelf container" aria-labelledby="touch-heading">
+  <div class="section-heading"><h2 id="touch-heading">Năm điểm chạm.<br><em>Một cửa biển.</em></h2><a class="touch-map-link" href="#memory-map">Xem bản đồ <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="touch-tiles">
+    <button class="touch-tile" data-action="open-point" data-id="1">
+      <span class="touch-image">
+      <img src="assets/tu-lieu-62.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">01</span><span class="touch-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+      </span>
+      <span class="touch-label"><strong>Cửa Việt – cửa biển của ký ức</strong><small>Không gian xưa và nay</small></span>
+    </button>
+    <button class="touch-tile" data-action="open-point" data-id="2">
+      <span class="touch-image">
+      <img src="assets/tuong-dai-chien-thang.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">02</span><span class="touch-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+      </span>
+      <span class="touch-label"><strong>Dấu ấn lịch sử Cửa Việt</strong><small>Lần theo dấu ấn thời gian</small></span>
+    </button>
+    <button class="touch-tile" data-action="open-point" data-id="3">
+      <span class="touch-image">
+      <img src="assets/cau-cua-viet.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">03</span><span class="touch-feature"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> Video lời kể</span><span class="touch-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+      </span>
+      <span class="touch-label"><strong>Người kể chuyện Cửa Việt</strong><small>Ký ức qua lời kể</small></span>
+    </button>
+    <button class="touch-tile" data-action="open-point" data-id="4">
+      <span class="touch-image">
+      <img src="assets/cang-ca.webp" alt="" loading="lazy" width="480" height="320">
+      <span class="touch-number">04</span><span class="touch-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+      </span>
+      <span class="touch-label"><strong>Nhịp sống làng biển</strong><small>Nghề biển và cộng đồng</small></span>
+    </button>
+    <button class="touch-tile" data-action="open-point" data-id="5">
+      <span class="touch-image">
+      <img src="assets/anh-nhom/img-3961.webp" alt="" loading="lazy" width="960" height="720">
+      <span class="touch-number">05</span><span class="touch-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+      </span>
+      <span class="touch-label"><strong>Cửa Việt trong mắt người trẻ</strong><small>Góc nhìn và sáng tạo</small></span>
+    </button>
+  </div>
+</section>
+
+<section class="map-section" id="memory-map" aria-labelledby="map-heading"><div class="container">
+  <div class="section-heading"><div><p class="eyebrow light">BẢN ĐỒ KÝ ỨC</p><h2 id="map-heading">Một cửa biển. <em>Năm điểm chạm.</em></h2></div><p class="section-intro">Chọn chủ đề hoặc một điểm chạm để mở câu chuyện.</p></div>
+  <div class="map-toolbar"><div class="filters" aria-label="Lọc theo chủ đề"><button class="filter active" data-action="filter" data-route="0" aria-pressed="true">Tất cả <b>05</b></button><button class="filter" data-action="filter" data-route="1" aria-pressed="false"><span class="dot history"></span> Lịch sử</button><button class="filter" data-action="filter" data-route="2" aria-pressed="false"><span class="dot living"></span> Ký ức sống</button><button class="filter" data-action="filter" data-route="3" aria-pressed="false"><span class="dot today"></span> Hôm nay</button></div><label class="search"><svg class="icon"><use href="#i-search"/></svg><input id="point-search" type="search" placeholder="Tìm điểm chạm…" aria-label="Tìm điểm chạm" autocomplete="off"></label></div>
+  <div class="map-layout">
+<div class="map-canvas" role="group" aria-label="Hành trình tương tác 5 chạm Cửa Việt">
+<div class="map-scene" id="map-scene">
+<svg class="landscape" viewBox="0 0 860 680" preserveAspectRatio="none" aria-hidden="true">
+<defs><linearGradient id="water" x2="1" y2="1"><stop stop-color="#d9f7f9"/><stop offset="1" stop-color="#a3e4ee"/></linearGradient><pattern id="waves2" width="70" height="40" patternUnits="userSpaceOnUse"><path d="M0 20q17-9 35 0t35 0" stroke="#fff" opacity=".35" fill="none"/></pattern><pattern id="paper2" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r=".65" fill="#9caa9b" opacity=".25"/></pattern></defs>
+<rect width="860" height="680" fill="url(#water)"/><rect width="860" height="680" fill="url(#waves2)"/>
+<path d="M0 0H590Q735 150 636 290T650 490Q680 580 785 680H0Z" fill="#f3dfb2"/><path d="M0 0H571Q710 150 614 290T629 490Q658 580 764 680H0Z" fill="#fffaf0"/><path d="M0 0H571Q710 150 614 290T629 490Q658 580 764 680H0Z" fill="url(#paper2)"/>
+<path d="M-50 280Q150 240 270 328T624 366" fill="none" stroke="#bfe9e8" stroke-width="45"/>
+<path d="M20 20Q190 180 100 350T80 680M250 0Q180 170 380 240T510 680M0 120L620 190M0 590Q320 520 680 570" fill="none" stroke="#eae0ca" stroke-width="9"/><path d="M20 20Q190 180 100 350T80 680M250 0Q180 170 380 240T510 680M0 120L620 190M0 590Q320 520 680 570" fill="none" stroke="#fffdf5" stroke-width="4"/>
+<path class="map-route" d="M292 109C700 109 700 224 516 224S80 340 292 340S730 456 516 456S70 571 292 571" stroke="#b9955e" stroke-width="3" fill="none" stroke-dasharray="7 9"/>
+<text x="748" y="360" text-anchor="middle" fill="#377e8a" font-size="17" letter-spacing="5" transform="rotate(90 748 360)">BIỂN ĐÔNG</text>
+<g transform="translate(766 65)" stroke="#407f88" fill="none"><circle r="27" opacity=".35"/><path d="M0-21V21M-21 0H21M0-21L-5-8L0-11L5-8Z"/><text x="-4" y="-36" font-size="11" stroke="none" fill="#407f88">B</text></g>
+</svg><div id="map-pins"></div></div>
+<span class="map-caption">CỬA VIỆT / HÀNH TRÌNH KÝ ỨC</span>
+<p class="map-open-status" id="map-open-status" role="status" aria-live="polite">Chọn một chạm để mở câu chuyện</p>
+</div>
+<aside class="journey-editorial"><div class="editorial-image"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa biển Cửa Việt" loading="lazy"><span>QUẢNG TRỊ, VIỆT NAM</span></div><div class="editorial-copy"><p class="eyebrow">MỘT VÙNG ĐẤT · NĂM GÓC NHÌN</p><h3>Đi qua cảnh sắc.<br>Ở lại với <em>câu chuyện.</em></h3><p>Từ cửa biển đến ký ức con người, mỗi chạm mở ra một cách hiểu và yêu Cửa Việt.</p><div class="editorial-stats"><div><b>05</b><span>chạm khám phá</span></div><div><b>08</b><span>bước mỗi chạm</span></div></div><button class="btn btn-primary" data-action="continue">Tiếp tục hành trình ↗</button><div class="editorial-note">Quan sát · Lắng nghe · Suy ngẫm<br>Ghi lại điều bạn muốn giữ.</div></div></aside>
+</div>
+  <div class="map-footnote"><span><svg class="icon"><use href="#i-compass"/></svg> Sơ đồ kết nối chủ đề, vị trí mang tính minh họa; không dùng để chỉ đường.</span><a href="https://www.google.com/maps/search/?api=1&query=C%E1%BB%ADa+Vi%E1%BB%87t+Qu%E1%BA%A3ng+Tr%E1%BB%8B" target="_blank" rel="noopener noreferrer">Xem khu vực trên Google Maps <svg class="icon"><use href="#i-external"/></svg></a></div>
+</div></section>
+
+<section class="section container point-section" aria-labelledby="points-heading"><div class="section-heading compact"><div><h2 id="points-heading">Những điều chờ bạn <em>khám phá.</em></h2></div><p id="results-count" class="result-count" aria-live="polite">Hiển thị 5 điểm chạm</p></div><div id="point-grid" class="point-grid"></div><div id="empty-results" class="empty-state" hidden><svg class="icon"><use href="#i-search"/></svg><h3>Chưa tìm thấy điểm chạm</h3><p>Thử một từ khóa khác hoặc xem lại tất cả điểm chạm.</p><button class="btn btn-primary" data-action="reset-filter">Xem tất cả điểm chạm</button></div></section>
+
+<section class="story-section" id="stories" aria-labelledby="story-heading"><div class="container story-layout"><div class="story-visual"><img src="assets/cang-ca.webp" alt="Tàu cá và người dân tấp nập ở bến" loading="lazy" width="1200" height="800"><span class="image-note">NHỮNG ĐIỀU BÌNH DỊ LÀM NÊN MỘT VÙNG ĐẤT</span><div class="story-label"><svg class="icon"><use href="#i-wave"/></svg><span>Biển có sóng.<br>Người có chuyện.</span></div></div><div class="story-copy"><p class="eyebrow">LẮNG NGHE CỬA VIỆT</p><h2 id="story-heading">Ký ức không chỉ<br>nằm trong <em>trang sách.</em></h2><p>Đó còn là nhịp thuyền về bến, một buổi chợ sớm và những câu chuyện được truyền từ thế hệ này sang thế hệ khác.</p><p>Hãy bắt đầu bằng một phút lắng nghe. Rồi tự hỏi: điều gì khiến bạn muốn tìm hiểu thêm về miền biển này?</p><div class="audio-card"><button class="audio-play" data-action="narrate" data-context="intro" aria-label="Nghe thuyết minh giới thiệu Cửa Việt"><svg class="icon"><use href="#i-play"/></svg></button><div class="audio-copy"><strong>Một phút chạm Cửa Việt</strong><small>Thuyết minh tự động · Giọng đọc của thiết bị</small><div class="waveform" aria-hidden="true"></div></div><span class="audio-indicator" aria-live="polite">Sẵn sàng</span></div><button class="text-btn" data-action="transcript">Đọc nội dung thuyết minh <svg class="icon"><use href="#i-arrow"/></svg></button><div class="story-shortcuts" id="story-shortcuts" aria-label="Mở video lời kể theo điểm chạm"></div><p class="source-note">Hình ảnh về nhịp sống Cửa Việt ở Chạm 04. Phần thuyết minh sử dụng giọng đọc của thiết bị.</p></div></div></section>
+
+<section class="section container" id="gallery"><div class="section-heading"><div><p class="eyebrow">THƯ VIỆN ẢNH</p><h2>Cửa Việt qua <em>những góc nhìn.</em></h2></div><p class="section-intro">Những khoảnh khắc kể câu chuyện về Cửa Việt.<br>Chạm vào ảnh để xem lớn và đọc chú thích.</p></div><div class="new-gallery"><button data-action="gallery" data-key="past" data-caption="Tàu thuyền tại Cửa Việt năm 1967. Thông tin ghi trên ảnh: US Navy."><img src="assets/cua-viet-1967.webp" loading="lazy" alt="Tàu thuyền tại Cửa Việt năm 1967. Thông tin ghi trên ảnh: US Navy."><span>Ký ức cửa biển ↗</span></button><button data-action="gallery" data-key="present" data-caption="Toàn cảnh Cửa Việt hôm nay. Chưa xác định được tác giả ảnh."><img src="assets/cua-song-thach-han.webp" loading="lazy" alt="Toàn cảnh Cửa Việt hôm nay. Chưa xác định được tác giả ảnh."><span>Dòng sông gặp biển ↗</span></button><button data-action="gallery" data-key="boatsDoc" data-caption="Thuyền ven bờ biển Cửa Việt. Chưa xác định được tác giả ảnh."><img src="assets/thuyen-thung.webp" loading="lazy" alt="Thuyền ven bờ biển Cửa Việt. Chưa xác định được tác giả ảnh."><span>Nhịp sống bên sóng ↗</span></button><button data-action="gallery" data-key="monument" data-caption="Hình ảnh tượng đài gắn với dấu ấn lịch sử Cửa Việt. Chưa xác định được tác giả ảnh."><img src="assets/tuong-dai-lich-su.webp" loading="lazy" alt="Hình ảnh tượng đài gắn với dấu ấn lịch sử Cửa Việt. Chưa xác định được tác giả ảnh."><span>Một địa chỉ để nhớ ↗</span></button></div></section><section class="container creation"><div><p class="eyebrow">GÓC SÁNG TẠO · CHẠM 05</p><h2>Kể Cửa Việt<br>bằng <em>cách của bạn.</em></h2><p>Một tấm bưu thiếp, một bài viết, một câu chuyện nhỏ.<br>Chọn điều khiến bạn nhớ và bắt đầu kể.</p></div><div class="creation-options"><button data-action="project" data-type="Bưu thiếp quê hương"><b>01 / Bưu thiếp quê hương</b><span>Viết thông điệp bưu thiếp dài 50–80 chữ. ↗</span></button><button data-action="project" data-type="Phóng viên làng biển"><b>02 / Phóng viên làng biển</b><span>Chuẩn bị 3 câu hỏi mở để lắng nghe người dân. ↗</span></button><button data-action="project" data-type="Một phút giới thiệu Cửa Việt"><b>03 / Một phút giới thiệu Cửa Việt</b><span>Viết lời dẫn ngắn với một điều đã học và một lời mời. ↗</span></button></div></section>
+<section class="section container community-section" id="community-board" aria-labelledby="community-heading" hidden>
+  <div class="community-heading">
+    <p class="eyebrow">GÓC CHIA SẺ · CỘNG ĐỒNG CHẠM CỬA VIỆT</p>
+    <h2 id="community-heading">Gửi một lời.<br><em>Giữ một ký ức.</em></h2>
+    <p>Viết điều bạn yêu mến, một câu chuyện đáng nhớ hay lời nhắn gửi đến quê hương Cửa Việt. Mỗi chia sẻ đều trở thành một phần trong bức tranh ký ức chung.</p>
+  </div>
+  <div class="community-layout">
+    <form id="community-form" class="community-form">
+      <h3>Chia sẻ ký ức của bạn</h3>
+      <label for="community-name">1. Tên hiển thị</label>
+      <input id="community-name" name="name" type="text" maxlength="40" minlength="2" autocomplete="nickname" required placeholder="Ví dụ: Bạn Minh, Người yêu Cửa Việt">
+      <p class="community-note">Bạn có thể dùng biệt danh, không cần ghi họ tên đầy đủ.</p>
+      <label for="community-message">2. Câu chuyện hoặc cảm nhận</label>
+      <textarea id="community-message" name="message" minlength="10" maxlength="600" rows="5" required placeholder="Điều khiến tôi nhớ nhất về Cửa Việt là…"></textarea>
+      <label class="community-accept" for="community-consent"><input type="checkbox" id="community-consent" required><span>Tôi đồng ý công khai tên hiển thị và nội dung này để mọi người cùng đọc.</span></label>
+      <p class="community-note">Vui lòng không ghi số điện thoại, địa chỉ hay thông tin riêng tư của bản thân và người khác.</p>
+      <div class="community-honeypot" aria-hidden="true"><label for="community-website">Trang cá nhân</label><input id="community-website" type="text" autocomplete="off" tabindex="-1"></div>
+      <button class="btn btn-primary" id="community-submit" type="submit" disabled>Lưu và chia sẻ ký ức</button>
+      <p class="community-status" id="community-status" role="status">Đang chuẩn bị chức năng lưu trực tuyến…</p>
+    </form>
+    <div class="community-list">
+      <div class="community-list-header"><h3>Những ký ức được chia sẻ</h3><span class="community-note" id="community-feed-status" role="status">Đang tải lời nhắn…</span></div>
+      <div class="community-feed" id="community-feed" aria-live="polite"></div>
+      <button class="btn btn-outline community-more" id="community-more" type="button" hidden>Xem thêm ký ức cũ</button>
+    </div>
+  </div>
+</section>
+<section class="section container" id="passport" aria-labelledby="passport-heading"><div class="passport-banner"><div class="passport-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><div class="passport-book"><p>HÀNH TRÌNH CỦA RIÊNG BẠN</p><svg><use href="#i-compass"/></svg><h3>HỘ CHIẾU<br>KÝ ỨC</h3><span>CỬA VIỆT</span><small>EXPLORE · LEARN · REMEMBER</small></div><span class="paper-stamp">MỖI ĐIỂM ĐẾN<br><b>MỘT ĐIỀU NHỚ</b></span></div><div class="passport-copy"><p class="eyebrow">MANG KÝ ỨC THEO MÌNH</p><h2 id="passport-heading">Một chút Cửa Việt.<br><em>Dành riêng cho bạn.</em></h2><p>Khám phá một điểm chạm, hoàn thành câu hỏi và nhận một dấu ký ức. Từng điều bạn học sẽ trở thành một phần hành trình.</p><div class="mini-stamps" id="mini-stamps" aria-label="Tiến trình hộ chiếu"></div><div class="passport-cta"><button class="btn btn-primary" data-action="passport">Mở hộ chiếu của tôi <svg class="icon"><use href="#i-arrow"/></svg></button><span><b id="passport-progress">0 / 5</b> dấu đã sưu tập</span></div><small class="privacy-note"><svg class="icon"><use href="#i-lock"/></svg> Tiến trình và cảm nhận được lưu riêng trên trình duyệt này.</small></div></div></section>
+
+<section class="section about-section container" id="about" aria-labelledby="about-heading"><div class="about-intro"><p class="eyebrow">TỪ NGHIÊN CỨU ĐẾN TRẢI NGHIỆM</p><h2 id="about-heading">Hiểu để yêu.<br><em>Chạm để nhớ.</em></h2><p>CHẠM CỬA VIỆT là không gian học tập lịch sử và văn hóa địa phương, được phát triển theo định hướng của đề tài “Ký ức Cửa Việt trong mắt thế hệ trẻ”.</p><span class="project-tag"><span class="dot living"></span> Giáo dục di sản · Học qua trải nghiệm</span></div><div class="about-accordions"><details open><summary>Trải nghiệm này dành cho ai?<span>+</span></summary><p>Học sinh, giáo viên và những người muốn tìm hiểu Cửa Việt. Học sinh có thể tự khám phá hoặc cùng giáo viên sử dụng các điểm chạm trong giờ học và hoạt động nhóm.</p></details><details><summary>Tôi bắt đầu như thế nào?<span>+</span></summary><p>Chọn một trong 5 điểm trên sơ đồ. Mỗi chạm có 8 bước: định vị, thử đoán, xem ảnh, lắng nghe, khám phá, kiểm tra, viết ký ức và chọn đường đi tiếp. Hoàn thành các câu hỏi ghi nhớ để nhận dấu hộ chiếu.</p></details><details><summary>Hành trình gồm những gì?<span>+</span></summary><p>Năm điểm chạm giới thiệu cửa biển, lịch sử, người kể chuyện, làng biển và góc nhìn người trẻ.</p></details><details><summary>Nguồn tư liệu và hình ảnh<span>+</span></summary><p>Nội dung được biên soạn theo định hướng giáo dục di sản, kết hợp tìm hiểu lịch sử, văn hóa và đời sống Cửa Việt. Hình ảnh tham khảo từ các nguồn đã dẫn, gồm Báo Nông nghiệp và Môi trường, XANH EWEC, VOV và Báo Đầu tư; ảnh ngày nay không được giới thiệu như ảnh lịch sử.</p><button class="text-btn" data-action="sources">Xem nguồn và phạm vi nội dung <svg class="icon"><use href="#i-arrow"/></svg></button></details><details><summary>Cảm nhận của tôi có được công khai không?<span>+</span></summary><p>Không. Dấu hộ chiếu và cảm nhận chỉ được lưu trên trình duyệt đang dùng, không tự động gửi cho nhà trường hoặc đăng công khai. Bạn có thể tải nhật ký về máy; việc xóa dữ liệu trình duyệt có thể làm mất tiến trình.</p></details></div></section>
+<section class="closing"><div class="container"><svg class="closing-wave"><use href="#i-wave"/></svg><h2>Hành trình bắt đầu<br>bằng một lần <em>chạm.</em></h2><button class="btn btn-gold" data-action="continue">Khám phá điểm chạm tiếp theo <svg class="icon"><use href="#i-arrow"/></svg></button></div></section>
+</main>
+<footer class="footer"><div class="container footer-top"><a class="brand" href="#home"><span class="brand-symbol"><svg><use href="#i-wave"/></svg></span><span>CHẠM CỬA VIỆT</span></a><p>Giữ một câu chuyện.<br>Nối những thế hệ.</p><div><a href="#touch-heading">Khám phá</a><button data-action="sources">Nguồn tư liệu</button><button data-action="privacy">Quyền riêng tư</button></div></div><div class="container footer-bottom"><span>© 2026 CHẠM CỬA VIỆT · Không gian trải nghiệm giáo dục</span><span>Được tạo để khám phá, học hỏi và gìn giữ.</span></div></footer>
+<nav class="mobile-bottom" aria-label="Truy cập nhanh"><a href="#touch-heading"><svg class="icon"><use href="#i-compass"/></svg>Hành trình</a><a href="#memory-map"><svg class="icon"><use href="#i-pin"/></svg>Bản đồ</a><button data-action="passport"><svg class="icon"><use href="#i-book"/></svg>Hộ chiếu <b class="passport-count">0/5</b></button></nav>
+<button class="to-top icon-btn" data-action="top" aria-label="Về đầu trang" hidden><svg class="icon"><use href="#i-up"/></svg></button>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<dialog id="experience-dialog" class="experience-dialog" aria-labelledby="experience-title"><div id="experience-content"></div></dialog>
+<dialog id="utility-dialog" class="utility-dialog" aria-labelledby="utility-title"><div class="utility-header"><p class="eyebrow">CHẠM CỬA VIỆT</p><button class="icon-btn" data-action="close" aria-label="Đóng cửa sổ"><svg class="icon"><use href="#i-close"/></svg></button></div><div id="utility-content"></div></dialog>
+<noscript><div class="noscript">Vui lòng bật JavaScript để dùng bản đồ tương tác và hộ chiếu. Các phần giới thiệu vẫn có thể đọc trên trang.</div></noscript>
+<script defer src="app.js?v=41"></script>
+<script defer src="navigation.js?v=18"></script>
+<script defer src="presentation.js?v=1"></script>
+  <!-- Thống kê riêng tư: không chạy nếu chưa cấu hình Umami -->
+  <script defer src="analytics-config.js?v=1"></script>
+  <script defer src="analytics.js?v=1"></script>
+  <!-- Bảng ký ức chung chỉ xuất hiện khi Firebase đã kết nối thành công -->
+  <script defer src="community-config.js?v=1"></script>
+  <script defer src="community-touch.js?v=2"></script>
+  <script defer src="community.js?v=5"></script>
+  <script defer src="community-photos.js?v=3"></script>
+  <script defer src="photo-credits.js?v=2"></script>
 </body>
 </html>
