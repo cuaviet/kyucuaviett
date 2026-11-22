@@ -874,6 +874,14 @@ function applyTeacherTextCorrections() {
       if (/3 tuyến/i.test(el.textContent || '') || el.tagName === 'I') el.remove();
     });
   }
+  // Theo góp ý: bỏ cả cụm ba tuyến trên trang chủ, đi thẳng đến năm Chạm.
+  const oldRouteSection = document.querySelector('#journeys');
+  if (oldRouteSection) oldRouteSection.remove();
+  document.querySelectorAll('a[href="#journeys"]').forEach(link => {
+    link.setAttribute('href', '#touch-heading');
+    const name = (link.textContent || '').trim();
+    if (name === 'Hành trình' || name === 'Hành trình khám phá') link.textContent = '5 điểm chạm';
+  });
   document.querySelectorAll('.route-number').forEach(el => {
     if (/tuyến/i.test(el.textContent || '')) el.remove();
   });
