@@ -753,7 +753,9 @@ const baseStepMarkup=stepMarkup;
 stepMarkup=function(p){
  if (currentStep === 0 && p.opening) {
   const locationPhoto = p.id === 1 ? `<figure class="station-monument">
-    <img src="assets/anh-chup-ban-do.webp" width="1600" height="900" alt="Ảnh chụp màn hình Google Earth, góc nhìn từ trên cao về Cửa Việt và cửa sông Thạch Hãn">
+    <div class="station-earth-crop">
+      <img src="assets/anh-chup-ban-do.webp" width="1600" height="900" alt="Cửa Việt và cửa sông Thạch Hãn nhìn từ trên cao qua Google Earth, đã cắt bỏ thanh trình duyệt và bảng công cụ" loading="lazy" decoding="async">
+    </div>
     <figcaption>Cửa Việt qua chế độ hình ảnh vệ tinh của Google Earth. Nguồn ảnh: Google Earth (ảnh chụp màn hình do nhóm dự án cung cấp).</figcaption>
   </figure>` : '';
   return `<h3>${p.title}</h3>${locationPhoto}${stationLocationMarkup(p.id)}${p.opening.map(t => `<p>${esc(t)}</p>`).join('')}`;
