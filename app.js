@@ -754,7 +754,7 @@ stepMarkup=function(p){
  if (currentStep === 0 && p.opening) {
   const locationPhoto = p.id === 1 ? `<figure class="station-monument">
     <img src="assets/anh-chup-ban-do.webp" width="1600" height="900" alt="Ảnh chụp màn hình Google Earth, góc nhìn từ trên cao về Cửa Việt và cửa sông Thạch Hãn">
-    <figcaption>Cửa Việt qua góc nhìn vệ tinh trên Google Earth. Ảnh chụp màn hình do nhóm dự án cung cấp; nguồn nền ảnh: Google Earth.</figcaption>
+    <figcaption>Cửa Việt qua chế độ hình ảnh vệ tinh của Google Earth. Nguồn ảnh: Google Earth (ảnh chụp màn hình do nhóm dự án cung cấp).</figcaption>
   </figure>` : '';
   return `<h3>${p.title}</h3>${locationPhoto}${stationLocationMarkup(p.id)}${p.opening.map(t => `<p>${esc(t)}</p>`).join('')}`;
  }
@@ -840,7 +840,7 @@ steps[2]='Chạm qua hình ảnh';steps[3]='Nghe người thật kể';
 
 points.find(p=>p.id===3).text=[" KHÁM PHÁ NHỮNG CÂU CHUYỆN – LƯU GIỮ HỒN QUÊ CỬA VIỆT.  Những câu chuyện được kể không chỉ giúp chúng ta hiểu về một con người mà còn mở ra bức tranh về lịch sử, văn hóa và cuộc sống của cả một cộng đồng.  Nội dung được chia thành 4 nhóm chủ đề chính:  a. Ký ức chiến tranh – Những năm tháng không thể quên  Giới thiệu những câu chuyện về chiến tranh, tình đồng đội, sự hy sinh, tinh thần kiên cường và khát vọng hòa bình của người dân Cửa Việt.  b. Ký ức nghề biển – Một đời gắn bó với sóng nước  Khám phá những câu chuyện về nghề đánh bắt thủy sản, kinh nghiệm đi biển, phương tiện đánh bắt, những chuyến ra khơi và tình yêu biển của ngư dân.  c. Ký ức làng quê – Nếp sống và tình người  Tìm hiểu về diện mạo làng quê ngày trước, cuộc sống gia đình, quan hệ xóm giềng, sinh hoạt cộng đồng và những nét đẹp trong đời sống thường ngày.  d. Ký ức văn hóa – Những giá trị được trao truyền  Khám phá phong tục, tập quán, lễ hội cầu ngư, tín ngưỡng và những kinh nghiệm dân gian được người dân gìn giữ, truyền lại qua nhiều thế hệ. "];
 points.find(p=>p.id===4).text=[" KHÁM PHÁ BẢN SẮC VĂN HÓA – CẢM NHẬN HỒN QUÊ LÀNG BIỂN.  Văn hóa làng biển được hình thành từ quá trình con người thích nghi với môi trường biển, lao động sản xuất và sinh hoạt cộng đồng. Những giá trị ấy được thể hiện qua nhiều khía cạnh của cuộc sống.  a. Nghề biển – Nhịp sống từ đại dương  Nghề đánh bắt và khai thác thủy sản là một hoạt động kinh tế gắn bó lâu đời với cư dân ven biển. Nghề biển không chỉ tạo ra nguồn sống mà còn hình thành những kinh nghiệm, kỹ năng và nếp sinh hoạt đặc trưng.  Học sinh khám phá:  Các hình thức đánh bắt thủy sản.  Phương tiện và ngư cụ truyền thống.  Hoạt động ở bến cá, chợ cá.  Những kinh nghiệm được ngư dân truyền lại.  b. Lễ hội cầu ngư – Niềm tin và khát vọng của cư dân biển  Lễ hội cầu ngư là một sinh hoạt văn hóa tín ngưỡng gắn với cộng đồng cư dân ven biển ở nhiều địa phương. Lễ hội thể hiện mong ước biển yên, trời thuận, đánh bắt thuận lợi, cuộc sống bình an và no đủ.  Học sinh tìm hiểu:  Nguồn gốc và ý nghĩa lễ hội tại địa phương.  Những nghi thức và hoạt động tiêu biểu.  Vai trò của lễ hội trong đời sống cộng đồng.  Ý thức gìn giữ các giá trị văn hóa truyền thống.  Lưu ý: Nội dung về tên gọi, thời gian, nghi thức và địa điểm tổ chức lễ hội cầu ngư tại Cửa Việt cần được học sinh xác minh qua người am hiểu văn hóa và tư liệu địa phương, không mặc định mọi địa phương đều có nghi thức giống nhau.  c. Phong tục tập quán – Nét đẹp trong đời sống cộng đồng  Cuộc sống của cư dân ven biển được gắn kết bởi nhiều phong tục và tập quán trong lao động, sinh hoạt gia đình và hoạt động cộng đồng.  Học sinh khám phá:  Những tập quán trong lao động nghề biển.  Nếp sống và sinh hoạt gia đình.  Tinh thần tương trợ, đoàn kết trong cộng đồng.  Những phong tục được lưu giữ qua nhiều thế hệ.  d. Tri thức dân gian – Kinh nghiệm từ biển cả  Qua quá trình lao động, người dân tích lũy nhiều kinh nghiệm về thời tiết, gió, sóng, thủy triều, mùa vụ và hoạt động đánh bắt.  Học sinh tìm hiểu:  Kinh nghiệm nhận biết thời tiết khi đi biển.  Cách quan sát gió, sóng và dấu hiệu tự nhiên.  Kinh nghiệm lựa chọn thời điểm ra khơi.  Các câu ca dao, tục ngữ và câu chuyện dân gian liên quan đến biển.  đ. Ẩm thực làng biển – Hương vị quê hương  Ẩm thực là một phần quan trọng trong đời sống văn hóa của cư dân ven biển, phản ánh nguồn nguyên liệu từ biển và cách chế biến được truyền qua nhiều thế hệ.  Học sinh khám phá:  Các loại hải sản đặc trưng.  Những món ăn truyền thống của gia đình và làng quê.  Cách chế biến, bảo quản thủy sản.  Những món ăn gắn với ký ức và sinh hoạt cộng đồng. "];
-points.find(p=>p.id===5).text=[" Bốn không gian sáng tạo   Cửa Việt qua ống kính trẻ  Những bức ảnh đẹp về biển, cảnh quan, con người và cuộc sống địa phương.  Viết ý tưởng của bạn →    Cửa Việt qua sắc màu nghệ thuật  Tranh vẽ, thiết kế poster, thơ, bài viết và các sáng tác về quê hương.  Viết ý tưởng của bạn →    Cửa Việt – Điểm hẹn du lịch  Ý tưởng trải nghiệm, tham quan, khám phá văn hóa, ẩm thực và du lịch biển.  Viết ý tưởng của bạn →    Cửa Việt xanh trong tương lai  Ý tưởng du lịch xanh, bảo vệ môi trường và phát triển du lịch bền vững.  Viết ý tưởng của bạn →  "];
+points.find(p=>p.id===5).text=["Ở Chạm năm, bạn có thể chia sẻ hình ảnh và cảm nhận về Cửa Việt qua bốn chủ đề: góc nhìn người trẻ, sắc màu nghệ thuật, điểm hẹn du lịch và Cửa Việt xanh trong tương lai. Hãy chọn một chủ đề, tải hình ảnh phù hợp, ghi tên hiển thị và chú thích để lưu lại. Nội dung sẽ được giáo viên xem xét trước khi chia sẻ công khai."];
 
 const chamTwoToday='assets/toan-canh-cua-viet.webp';
 const chamOneOriginal='assets/tu-lieu-62.webp';
@@ -853,3 +853,54 @@ embeddedImages.station3="assets/cau-cua-viet.webp";points.find(p=>p.id===3).imag
 embeddedImages.station4="assets/nhip-song-ben-ca.webp";points.find(p=>p.id===4).image='station4';
 embeddedImages.station5="assets/bo-bien-cua-viet.webp";points.find(p=>p.id===5).image='station5';
 refresh();
+
+/* Nội dung theo góp ý giáo viên: không nhắc "tuyến" trong phần giới thiệu
+ * và nhãn các Chạm. Giữ nguyên bộ lọc chủ đề và hoạt động tương tác.
+ * Chỉnh văn bản từ bản phục hồi nếu trang chủ vẫn được lấy từ snapshot cũ.
+ */
+function applyTeacherTextCorrections() {
+  document.title = 'CHẠM CỬA VIỆT — Khám phá lịch sử, văn hóa và con người';
+  const description = document.querySelector('meta[name="description"]');
+  if (description) description.content = 'Khám phá lịch sử, văn hóa và con người Cửa Việt qua 5 điểm chạm tương tác, hình ảnh và những câu chuyện quê hương.';
+  document.querySelectorAll('.brand small').forEach(el => {
+    if (/nơi ký ức gặp đại dương/i.test(el.textContent || '')) el.remove();
+  });
+  document.querySelectorAll('.cover-subtitle').forEach(el => {
+    if (/nơi ký ức gặp đại dương/i.test(el.textContent || '')) el.remove();
+  });
+  const heroDetails = document.querySelector('.hero-detail');
+  if (heroDetails) {
+    Array.from(heroDetails.children).forEach(el => {
+      if (/3 tuyến/i.test(el.textContent || '') || el.tagName === 'I') el.remove();
+    });
+  }
+  document.querySelectorAll('.route-number').forEach(el => {
+    if (/tuyến/i.test(el.textContent || '')) el.remove();
+  });
+  document.querySelectorAll('.route-bottom button[aria-label]').forEach(el => {
+    el.setAttribute('aria-label', el.getAttribute('aria-label').replace(/khám phá tuyến/gi, 'Khám phá chủ đề'));
+  });
+  document.querySelectorAll('.section-intro').forEach(el => {
+    const value = (el.textContent || '').trim();
+    if (value === 'Mỗi tuyến dẫn đến các điểm chạm cùng chủ đề.') {
+      el.textContent = 'Mỗi chủ đề mở ra một góc nhìn về lịch sử, con người và cảnh sắc Cửa Việt.';
+    } else if (value === 'Lọc theo tuyến hoặc chọn một điểm chạm để mở câu chuyện.') {
+      el.textContent = 'Chọn chủ đề hoặc một điểm chạm để mở câu chuyện.';
+    }
+  });
+  const filters = document.querySelector('.filters[aria-label="Lọc theo tuyến"]');
+  if (filters) filters.setAttribute('aria-label', 'Lọc theo chủ đề');
+  document.querySelectorAll('.empty-state p, .about-accordions p').forEach(el => {
+    const text = (el.textContent || '').trim();
+    if (text === 'Thử một từ khóa khác hoặc xem lại tất cả các tuyến.') {
+      el.textContent = 'Thử một từ khóa khác hoặc xem lại tất cả điểm chạm.';
+    } else if (text === 'Ba tuyến nhóm năm chủ đề gồm cửa biển, lịch sử, người kể chuyện, làng biển và góc nhìn người trẻ.') {
+      el.textContent = 'Năm điểm chạm giới thiệu cửa biển, lịch sử, người kể chuyện, làng biển và góc nhìn người trẻ.';
+    }
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', applyTeacherTextCorrections, { once: true });
+} else {
+  applyTeacherTextCorrections();
+}
