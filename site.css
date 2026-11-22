@@ -283,3 +283,30 @@ dialog::backdrop { backdrop-filter: blur(4px); }
   object-position: center;
 }
 .compare-cham-five .compare-top { background: #e7ece6; }
+
+
+/* Chạm 1 / Bước 01: cắt khung chụp Google Earth, chỉ giữ phần bản đồ.
+   Ảnh nguồn vẫn được bảo toàn; không hiển thị tab trình duyệt và thanh công cụ. */
+.station-monument .station-earth-crop {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 1200 / 744;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(18, 54, 48, .16);
+  background: #dcece8;
+}
+.station-monument .station-earth-crop img {
+  display: block;
+  position: absolute;
+  width: 133.333%;
+  max-width: none;
+  height: auto;
+  left: -30.833%;
+  top: -10.75%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
