@@ -196,8 +196,8 @@ const geographicTopics = [
   ['Sông Thạch Hãn', 'Dòng sông dẫn nước từ đất liền về Cửa Việt rồi đổ ra biển Đông. Đường thủy gắn vùng cửa biển với các địa bàn ở phía trong.', {
     src: 'assets/song-thach-han-moi.webp',
     fallback: 'assets/cua-song-thach-han.webp',
-    width: 1794,
-    height: 877,
+    width: 1440,
+    height: 704,
     caption: 'Cửa sông Thạch Hãn tại Cửa Việt nhìn từ trên cao.'
   }],
   ['Cảng Cửa Việt', 'Vị trí ở cửa sông giúp cảng kết nối vận tải đường biển, vận chuyển hàng hóa và dịch vụ phục vụ kinh tế địa phương.', {
