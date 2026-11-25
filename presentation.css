@@ -441,7 +441,8 @@ dialog::backdrop {
   grid-template-rows: minmax(0, 1fr) auto;
   background: #f4faf8;
 }
-.cover-frame .hero-photo { position: relative; min-height: 0; }
+.cover-image { position: relative; overflow: hidden; min-height: 0; }
+.cover-frame .hero-photo { position: absolute; }
 .cover-frame figcaption {
   position: static;
   padding: 6px 18px;
