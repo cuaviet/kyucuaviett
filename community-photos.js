@@ -34,12 +34,10 @@
         '<label for="creative-photo-file-' + category + '">1. Chọn ảnh của bạn</label>' +
         '<input id="creative-photo-file-' + category + '" name="photo" type="file" accept="image/jpeg,image/png,image/webp" required>' +
         '<div class="creative-photo-preview" aria-live="polite"></div>' +
-        '<label for="creative-photo-name-' + category + '">2. Tên hiển thị</label>' +
-        '<input id="creative-photo-name-' + category + '" name="name" type="text" minlength="2" maxlength="40" required autocomplete="nickname" placeholder="Ví dụ: Bạn An">' +
-        '<label for="creative-photo-caption-' + category + '">3. Ghi chú dưới ảnh</label>' +
+        '<label for="creative-photo-caption-' + category + '">2. Ghi chú dưới ảnh</label>' +
         '<textarea id="creative-photo-caption-' + category + '" name="caption" rows="3" minlength="5" maxlength="220" required placeholder="Ảnh chụp ở đâu? Khi nào? Điều gì khiến bạn muốn chia sẻ?"></textarea>' +
         '<label class="creative-photo-consent"><input type="checkbox" name="consent" required> ' +
-        '<span>Tôi có quyền chia sẻ ảnh này và đồng ý công khai ảnh, tên hiển thị, ghi chú sau khi giáo viên duyệt.</span></label>' +
+        '<span>Tôi có quyền chia sẻ ảnh này và đồng ý công khai ảnh sau khi giáo viên duyệt.</span></label>' +
         '<p class="creative-photo-tip">Mỗi lần gửi một ảnh JPG, PNG hoặc WebP (tối đa 12 MB trước khi nén). Không gửi ảnh nhạy cảm hay ảnh người khác khi chưa được đồng ý.</p>' +
         '<input class="creative-photo-trap" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">' +
         '<button type="submit" class="btn btn-primary creative-photo-submit" disabled>Lưu ảnh và ghi chú</button>' +
@@ -290,7 +288,7 @@
     if (!form.matches('.creative-photo-form')) return;
     event.preventDefault();
     const file = form.elements.photo.files[0];
-    const name = String(form.elements.name.value || '').normalize('NFC').trim().replace(/\s+/g, ' ');
+    const name = 'Người tham gia ẩn danh';
     const caption = String(form.elements.caption.value || '').normalize('NFC').trim();
     const category = Number(form.dataset.photoCategory);
     const consent = form.elements.consent.checked;
@@ -302,9 +300,9 @@
       return;
     }
     if (!Number.isInteger(category) || category < 0 || category > 3 ||
-        name.length < 2 || name.length > 40 || caption.length < 5 || caption.length > 220 ||
+        caption.length < 5 || caption.length > 220 ||
         !file || !consent) {
-      setStatus(form, 'Hãy chọn ảnh, nhập tên, ghi chú và xác nhận quyền chia sẻ.', true);
+      setStatus(form, 'Hãy chọn ảnh, ghi chú và xác nhận quyền chia sẻ.', true);
       return;
     }
     let lastSent = 0;

@@ -228,12 +228,10 @@ function chamFivePhotoForm(category) {
       <label for="creative-photo-file-${category}">Tải ảnh lên</label>
       <input id="creative-photo-file-${category}" type="file" name="photo" accept="image/jpeg,image/png,image/webp" required>
       <div class="creative-photo-preview" aria-live="polite"></div>
-      <label for="creative-photo-name-${category}">Tên của bạn</label>
-      <input id="creative-photo-name-${category}" type="text" name="name" minlength="2" maxlength="40" required autocomplete="nickname" placeholder="Nhập tên hoặc biệt danh">
       <label for="creative-photo-caption-${category}">Ghi chú dưới ảnh</label>
       <textarea id="creative-photo-caption-${category}" name="caption" rows="3" minlength="5" maxlength="220" required placeholder="Viết vài dòng về hình ảnh của bạn…"></textarea>
       <label class="creative-photo-consent"><input type="checkbox" name="consent" required>
-        <span>Tôi đồng ý chia sẻ ảnh, tên hiển thị và ghi chú sau khi giáo viên duyệt.</span>
+        <span>Tôi đồng ý chia sẻ ảnh sau khi giáo viên duyệt.</span>
       </label>
       <p class="creative-photo-tip">Ảnh JPG, PNG hoặc WebP, tối đa 12 MB trước khi nén. Không đăng ảnh người khác nếu chưa được đồng ý.</p>
       <input class="creative-photo-trap" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -278,7 +276,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json?v=2').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=3').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {

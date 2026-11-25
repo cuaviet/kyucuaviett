@@ -34,14 +34,14 @@ footer { margin-top:36px;color:#607675;font-size:13px; }
 <main>
 <p class="eyebrow">CHẠM CỬA VIỆT · Báo cáo nghiên cứu KHKT</p>
 <h1>Tổng hợp khảo sát trước và sau trải nghiệm</h1>
-<p>Trang báo cáo <strong>độc lập</strong> với giao diện 5 Chạm. Nhập hai tệp CSV xuất từ Google Forms để xem thống kê và đối chiếu câu hỏi giống nhau. Các tệp được xử lý <strong>ngay trên trình duyệt</strong>, không tải lên GitHub, Umami hoặc máy chủ khác.</p>
+<p>Trang báo cáo <strong>độc lập</strong> với giao diện 5 Chạm. Nhập hai tệp CSV xuất từ Google Forms để ghép hai lần trả lời bằng cùng một mã ẩn danh và đối chiếu các câu hỏi giống nhau. Các tệp được xử lý <strong>ngay trên trình duyệt</strong>, không tải lên GitHub, Umami hoặc máy chủ khác.</p>
 <section class="card controls">
 <h2>1. Nhập dữ liệu khảo sát</h2>
 <div class="grid">
 <div><label for="before">Phiếu TRƯỚC trải nghiệm (.csv)</label><input type="file" id="before" accept=".csv,text/csv"></div>
 <div><label for="after">Phiếu SAU trải nghiệm (.csv)</label><input type="file" id="after" accept=".csv,text/csv"></div>
 </div>
-<p class="muted">Trong Google Forms: Câu trả lời → Liên kết Google Sheets hoặc dấu ba chấm → tải tệp CSV. Chỉ sử dụng dữ liệu đã được phép thu thập; nên xóa cột định danh trước khi xuất dữ liệu.</p>
+<p class="muted">Trong Google Forms: Câu trả lời → Liên kết Google Sheets hoặc dấu ba chấm → tải tệp CSV. Dùng cùng cột “Mã ẩn danh” trong hai tệp và giữ mã dưới dạng văn bản. Bỏ họ tên, lớp và các cột nhận diện trước khi nhập. Phiếu vận dụng cuối hành trình chỉ dùng cho hoạt động học tập.</p>
 <button id="analyze">Phân tích các câu hỏi trùng tên</button>
 <button class="secondary" id="export" disabled>Xuất bảng tổng hợp CSV</button>
 <button class="secondary" id="print" disabled>In báo cáo / Lưu PDF</button>
@@ -61,7 +61,7 @@ footer { margin-top:36px;color:#607675;font-size:13px; }
 (() => {
 'use strict';
 const $ = id => document.getElementById(id);
-let pre = null, post = null, reportRows = [];
+let pre = null, post = null, reportRows = [], originalCounts = [];
 const skip = /^(timestamp|dau thoi gian|thoi gian|email|email address|ho va ten|ho ten|ten hoc sinh|full name|name|lop|class|so dien thoai|sdt|phone|student id|ma hoc sinh|dia chi|address)$/;
 const normalize = s => String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const safeField = s => {const t=String(s==null?'':s);const value=/^[=+\-@\t\r]/.test(t)?"'"+t:t;return '"'+value.replace(/"/g,'""')+'"';};
@@ -86,7 +86,31 @@ function parseCSV(source) {
   if(headers.length<2)throw Error('Tệp CSV cần ít nhất hai cột (một cột câu hỏi).');
   return {headers,rows:rows.slice(1).filter(r=>r.some(x=>String(x||'').trim()))};
 }
-const acceptable=(header)=>!skip.test(normalize(header));
+const isCodeHeader = header => /\bma (?:so )?an danh\b/.test(normalize(header));
+const acceptable = header => !isCodeHeader(header) && !skip.test(normalize(header));
+function indexByCode(data) {
+  const columns = data.headers.map((header, index) => isCodeHeader(header) ? index : -1).filter(index => index >= 0);
+  if (columns.length !== 1) throw Error('Mỗi tệp cần có đúng một cột “Mã ẩn danh”.');
+  const entries = new Map();
+  for (const row of data.rows) {
+    const code = String(row[columns[0]] || '').normalize('NFKC').trim().toUpperCase();
+    if (code) entries.set(code, entries.has(code) ? null : row);
+  }
+  return entries;
+}
+function pairResponses(before, after) {
+  const first = indexByCode(before);
+  const second = indexByCode(after);
+  const pairedBefore = [], pairedAfter = [];
+  for (const [code, row] of first) {
+    const match = second.get(code);
+    if (!row || !match) continue;
+    pairedBefore.push(row);
+    pairedAfter.push(match);
+  }
+  if (!pairedBefore.length) throw Error('Không tìm thấy mã ẩn danh xuất hiện đúng một lần trong cả hai tệp.');
+  return [{headers: before.headers, rows: pairedBefore}, {headers: after.headers, rows: pairedAfter}];
+}
 function choices(data,index){
   const values=data.rows.map(row=>String(row[index]||'').trim()).filter(Boolean);
   const map=new Map();for(const v of values)map.set(v,(map.get(v)||0)+1);
@@ -136,17 +160,17 @@ function topStats(number){
  const region=element('section',undefined,'card');
  region.append(element('h2','Tổng quan'));
  const grid=element('div',undefined,'metrics');
- [['Phiếu trước',pre.rows.length],['Phiếu sau',post.rows.length],['Cặp câu hỏi so sánh',number]].forEach(([label,value])=>{
+ [['Phiếu trước đã nhập',originalCounts[0]],['Phiếu sau đã nhập',originalCounts[1]],['Cặp phiếu ghép được',pre.rows.length],['Cặp câu hỏi so sánh',number]].forEach(([label,value])=>{
    const div=element('div',undefined,'metric');div.append(element('small',label),element('strong',String(value)));grid.append(div);
  });
  region.append(grid);return region;
 }
 function analyzePair(pairs){
- reportRows=[];const target=$('report');target.replaceChildren(topStats(pairs.length));
+ reportRows=[];$('export').disabled=true;$('print').disabled=true;const target=$('report');target.replaceChildren(topStats(pairs.length));
  if(!pairs.length){target.append(element('p','Không tìm thấy tiêu đề câu hỏi giống nhau. Hãy chọn hai câu tương đương tại mục “So sánh một cặp câu hỏi”.'));return;}
  for(const [label,i,j]of pairs)target.append(compare(label,i,j));
  $('export').disabled=false;$('print').disabled=false;
- $('status').textContent='Đã tổng hợp '+pairs.length+' cặp câu hỏi. Dữ liệu không rời khỏi trình duyệt.';
+ $('status').textContent='Đã tổng hợp '+pairs.length+' cặp câu hỏi trên '+pre.rows.length+' cặp phiếu. Phiếu thiếu mã, trùng mã hoặc không có mã khớp được bỏ khỏi so sánh.';
 }
 function populate(select,headers){
  select.replaceChildren();
@@ -155,13 +179,16 @@ function populate(select,headers){
 $('analyze').addEventListener('click',async()=>{
  try{
    if(!$('before').files[0]||!$('after').files[0])throw Error('Hãy chọn đủ hai tệp CSV.');
-   pre=parseCSV(await $('before').files[0].text());post=parseCSV(await $('after').files[0].text());
+   const before = parseCSV(await $('before').files[0].text());
+   const after = parseCSV(await $('after').files[0].text());
+   [pre, post] = pairResponses(before, after);
+   originalCounts = [before.rows.length, after.rows.length];
    populate($('pre-question'),pre.headers);populate($('post-question'),post.headers);
    $('manual-section').hidden=false;
    const first=new Map();pre.headers.forEach((h,i)=>{if(acceptable(h)&&!first.has(normalize(h)))first.set(normalize(h),i);});
    const pairs=[];post.headers.forEach((h,j)=>{const i=first.get(normalize(h));if(acceptable(h)&&i!==undefined)pairs.push([h,i,j]);});
    analyzePair(pairs);
- }catch(err){$('status').textContent='Không thể phân tích: '+err.message; $('export').disabled=true;$('print').disabled=true;}
+ }catch(err){pre=null;post=null;reportRows=[];$('manual-section').hidden=true;$('report').replaceChildren();$('status').textContent='Không thể phân tích: '+err.message; $('export').disabled=true;$('print').disabled=true;}
 });
 $('manual-analyze').addEventListener('click',()=>{
  if(!pre||!post)return;

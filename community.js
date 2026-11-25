@@ -199,7 +199,6 @@
         <h3 id="community-delete-title">Xóa bài viết này?</h3>
         <p class="community-edit-intro">Bài sẽ bị xóa vĩnh viễn khỏi Bảng ký ức chung và các điểm Chạm. Hành động này không thể hoàn tác.</p>
         <p class="community-delete-preview" id="community-delete-preview"></p>
-        <label class="community-accept"><input id="community-edit-consent" type="checkbox" required><span>Tôi đồng ý công khai nội dung đã chỉnh sửa dưới tên ẩn danh.</span></label>
         <p class="community-edit-status" id="community-delete-status" role="status"></p>
         <div class="community-edit-actions">
           <button class="btn btn-outline" id="community-delete-cancel" type="button">Giữ lại</button>
