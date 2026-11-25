@@ -348,9 +348,6 @@ function initPlayer(container) {
 }
 
 const groupPhotoAlbums = {
-  2: [
-    ['4016', 'Các chiến sĩ dâng hương tại nơi tưởng niệm. Ảnh hoạt động tri ân hiện nay.']
-  ],
   4: [
     ['3959', 'Những đội đua thuyền đi qua dưới chân cầu.'],
     ['4006', 'Thuyền thúng và tàu cá bên bờ.']
