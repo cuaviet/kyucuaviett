@@ -116,15 +116,20 @@ function chamTwoPhotoGallery() {
 
 function chamThreePhotoGallery() {
   const photos = [
+    ['ba-tu-lieu-bang-khen.webp', 'Bằng khen của Ủy ban Nhân dân Cách mạng tỉnh Quảng Trị trong bộ tư liệu được lưu giữ'],
+    ['ba-tu-lieu-anh-tap-the.webp', 'Ảnh tập thể được lưu giữ qua nhiều năm'],
+    ['ba-tu-lieu-giay-chung-nhan.webp', 'Những giấy chứng nhận danh hiệu Dũng sĩ trong bộ tư liệu'],
+    ['ba-tu-lieu-anh-ky-niem.webp', 'Ảnh kỷ niệm bên một công trình tưởng niệm'],
+    ['ba-gap-nhom-hoc-sinh.webp', 'Học sinh gặp gỡ và lắng nghe người kể chuyện trong chuyến sưu tầm tư liệu'],
     ['anh-3.webp', 'Hình ảnh tư liệu về các bằng khen được lưu giữ'],
     ['anh-4.webp', 'Hình ảnh các giấy khen được lưu giữ'],
     ['anh-5.webp', 'Hình ảnh nhóm học sinh chụp cùng người kể chuyện']
   ];
-  return `<section class="interview-photo-section" aria-labelledby="cham-three-photo-heading">
-    <h4 id="cham-three-photo-heading">Hình ảnh tư liệu</h4>
-    <p>Hình ảnh do chúng tôi sưu tầm/chụp được. Chọn ảnh để xem lớn.</p>
-    <div class="interview-photo-grid">${photos.map(([name, description]) =>
-      `<a href="assets/cham-3-anh-tu-lieu/${name}" target="_blank" rel="noopener noreferrer" aria-label="Xem lớn: ${esc(description)}"><img src="assets/cham-3-anh-tu-lieu/${name}" alt="${esc(description)}" loading="lazy"></a>`).join('')}</div>
+  return `<section class="interview-photo-section interview-photo-section--archive" aria-labelledby="cham-three-photo-heading">
+    <h4 id="cham-three-photo-heading">Hình ảnh tư liệu từ cuộc gặp gỡ người kể chuyện</h4>
+    <p>Những tấm ảnh, giấy chứng nhận và kỷ niệm do nhóm dự án sưu tầm, ghi lại. Chọn ảnh để xem nguyên bản.</p>
+    <div class="interview-photo-grid interview-photo-grid--archive">${photos.map(([name, description]) =>
+      `<figure class="interview-archive-card"><a href="assets/cham-3-anh-tu-lieu/${name}" target="_blank" rel="noopener noreferrer" aria-label="Xem lớn: ${esc(description)}"><img src="assets/cham-3-anh-tu-lieu/${name}" alt="${esc(description)}" loading="lazy"></a><figcaption>${esc(description)}</figcaption></figure>`).join('')}</div>
   </section>`;
 }
 
