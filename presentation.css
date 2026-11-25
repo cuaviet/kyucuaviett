@@ -458,9 +458,6 @@ dialog::backdrop {
   outline: 3px solid #075a53;
   outline-offset: 2px;
 }
-.map-selection { margin-top: 16px; }
-.map-selection .btn { min-height: 44px; text-align: left; }
-.map-selection .btn[hidden] { display: none; }
 
 .mobile-step-title { display: none; }
 @media (max-width: 800px) {
