@@ -14,8 +14,7 @@ const photoCatalog = {
     "caption": "Cổng chào Cửa Việt và đoàn xe trên đường ven biển.",
     "label": "Bộ sưu tập của dự án. Chưa xác định người chụp và thời điểm chụp.",
     "locations": [
-      "Trang chủ",
-      "Chạm 5"
+      "Trang chủ"
     ]
   },
   "assets/toan-canh-cua-viet.webp": {
@@ -306,6 +305,20 @@ const photoCatalog = {
   "media/cham-5-1.webp": {
     "caption": "Hai người trẻ đứng trước bãi biển trong video Chạm 5.",
     "label": "Khung hình của video do nhóm dự án cung cấp.",
+    "locations": [
+      "Chạm 5"
+    ]
+  },
+  "assets/tu-lieu-51.webp": {
+    "caption": "Thuyền nhỏ trên dải cát ven biển.",
+    "label": "Bộ sưu tập của dự án. Chưa xác minh địa điểm chính xác, người chụp và ngày chụp.",
+    "locations": [
+      "Chạm 5"
+    ]
+  },
+  "assets/tu-lieu-52.webp": {
+    "caption": "Hình ghép giới thiệu bãi biển, cổng chào và hoạt động dù lượn.",
+    "label": "Bộ sưu tập của dự án. Chưa rõ người thiết kế và nguồn từng ảnh thành phần.",
     "locations": [
       "Chạm 5"
     ]
