@@ -226,7 +226,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=2').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {
@@ -245,108 +245,17 @@ function mediaShell(key, title) {
   return `<div class="station-video" data-video="${key}" data-video-title="${esc(title)}"><p role="status">Đang chuẩn bị video…</p></div>`;
 }
 
-// Video replacement set: use new interviews only after all corresponding files are available.
-// The previous interview and historical photos remain as fallback during the upload.
-const newChamThreeClips = {
-  "cham-3": [
-    {
-      "path": "media/cham-3-4733-00.mp4",
-      "start": 0,
-      "end": 42
-    },
-    {
-      "path": "media/cham-3-4733-01.mp4",
-      "start": 42,
-      "end": 75
-    },
-    {
-      "path": "media/cham-3-4733-02.mp4",
-      "start": 75,
-      "end": 108
-    },
-    {
-      "path": "media/cham-3-4733-03.mp4",
-      "start": 108,
-      "end": 142
-    },
-    {
-      "path": "media/cham-3-4733-04.mp4",
-      "start": 142,
-      "end": 183
-    },
-    {
-      "path": "media/cham-3-4733-05.mp4",
-      "start": 183,
-      "end": 190
-    }
-  ],
-  "cham-3-quyen": [
-    {
-      "path": "media/cham-3-4745-00.mp4",
-      "start": 0,
-      "end": 42
-    },
-    {
-      "path": "media/cham-3-4745-01.mp4",
-      "start": 42,
-      "end": 75
-    },
-    {
-      "path": "media/cham-3-4745-02.mp4",
-      "start": 75,
-      "end": 108
-    },
-    {
-      "path": "media/cham-3-4745-03.mp4",
-      "start": 108,
-      "end": 142
-    },
-    {
-      "path": "media/cham-3-4745-04.mp4",
-      "start": 142,
-      "end": 183
-    },
-    {
-      "path": "media/cham-3-4745-05.mp4",
-      "start": 183,
-      "end": 217
-    },
-    {
-      "path": "media/cham-3-4745-06.mp4",
-      "start": 217,
-      "end": 226
-    }
-  ]
-};
-const confirmedChamThreeUploads = new Set();
-async function resolveStationClips(catalog, key) {
-  const next = newChamThreeClips[key];
-  if (!next) return catalog[key];
-  if (!confirmedChamThreeUploads.has(key)) {
-    const ready = await Promise.all(next.map(async clip => {
-      try {
-        const response = await fetch(clip.path, { method: 'HEAD', cache: 'no-store' });
-        const type = response.headers.get('content-type') || '';
-        return response.ok && /^(video\/mp4|application\/octet-stream)(?:;|$)/i.test(type);
-      } catch { return false; }
-    }));
-    if (ready.every(Boolean)) confirmedChamThreeUploads.add(key);
-  }
-  return confirmedChamThreeUploads.has(key) ? next : catalog[key];
-}
-
 function initPlayer(container) {
   loadMediaCatalog().then(async catalog => {
     if (!container.isConnected) return;
     const key = container.dataset.video;
-    const clips = await resolveStationClips(catalog, key);
-    if (!container.isConnected) return;
+    const clips = catalog[key];
     if (key === 'cham-3-quyen' && (!Array.isArray(clips) || !clips.length)) {
       container.remove();
       return;
     }
     if (!Array.isArray(clips) || !clips.length) throw new Error("Không có video cho điểm chạm này.");
-    if (key === 'cham-3-quyen' && confirmedChamThreeUploads.has(key)) {
+    if (key === 'cham-3-quyen') {
       const oldPhotos = container.previousElementSibling;
       if (oldPhotos && oldPhotos.classList.contains('war-old-media')) oldPhotos.remove();
     }
