@@ -9,7 +9,9 @@
   if (!section || !cfg || !cfg.apiKey || !cfg.projectId || !cfg.appId || !cfg.authDomain) return;
 
   const form = document.getElementById('community-form');
-  const nameField = document.getElementById('community-name');
+  const anonymousAuthor = 'Người tham gia ẩn danh';
+  const containsIdentityLabel = value => /(?:họ\s*(?:và\s*)?tên|(?:em|tôi|mình)\s+tên|lớp\s*[:–-]?\s*\d{1,2}\s*[a-zđ](?:\s*\d{1,2})?\b|mã học sinh|\b0\d{9}\b)/iu.test(value);
+  const isVisiblePost = data => data.name === anonymousAuthor && !containsIdentityLabel(data.message || '');
   const messageField = document.getElementById('community-message');
   const status = document.getElementById('community-status');
   const feed = document.getElementById('community-feed');
@@ -30,9 +32,6 @@
     el.textContent = message;
     el.dataset.error = isError ? 'true' : 'false';
   }
-  function cleanText(value) {
-    return String(value || '').normalize('NFC').trim().replace(/\s+/g, ' ');
-  }
   function dateText(timestamp) {
     try {
       const date = timestamp && typeof timestamp.toDate === 'function' ? timestamp.toDate() : null;
@@ -46,7 +45,7 @@
     const top = document.createElement('div');
     top.className = 'community-entry-top';
     const author = document.createElement('strong');
-    author.textContent = cleanText(data.name).slice(0, 40) || 'Người yêu Cửa Việt';
+    author.textContent = anonymousAuthor;
     const time = document.createElement('time');
     time.textContent = dateText(data.createdAt);
     const rawMessage = String(data.message || '').slice(0, 600);
@@ -59,7 +58,9 @@
     }
     top.append(author, time);
     const paragraph = document.createElement('p');
-    paragraph.textContent = touchPrefix ? rawMessage.slice(touchPrefix[0].length) : rawMessage;
+    paragraph.textContent = isVisiblePost(data)
+      ? rawMessage.slice(touchPrefix?.[0].length || 0)
+      : 'Bài cũ đang ẩn. Bạn có thể sửa nội dung và đồng ý đăng lại, hoặc xóa bài.';
     article.append(top, paragraph);
     if (data.editedAt) {
       const edited = document.createElement('small');
@@ -117,7 +118,7 @@
         sendButton.disabled = false;
         watchOwnPosts();
         paintFeed();
-        statusText(status, 'Tên và nội dung bạn đăng sẽ hiển thị công khai để mọi người cùng đọc.', false);
+        statusText(status, 'Nội dung bạn đồng ý đăng sẽ hiển thị công khai dưới tên ẩn danh.', false);
       } catch (error) {
         firebaseReady = false;
         viewerUid = null;
@@ -142,11 +143,10 @@
     editDialog.innerHTML = `
       <form class="community-edit-form" id="community-edit-form">
         <h3 id="community-edit-title">Chỉnh sửa cảm nhận của bạn</h3>
-        <p class="community-edit-intro">Sửa lỗi chính tả, tên hiển thị hoặc nội dung. Bài viết được cập nhật tại vị trí cũ, không đăng thêm bài mới.</p>
-        <label for="community-edit-name">Tên hiển thị</label>
-        <input id="community-edit-name" type="text" minlength="2" maxlength="40" required autocomplete="nickname">
+        <p class="community-edit-intro">Xóa họ tên, lớp và các thông tin nhận diện trước khi cập nhật bài.</p>
         <label for="community-edit-message">Câu chuyện hoặc cảm nhận</label>
         <textarea id="community-edit-message" minlength="10" maxlength="600" rows="6" required></textarea>
+        <label class="community-accept"><input id="community-edit-consent" type="checkbox" required><span>Tôi đồng ý công khai nội dung đã chỉnh sửa dưới tên ẩn danh.</span></label>
         <p class="community-edit-status" role="status"></p>
         <div class="community-edit-actions">
           <button class="btn btn-outline" type="button" id="community-edit-cancel">Hủy</button>
@@ -155,7 +155,7 @@
       </form>`;
     document.body.append(editDialog);
     const editForm = editDialog.querySelector('#community-edit-form');
-    const editName = editDialog.querySelector('#community-edit-name');
+    const editConsent = editDialog.querySelector('#community-edit-consent');
     const editMessage = editDialog.querySelector('#community-edit-message');
     const editStatus = editDialog.querySelector('.community-edit-status');
     const editSave = editDialog.querySelector('#community-edit-save');
@@ -180,13 +180,13 @@
       const prefixMatch = message.match(/^\[Chạm (0[1-5])\]\s*/);
       editingPrefix = prefixMatch ? prefixMatch[0] : '';
       editingId = entry.id;
-      editName.value = String(data.name || '');
+      editConsent.checked = false;
       editMessage.value = editingPrefix ? message.slice(editingPrefix.length) : message;
       editMessage.maxLength = 600 - editingPrefix.length;
       statusText(editStatus, '', false);
       editSave.disabled = false;
       if (!editDialog.open) editDialog.showModal();
-      editName.focus();
+      editMessage.focus();
     });
 
 
@@ -199,6 +199,7 @@
         <h3 id="community-delete-title">Xóa bài viết này?</h3>
         <p class="community-edit-intro">Bài sẽ bị xóa vĩnh viễn khỏi Bảng ký ức chung và các điểm Chạm. Hành động này không thể hoàn tác.</p>
         <p class="community-delete-preview" id="community-delete-preview"></p>
+        <label class="community-accept"><input id="community-edit-consent" type="checkbox" required><span>Tôi đồng ý công khai nội dung đã chỉnh sửa dưới tên ẩn danh.</span></label>
         <p class="community-edit-status" id="community-delete-status" role="status"></p>
         <div class="community-edit-actions">
           <button class="btn btn-outline" id="community-delete-cancel" type="button">Giữ lại</button>
@@ -260,12 +261,7 @@
     editForm.addEventListener('submit', async event => {
       event.preventDefault();
       if (!editingId || !auth.currentUser) return;
-      const name = cleanText(editName.value);
       const newContent = String(editMessage.value || '').normalize('NFC').trim();
-      if (name.length < 2 || name.length > 40) {
-        statusText(editStatus, 'Tên hiển thị cần có từ 2 đến 40 ký tự.', true);
-        return;
-      }
       if (newContent.length < 10 || (editingPrefix + newContent).length > 600) {
         statusText(editStatus, 'Nội dung cần có từ 10 ký tự và không vượt quá 600 ký tự.', true);
         return;
@@ -275,13 +271,17 @@
         statusText(editStatus, 'Không tìm thấy bài viết thuộc phiên đăng nhập của bạn.', true);
         return;
       }
+      if (!editConsent.checked || containsIdentityLabel(newContent)) {
+        statusText(editStatus, 'Hãy bỏ thông tin nhận diện và tích đồng ý trước khi cập nhật bài.', true);
+        return;
+      }
       editSave.disabled = true;
       statusText(editStatus, 'Đang lưu bản chỉnh sửa…', false);
       try {
         await firebaseStore.updateDoc(
           firebaseStore.doc(db, 'public_memories', editingId),
           {
-            name: name,
+            name: anonymousAuthor,
             message: editingPrefix + newContent,
             editedAt: firebaseStore.serverTimestamp()
           }
@@ -331,6 +331,7 @@
       for (const item of all) {
         if (seen.has(item.id)) continue;
         seen.add(item.id);
+        if (!isVisiblePost(item.data()) && (!viewerUid || item.data().authorUid !== viewerUid)) continue;
         feed.append(renderCard(item));
         shown++;
       }
@@ -380,7 +381,7 @@
         return timeB - timeA;
       };
       const mine = related.filter(item => viewerUid && item.data().authorUid === viewerUid).sort(byCreatedAt);
-      const others = related.filter(item => !viewerUid || item.data().authorUid !== viewerUid).sort(byCreatedAt);
+      const others = related.filter(item => isVisiblePost(item.data()) && item.data().authorUid !== viewerUid).sort(byCreatedAt);
       const recent = mine.slice(0, 12).concat(others.slice(0, 8));
       if (recent.length) {
         recent.forEach(item => touchFeed.append(renderCard(item)));
@@ -448,7 +449,6 @@
       if (!fromTouch && submittedForm !== form) return;
       event.preventDefault();
 
-      const nameInput = fromTouch ? submittedForm.querySelector('#community-touch-name') : nameField;
       const messageInput = fromTouch ? submittedForm.querySelector('#community-touch-message') : messageField;
       const consentInput = fromTouch ? submittedForm.querySelector('#community-touch-consent') : consent;
       const honeyInput = fromTouch ? submittedForm.querySelector('#community-touch-website') : honeypot;
@@ -461,17 +461,11 @@
         return;
       }
 
-      const name = cleanText(nameInput?.value);
       const message = String(messageInput?.value || '').normalize('NFC').trim();
       const touchId = fromTouch ? Number(submittedForm.dataset.touchId) : 0;
       const prefix = fromTouch ? '[Chạm ' + String(touchId).padStart(2, '0') + '] ' : '';
       if (fromTouch && (!Number.isInteger(touchId) || touchId < 1 || touchId > 5)) {
         statusText(statusTarget, 'Không xác định được điểm Chạm. Hãy mở lại phần này.', true);
-        return;
-      }
-      if (name.length < 2 || name.length > 40) {
-        statusText(statusTarget, 'Tên hiển thị cần có từ 2 đến 40 ký tự.', true);
-        nameInput.focus();
         return;
       }
       if (message.length < 10 || (prefix + message).length > 600) {
@@ -480,8 +474,14 @@
         return;
       }
       if (!consentInput?.checked) {
-        statusText(statusTarget, 'Bạn cần đồng ý công khai tên hiển thị và nội dung trước khi đăng.', true);
+        statusText(statusTarget, 'Bạn cần đồng ý công khai nội dung trước khi đăng.', true);
         consentInput.focus();
+        return;
+      }
+
+      if (containsIdentityLabel(message)) {
+        statusText(statusTarget, 'Hãy bỏ thông tin nhận diện trước khi đăng.', true);
+        messageInput.focus();
         return;
       }
 
@@ -499,7 +499,7 @@
       try {
         const user = auth.currentUser || (await firebaseAuth.signInAnonymously(auth)).user;
         await firebaseStore.addDoc(collectionRef, {
-          name,
+          name: anonymousAuthor,
           message: prefix + message,
           authorUid: user.uid,
           createdAt: firebaseStore.serverTimestamp()

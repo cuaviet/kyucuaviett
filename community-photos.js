@@ -113,16 +113,16 @@
     image.src = photo.imageData;
     image.loading = 'lazy';
     image.decoding = 'async';
-    image.alt = 'Ảnh do ' + String(photo.name || 'người tham gia').slice(0, 40) + ' chia sẻ về Cửa Việt';
+    image.alt = 'Ảnh do người tham gia chia sẻ về Cửa Việt';
     const caption = document.createElement('figcaption');
     const author = document.createElement('strong');
-    author.textContent = String(photo.name || '').slice(0, 40);
+    author.textContent = 'Người tham gia ẩn danh';
     const note = document.createElement('p');
-    note.textContent = String(photo.caption || '').slice(0, 220);
+    if (pending) note.textContent = String(photo.caption || '').slice(0, 220);
     caption.append(author, note);
     const submittedSource = document.createElement('small');
     submittedSource.className = 'creative-photo-submitted-source';
-    submittedSource.textContent = 'Nguồn ảnh: Người tham gia gửi (theo tên hiển thị)';
+    submittedSource.textContent = 'Nguồn ảnh: Người tham gia gửi';
     caption.append(submittedSource);
     if (pending) {
       const label = document.createElement('small');

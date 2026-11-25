@@ -24,7 +24,7 @@
     'assets/cua-viet-u-chuop-nuoc-mam.avif': { label: 'Viết Hảo / Báo Nhà báo và Công luận', url: links.nuocmam },
     'assets/vietship-01-cuu-nan.jpg': { label: 'Báo Thanh Niên', url: links.thanhNien },
     'assets/anh-chien-su-1973.webp': { label: 'Ảnh tư liệu đăng trên Báo Dân Việt; chưa rõ tác giả gốc' },
-    'assets/tu-lieu-62.webp': { label: 'Tư liệu năm 1967, ghi chú US Navy; chưa xác minh ảnh gốc' },
+    'assets/tu-lieu-62.webp': { label: 'Kenneth L. Fuller / U.S. DefenseImagery, 15/3/1967 · DM-ST-85-09352', url: 'https://commons.wikimedia.org/wiki/File:LCVP_LCU_and_LCM_on_Cua_Viet_river_1967.JPEG' },
     'assets/cua-viet-1967.webp': { label: 'Tư liệu năm 1967, ghi chú US Navy; chưa xác minh ảnh gốc' },
     'assets/toan-canh-cua-viet.webp': { label: 'Nhóm dự án cung cấp; chưa rõ tác giả ảnh gốc' },
     'assets/cham-1-toan-canh-cua-viet.webp': { label: 'Nhóm dự án cung cấp; chưa rõ tác giả ảnh gốc' },

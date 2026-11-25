@@ -133,9 +133,61 @@ function chamThreePhotoGallery() {
   </section>`;
 }
 
+const creativeWritingTemplates = [
+  {title: 'Bưu thiếp quê hương', file: 'Buu_thiep_que_huong.txt', hint: 'Viết 50–80 chữ gửi một người bạn. Chọn một hình ảnh hoặc kỷ niệm ở Cửa Việt và kể vì sao bạn nhớ.', fields: ['Lời nhắn trên bưu thiếp']},
+  {title: 'Phóng viên làng biển', file: 'Phong_vien_lang_bien.txt', hint: 'Chọn một người bạn muốn phỏng vấn và viết ba câu hỏi mở để người ấy kể lại trải nghiệm của mình.', fields: ['Câu hỏi 1', 'Câu hỏi 2', 'Câu hỏi 3']},
+  {title: 'Một phút giới thiệu Cửa Việt', file: 'Mot_phut_gioi_thieu_Cua_Viet.txt', hint: 'Viết lời dẫn để đọc trong khoảng một phút. Đọc thử thành tiếng để chọn chi tiết đáng nhớ nhất.', fields: ['Mở đầu – Chào và giới thiệu chủ đề', 'Nội dung – Kể một câu chuyện hoặc giới thiệu một địa điểm', 'Kết – Gửi lời mời hoặc thông điệp']}
+];
+
+function creativeWritingMarkup() {
+  return `<section aria-labelledby="creative-writing-heading"><h3 id="creative-writing-heading">Góc sáng tạo</h3>
+    <div class="station-topics">${creativeWritingTemplates.map((template, index) => `
+      <details><summary>${template.title}</summary><p>${template.hint}</p>
+        <form class="note-form" data-creative-writing="${index}">
+          ${template.fields.map((label, field) => `<label for="creative-${index}-${field}">${label}</label>
+            <textarea id="creative-${index}-${field}" rows="${index === 0 ? 5 : 3}" maxlength="2000" required></textarea>`).join('')}
+          <button class="btn btn-primary" type="submit">Tải bài về (.txt)</button>
+          <p role="status"></p>
+        </form>
+      </details>`).join('')}</div></section>`;
+}
+
+document.addEventListener('submit', event => {
+  const form = event.target;
+  if (!form.matches('[data-creative-writing]')) return;
+  event.preventDefault();
+  const index = Number(form.dataset.creativeWriting);
+  const template = creativeWritingTemplates[index];
+  const fields = [...form.querySelectorAll('textarea')];
+  const answers = fields.map(field => field.value.trim());
+  const status = form.querySelector('[role="status"]');
+  const emptyIndex = answers.findIndex(answer => !answer);
+  if (emptyIndex >= 0) {
+    status.textContent = 'Hãy điền các mục còn trống trước khi tải.';
+    fields[emptyIndex].focus();
+    return;
+  }
+  if (index === 0) {
+    const wordCount = answers[0].match(/[\p{L}\p{N}]+(?:[-’'][\p{L}\p{N}]+)*/gu)?.length || 0;
+    if (wordCount < 50 || wordCount > 80) {
+      status.textContent = `Bài có ${wordCount} chữ. Hãy chỉnh về 50–80 chữ trước khi tải.`;
+      fields[0].focus();
+      return;
+    }
+  }
+  const content = [template.title, ...answers.map((answer, i) => template.fields[i] + '\n' + answer)].join('\n\n');
+  const url = URL.createObjectURL(new Blob([content], {type: 'text/plain;charset=utf-8'}));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = template.file;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  status.textContent = 'Đã yêu cầu tải bài.';
+});
+
 const interviewPrompts = [
   'Theo lời kể, điều gì đã thay đổi nhiều nhất ở vùng cửa biển?',
-  'Chi tiết nào trong lời kể giúp bạn hiểu thêm về Cửa Việt? Bạn sẽ đối chiếu với tư liệu nào?',
+  'Chi tiết nào trong lời kể giúp em hiểu thêm về Cửa Việt? Vì sao?',
   'Nếu được hỏi thêm một câu, bạn muốn hỏi người kể chuyện điều gì?',
   'Người kể đã nhắc đến những kinh nghiệm hoặc nếp sinh hoạt nào của cư dân làng biển?',
   'Bạn muốn giới thiệu Cửa Việt với người lần đầu đến đây bằng câu chuyện nào?'
@@ -261,7 +313,7 @@ function initPlayer(container) {
     }
     const title = container.dataset.videoTitle;
     const choices = clips.length > 1 ? `<div class="station-chapters" role="group" aria-label="Chọn phần video">${clips.map((clip, i) =>
-      `<button type="button" data-chapter="${i}" aria-pressed="${i === 0}">Phần ${i + 1}<small>${formatTime(clip.start)}–${formatTime(clip.end)}</small></button>`).join('')}</div>` : '';
+      `<button type="button" data-chapter="${i}" aria-pressed="${i === 0}">${esc(clip.title || `Phần ${i + 1}`)}<small>${formatTime(clip.start)}–${formatTime(clip.end)}</small></button>`).join('')}</div>` : '';
     container.innerHTML = `<figure>${choices}<video controls playsinline preload="none" aria-label="${esc(title)}">Trình duyệt chưa hỗ trợ phát video.</video>
       <p class="media-notice" role="status" hidden>Video tạm thời chưa tải được. <button type="button" class="btn btn-outline">Thử lại</button></p>
       <div class="video-toolbar"><button type="button" class="btn btn-primary video-toggle">Phát video</button></div>
@@ -362,11 +414,11 @@ stepMarkup = function (point) {
     return `${copy}<h3>Tư liệu trận Cửa Việt năm 1973</h3>${mediaShell('cham-2-tu-lieu', 'Tư liệu trận Cửa Việt năm 1973')}`;
   }
   if (currentStep === 4 && id === 5) {
-    return `<div class="station-body"><h3>Bốn không gian sáng tạo</h3>
+    return `<div class="station-body">${creativeWritingMarkup()}<h3>Chia sẻ ảnh về Cửa Việt</h3>
       <figure class="station-monument"><img src="${stationAssets['5_image1']}" alt="Dải bờ biển Cửa Việt nhìn từ trên cao"><figcaption>Bờ biển Cửa Việt · Góc nhìn hôm nay.</figcaption></figure>
       <div class="station-topics">${creativeTopics.map(([title], index) =>
         `<details><summary>${esc(title)}</summary>${chamFivePhotoForm(index)}</details>`).join('')}</div>
-      <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở phiếu khảo sát ${icon('arrow')}</button>
+      <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở Phiếu vận dụng cuối hành trình ${icon('arrow')}</button>
       <p class="station-source">Chọn một chủ đề, chia sẻ hình ảnh bạn thực hiện và ghi lại lời chú thích về Cửa Việt.</p></div>`;
   }
   const markup = originalStationMarkup(point);
