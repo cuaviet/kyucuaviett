@@ -18,10 +18,12 @@
   <summary>Đăng công khai</summary>
   <p>Bài xuất hiện trên Bảng ký ức chung. Chỉ viết nội dung bạn muốn chia sẻ với mọi người.</p>
   <form id="community-touch-form" class="note-form community-touch-form" data-touch-id="${touchId}">
+    <label for="community-touch-author">Tên hiển thị hoặc biệt danh (không bắt buộc)</label>
+    <input id="community-touch-author" name="author" type="text" maxlength="34" autocomplete="off" placeholder="Nhập tên hiển thị hoặc để trống nếu muốn ẩn danh">
     <label for="community-touch-message">Cảm nhận của bạn</label>
     <textarea id="community-touch-message" name="message" rows="4" minlength="10" maxlength="580" required placeholder="Một điều đã học, một cảm nhận, một câu hỏi…"></textarea>
-    <label class="community-accept" for="community-touch-consent"><input id="community-touch-consent" type="checkbox" required><span>Tôi đồng ý để cảm nhận này xuất hiện công khai cho mọi người cùng đọc.</span></label>
-    <p class="community-note">Không ghi họ tên, lớp, mã học sinh, địa chỉ hay số điện thoại của bất kỳ ai.</p>
+    <label class="community-accept" for="community-touch-consent"><input id="community-touch-consent" type="checkbox" required><span>Tôi đồng ý công khai cảm nhận và tên hiển thị nếu tôi đã điền.</span></label>
+    <p class="community-note">Bạn có thể dùng biệt danh. Không ghi họ tên, lớp, mã học sinh, địa chỉ hay số điện thoại trong nội dung cảm nhận.</p>
     <div class="community-honeypot" aria-hidden="true"><label for="community-touch-website">Website cá nhân</label><input id="community-touch-website" type="text" autocomplete="off" tabindex="-1"></div>
     <button class="btn btn-primary" id="community-touch-submit" type="submit" disabled>Đăng công khai</button>
     <p class="community-status" id="community-touch-status" role="status">Đang kết nối nơi lưu ký ức trực tuyến…</p>
