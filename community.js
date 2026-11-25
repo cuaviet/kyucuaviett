@@ -14,16 +14,25 @@
   const publicNamePrefix = 'Tên: ';
   const validDisplayName = value => /^(?=.{2,34}$)[\p{L}\p{M}]+(?:[ ’'-][\p{L}\p{M}]+)*$/u.test(value);
   function displayAuthor(data) {
-    if (data.name === anonymousAuthor) return anonymousAuthor;
-    if (typeof data.name !== 'string' || !data.name.startsWith(publicNamePrefix)) return null;
-    const name = data.name.slice(publicNamePrefix.length);
-    return validDisplayName(name) ? name : null;
+    const stored = typeof data.name === 'string' ? data.name.normalize('NFC').trim() : '';
+    if (stored === anonymousAuthor) return anonymousAuthor;
+    if (stored.startsWith(publicNamePrefix)) {
+      const name = stored.slice(publicNamePrefix.length);
+      return validDisplayName(name) ? name : null;
+    }
+    // Older public forms explicitly asked permission to publish the display name.
+    const name = stored
+      .replace(/\b(?:lớp\s*[:：]?\s*)?(?:[6-9]|1[012])\s*[a-zđ]\s*\d{0,2}\b/giu, ' ')
+      .replace(/\blớp\s*[:：]?\s*(?:[6-9]|1[012])\b/giu, ' ')
+      .replace(/[\s,;:()–-]+$/u, '')
+      .trim().replace(/\s+/gu, ' ');
+    return /^(?=.{2,40}$)[\p{L}\p{M}]+(?:[ ’'-][\p{L}\p{M}]+)*$/u.test(name) ? name : null;
   }
   const containsIdentityLabel = value => /(?:họ\s*(?:và\s*)?tên|(?:em|tôi|mình)\s+tên|lớp\s*[:–-]?\s*\d{1,2}\s*[a-zđ](?:\s*\d{1,2})?\b|mã học sinh|\b0\d{9}\b)/iu.test(value);
   function publicMessage(message, storedName) {
     let text = message.normalize('NFC');
     const name = String(storedName || '').normalize('NFC').trim();
-    if (name && !displayAuthor({name})) {
+    if (name && name !== anonymousAuthor && !name.startsWith(publicNamePrefix)) {
       const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
       text = text.replace(new RegExp('(?<![\\p{L}\\p{N}])' + escapedName + '(?![\\p{L}\\p{N}])', 'giu'), '[đã ẩn tên]');
     }
