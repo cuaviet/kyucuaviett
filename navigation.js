@@ -423,11 +423,11 @@ stepMarkup = function (point) {
     return `${copy}<h3>Tư liệu trận Cửa Việt năm 1973</h3>${mediaShell('cham-2-tu-lieu', 'Tư liệu trận Cửa Việt năm 1973')}`;
   }
   if (currentStep === 4 && id === 5) {
-    return `<div class="station-body">${creativeWritingMarkup()}<h3>Chia sẻ ảnh về Cửa Việt</h3>
+    return `<div class="station-body"><h3>Bốn không gian sáng tạo</h3>
       <figure class="station-monument"><img src="${stationAssets['5_image1']}" alt="Dải bờ biển Cửa Việt nhìn từ trên cao"><figcaption>Bờ biển Cửa Việt · Góc nhìn hôm nay.</figcaption></figure>
       <div class="station-topics">${creativeTopics.map(([title], index) =>
         `<details><summary>${esc(title)}</summary>${chamFivePhotoForm(index)}</details>`).join('')}</div>
-      <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở Phiếu vận dụng cuối hành trình ${icon('arrow')}</button>
+      <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở phiếu khảo sát ${icon('arrow')}</button>
       <p class="station-source">Chọn một chủ đề, chia sẻ hình ảnh bạn thực hiện và ghi lại lời chú thích về Cửa Việt.</p></div>`;
   }
   const markup = originalStationMarkup(point);
