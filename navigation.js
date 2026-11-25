@@ -420,7 +420,7 @@ stepMarkup = function (point) {
       <p class="station-source">Chọn một chủ đề, chia sẻ hình ảnh bạn thực hiện và ghi lại lời chú thích về Cửa Việt.</p></div>`;
   }
   const markup = originalStationMarkup(point);
-  if (currentStep === 2 && groupPhotoAlbums[id]) return markup + groupPhotoAlbum(id);
+  if (currentStep === 2 && id !== 4 && groupPhotoAlbums[id]) return markup + groupPhotoAlbum(id);
   if (currentStep === 0) {
     return markup + `<div class="station-quicklinks" aria-label="Lối tắt trong chạm"><button class="btn btn-outline" data-action="step" data-step="2">Xem hình ảnh</button><button class="btn btn-outline" data-action="step" data-step="3">Xem video lời kể</button><button class="btn btn-outline" data-action="step" data-step="4">Đọc nội dung</button></div>`;
   }
