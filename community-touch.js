@@ -1,4 +1,4 @@
-/* Chia sẻ công khai là một lựa chọn riêng ở Bước 7. */
+/* Hiển thị trực tiếp biểu mẫu chia sẻ công khai ở Bước 7. */
 (function () {
   'use strict';
   const cfg = window.CHAM_CUA_VIET_COMMUNITY;
@@ -14,8 +14,7 @@
 
     return markup + `
 <section class="community-touch" id="community-touch" data-touch-id="${touchId}">
-  <details class="timeline-entry">
-  <summary>Đăng công khai</summary>
+  <h4>Chia sẻ cảm nhận của bạn</h4>
   <p>Bài xuất hiện trên Bảng ký ức chung. Chỉ viết nội dung bạn muốn chia sẻ với mọi người.</p>
   <form id="community-touch-form" class="note-form community-touch-form" data-touch-id="${touchId}">
     <label for="community-touch-author">Tên hiển thị hoặc biệt danh (không bắt buộc)</label>
@@ -28,7 +27,6 @@
     <button class="btn btn-primary" id="community-touch-submit" type="submit" disabled>Đăng công khai</button>
     <p class="community-status" id="community-touch-status" role="status">Đang kết nối nơi lưu ký ức trực tuyến…</p>
   </form>
-  </details>
   <div class="community-touch-recent">
     <h4>Những cảm nhận được chia sẻ ở Chạm ${formattedId}</h4>
     <p class="community-note" id="community-touch-feed-status" role="status">Đang tải bài viết…</p>
