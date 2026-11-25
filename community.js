@@ -10,8 +10,17 @@
 
   const form = document.getElementById('community-form');
   const anonymousAuthor = 'Người tham gia ẩn danh';
+  const authorField = document.getElementById('community-author');
+  const publicNamePrefix = 'Tên: ';
+  const validDisplayName = value => /^(?=.{2,34}$)[\p{L}\p{M}]+(?:[ ’'-][\p{L}\p{M}]+)*$/u.test(value);
+  function displayAuthor(data) {
+    if (data.name === anonymousAuthor) return anonymousAuthor;
+    if (typeof data.name !== 'string' || !data.name.startsWith(publicNamePrefix)) return null;
+    const name = data.name.slice(publicNamePrefix.length);
+    return validDisplayName(name) ? name : null;
+  }
   const containsIdentityLabel = value => /(?:họ\s*(?:và\s*)?tên|(?:em|tôi|mình)\s+tên|lớp\s*[:–-]?\s*\d{1,2}\s*[a-zđ](?:\s*\d{1,2})?\b|mã học sinh|\b0\d{9}\b)/iu.test(value);
-  const isVisiblePost = data => data.name === anonymousAuthor && !containsIdentityLabel(data.message || '');
+  const isVisiblePost = data => Boolean(displayAuthor(data)) && !containsIdentityLabel(data.message || '');
   const messageField = document.getElementById('community-message');
   const status = document.getElementById('community-status');
   const feed = document.getElementById('community-feed');
@@ -45,7 +54,7 @@
     const top = document.createElement('div');
     top.className = 'community-entry-top';
     const author = document.createElement('strong');
-    author.textContent = anonymousAuthor;
+    author.textContent = isVisiblePost(data) ? displayAuthor(data) : anonymousAuthor;
     const time = document.createElement('time');
     time.textContent = dateText(data.createdAt);
     const rawMessage = String(data.message || '').slice(0, 600);
@@ -118,7 +127,7 @@
         sendButton.disabled = false;
         watchOwnPosts();
         paintFeed();
-        statusText(status, 'Nội dung bạn đồng ý đăng sẽ hiển thị công khai dưới tên ẩn danh.', false);
+        statusText(status, 'Bài đã đăng sẽ hiện công khai. Để trống ô tên nếu bạn muốn đăng ẩn danh.', false);
       } catch (error) {
         firebaseReady = false;
         viewerUid = null;
@@ -316,51 +325,33 @@
         ownQuery,
         snapshot => {
           ownPosts = snapshot.docs;
-          paintTouchFeed();
+          paintFeed();
         },
         error => console.warn('Unable to load your older memories:', error.code || error.message)
       );
     }
 
-    let showAllPosts = false;
     function paintFeed() {
       feed.replaceChildren();
       const seen = new Set();
-      const all = newest.concat(older);
+      const all = allLoadedPosts();
       let shown = 0;
       for (const item of all) {
         if (seen.has(item.id)) continue;
         seen.add(item.id);
         if (!isVisiblePost(item.data()) && (!viewerUid || item.data().authorUid !== viewerUid)) continue;
-        if (!showAllPosts && !isVisiblePost(item.data())) continue;
-        const card = renderCard(item);
-        if (!showAllPosts) {
-          const message = card.querySelector('p');
-          const toggle = document.createElement('button');
-          toggle.type = 'button';
-          toggle.className = 'text-btn community-read-more';
-          toggle.textContent = 'Đọc tiếp';
-          toggle.setAttribute('aria-expanded', 'false');
-          message.classList.add('community-message-preview');
-          toggle.addEventListener('click', () => {
-            const collapsed = message.classList.toggle('community-message-preview');
-            toggle.textContent = collapsed ? 'Đọc tiếp' : 'Thu gọn';
-            toggle.setAttribute('aria-expanded', String(!collapsed));
-          });
-          message.after(toggle);
-        }
-        feed.append(card);
+        feed.append(renderCard(item));
         shown++;
-        if (!showAllPosts && shown === 3) break;
       }
       if (!shown) {
         const note = document.createElement('p');
         note.className = 'community-empty';
-        note.textContent = 'Chưa có lời nhắn nào. Hãy trở thành người đầu tiên lưu một ký ức về Cửa Việt!';
+        note.textContent = all.length
+          ? 'Chưa có lời nhắn công khai trong các bài đã tải.'
+          : 'Chưa có lời nhắn nào. Hãy chia sẻ một ký ức về Cửa Việt!';
         feed.append(note);
       }
-      moreButton.hidden = showAllPosts ? !canLoadMore : all.length <= shown;
-      moreButton.textContent = showAllPosts ? 'Xem thêm ký ức cũ' : 'Xem tất cả bài chia sẻ';
+      moreButton.hidden = !canLoadMore;
       paintTouchFeed();
     }
 
@@ -445,11 +436,6 @@
     );
 
     moreButton.addEventListener('click', async () => {
-      if (!showAllPosts) {
-        showAllPosts = true;
-        paintFeed();
-        return;
-      }
       const last = older.length ? older[older.length - 1] : newest[newest.length - 1];
       if (!last) return;
       moreButton.disabled = true;
@@ -486,6 +472,12 @@
       }
 
       const message = String(messageInput?.value || '').normalize('NFC').trim();
+      const displayName = fromTouch ? '' : authorField.value.normalize('NFC').trim().replace(/\s+/g, ' ');
+      if (displayName && !validDisplayName(displayName)) {
+        statusText(statusTarget, 'Tên hiển thị cần từ 2 đến 34 ký tự và chỉ gồm chữ, khoảng trắng, dấu nháy hoặc dấu gạch nối.', true);
+        authorField.focus();
+        return;
+      }
       const touchId = fromTouch ? Number(submittedForm.dataset.touchId) : 0;
       const prefix = fromTouch ? '[Chạm ' + String(touchId).padStart(2, '0') + '] ' : '';
       if (fromTouch && (!Number.isInteger(touchId) || touchId < 1 || touchId > 5)) {
@@ -523,13 +515,14 @@
       try {
         const user = auth.currentUser || (await firebaseAuth.signInAnonymously(auth)).user;
         await firebaseStore.addDoc(collectionRef, {
-          name: anonymousAuthor,
+          name: displayName ? publicNamePrefix + displayName : anonymousAuthor,
           message: prefix + message,
           authorUid: user.uid,
           createdAt: firebaseStore.serverTimestamp()
         });
         try { localStorage.setItem(cooldownKey, String(Date.now())); } catch {}
         messageInput.value = '';
+        if (!fromTouch) authorField.value = '';
         consentInput.checked = false;
         statusTarget.dataset.hasFeedback = 'true';
         statusText(statusTarget, 'Đã lưu thành công! Lời nhắn của bạn được chia sẻ với mọi người.', false);

@@ -138,10 +138,12 @@
   <div class="community-layout">
     <form id="community-form" class="community-form">
       <h3>Chia sẻ ký ức của bạn</h3>
+      <label for="community-author">Họ và tên hoặc tên hiển thị</label>
+      <input id="community-author" name="author" type="text" maxlength="34" autocomplete="off" placeholder="Để trống nếu muốn đăng ẩn danh">
       <label for="community-message">Câu chuyện hoặc cảm nhận</label>
       <textarea id="community-message" name="message" minlength="10" maxlength="600" rows="5" required placeholder="Điều khiến tôi nhớ nhất về Cửa Việt là…"></textarea>
-      <label class="community-accept" for="community-consent"><input type="checkbox" id="community-consent" required><span>Tôi đồng ý công khai nội dung này dưới tên ẩn danh để mọi người cùng đọc.</span></label>
-      <p class="community-note">Vui lòng không ghi họ tên, lớp, mã học sinh, số điện thoại hay địa chỉ của bản thân và người khác.</p>
+      <label class="community-accept" for="community-consent"><input type="checkbox" id="community-consent" required><span>Tôi đồng ý công khai bài viết và tên hiển thị nếu tôi đã điền.</span></label>
+      <p class="community-note">Bạn có thể dùng biệt danh. Trong nội dung bài, đừng ghi họ tên, lớp, mã học sinh, số điện thoại hay địa chỉ.</p>
       <div class="community-honeypot" aria-hidden="true"><label for="community-website">Trang cá nhân</label><input id="community-website" type="text" autocomplete="off" tabindex="-1"></div>
       <button class="btn btn-primary" id="community-submit" type="submit" disabled>Đăng công khai</button>
       <p class="community-status" id="community-status" role="status">Đang chuẩn bị chức năng lưu trực tuyến…</p>
@@ -149,7 +151,7 @@
     <div class="community-list">
       <div class="community-list-header"><h3>Những ký ức được chia sẻ</h3><span class="community-note" id="community-feed-status" role="status">Đang tải lời nhắn…</span></div>
       <div class="community-feed" id="community-feed" aria-live="polite"></div>
-      <button class="btn btn-outline community-more" id="community-more" type="button" hidden>Xem tất cả bài chia sẻ</button>
+      <button class="btn btn-outline community-more" id="community-more" type="button" hidden>Xem thêm ký ức cũ</button>
     </div>
   </div>
 </section>
@@ -174,7 +176,7 @@
   <!-- Bảng ký ức chung chỉ xuất hiện khi Firebase đã kết nối thành công -->
   <script defer src="community-config.js?v=1"></script>
   <script defer src="community-touch.js?v=4"></script>
-  <script defer src="community.js?v=8"></script>
+  <script defer src="community.js?v=9"></script>
   <script defer src="community-photos.js?v=5"></script>
   <script defer src="photo-credits.js?v=4"></script>
 </body>
