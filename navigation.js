@@ -423,12 +423,19 @@ stepMarkup = function (point) {
     return `${copy}<h3>Tư liệu trận Cửa Việt năm 1973</h3>${mediaShell('cham-2-tu-lieu', 'Tư liệu trận Cửa Việt năm 1973')}`;
   }
   if (currentStep === 4 && id === 5) {
-    return `<div class="station-body"><h3>Bốn không gian sáng tạo</h3>
+    // Mở sẵn bốn khu vực tải ảnh; không giấu biểu mẫu trong các thẻ details đóng.
+    // Giữ nguyên chức năng lưu ảnh vào Firebase và duyệt của giáo viên.
+    return `<div class="station-body cham-five-explore"><h3>Bốn không gian sáng tạo</h3>
       <figure class="station-monument"><img src="${stationAssets['5_image1']}" alt="Dải bờ biển Cửa Việt nhìn từ trên cao"><figcaption>Bờ biển Cửa Việt · Góc nhìn hôm nay.</figcaption></figure>
-      <div class="station-topics">${creativeTopics.map(([title], index) =>
-        `<details><summary>${esc(title)}</summary>${chamFivePhotoForm(index)}</details>`).join('')}</div>
+      <p class="cham-five-upload-guide">Chọn một trong bốn chủ đề dưới đây để tải ảnh, ghi chú và chia sẻ. Các mục tải ảnh được mở sẵn để bạn dễ sử dụng.</p>
+      <div class="cham-five-upload-grid">${creativeTopics.map(([title, description], index) =>
+        `<section class="cham-five-upload-card" aria-labelledby="cham-five-upload-title-${index}">
+          <h4 id="cham-five-upload-title-${index}"><span class="cham-five-upload-number">${String(index + 1).padStart(2, '0')}</span> ${esc(title)}</h4>
+          <p class="cham-five-upload-description">${esc(description)}</p>
+          ${chamFivePhotoForm(index)}
+        </section>`).join('')}</div>
       <button class="btn btn-primary" data-action="step" data-step="7" data-open-survey>Mở phiếu khảo sát ${icon('arrow')}</button>
-      <p class="station-source">Chọn một chủ đề, chia sẻ hình ảnh bạn thực hiện và ghi lại lời chú thích về Cửa Việt.</p></div>`;
+      <p class="station-source">Mỗi chủ đề có chọn ảnh, xem trước, ghi chú và gửi ảnh để giáo viên duyệt trước khi công khai.</p></div>`;
   }
   const markup = originalStationMarkup(point);
   if (currentStep === 2 && id !== 4 && groupPhotoAlbums[id]) return markup + groupPhotoAlbum(id);
