@@ -98,9 +98,7 @@ const originalStationMarkup = stepMarkup;
 function mePhotoGallery() {
   const photos = [
     ['ba-tu-lieu-bang-khen.webp', 'Bằng khen của Ủy ban Nhân dân Cách mạng tỉnh Quảng Trị trong bộ tư liệu được lưu giữ'],
-    ['ba-tu-lieu-anh-tap-the.webp', 'Ảnh tập thể được lưu giữ qua nhiều năm'],
     ['ba-tu-lieu-giay-chung-nhan.webp', 'Những giấy chứng nhận danh hiệu Dũng sĩ trong bộ tư liệu'],
-    ['ba-tu-lieu-anh-ky-niem.webp', 'Ảnh lưu niệm của mệ Trần Thị Lành (bí danh Trần Thị Quyền) cùng Phó Đô đốc Nguyễn Văn Tình'],
     ['ba-gap-nhom-hoc-sinh.webp', 'Học sinh gặp gỡ và lắng nghe người kể chuyện trong chuyến sưu tầm tư liệu']
   ];
   return `<section class="interview-photo-section interview-photo-section--archive" aria-labelledby="cham-two-me-photo-heading">
@@ -172,8 +170,7 @@ const interviewPrompts = [
 ];
 const geographicTopics = [
   ['Sông Thạch Hãn', 'Dòng sông dẫn nước từ đất liền về Cửa Việt rồi đổ ra biển Đông. Đường thủy gắn vùng cửa biển với các địa bàn ở phía trong.', {
-    src: 'assets/song-thach-han-moi.webp',
-    fallback: 'assets/cua-song-thach-han.webp',
+    src: 'assets/toan-canh-cua-viet.webp',
     width: 1440,
     height: 704,
     caption: 'Cửa sông Thạch Hãn tại Cửa Việt nhìn từ trên cao.'
@@ -255,7 +252,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json?v=8').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=9').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {
@@ -376,7 +373,6 @@ const groupPhotoAlbums = {
   ],
   5: [
     ['3961', 'Toàn cảnh khu cổng chào ven biển nhìn từ trên cao.'],
-    ['3992', 'Sân khấu và không gian sự kiện ven biển về đêm.']
   ]
 };
 
@@ -413,7 +409,7 @@ stepMarkup = function (point) {
   }
   if (currentStep === 4 && id === 1) {
     return `<div class="station-body"><h3>Nơi dòng sông gặp biển</h3><p>Cửa Việt nằm ở phía đông Quảng Trị, nơi sông Thạch Hãn đổ ra biển Đông. Chọn từng chủ đề để tìm hiểu mối liên hệ giữa dòng sông, cảng và đời sống cư dân ven biển.</p>
-      ${topicMarkup(geographicTopics)}<figure class="station-monument"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa sông và bờ biển Cửa Việt từ trên cao"><figcaption>Toàn cảnh tại điểm Biển Cửa Việt trên Google Maps, do tài khoản KTSMAP Bùi Hải Giang đóng góp.</figcaption></figure>
+      ${topicMarkup(geographicTopics)}
       <h4>Cửa Việt qua các thời kỳ</h4>${topicMarkup(geographyTimeline)}
       <form class="cham-one-discovery-note" id="cham-one-discovery-note-form">
         <h4>Ghi chú của bạn</h4>
