@@ -33,7 +33,7 @@ function renderProgress(){const count=points.filter(p=>state.stamps[p.id]).lengt
 function applyFilter(route,resetSearch=false){resetMapFocus();filterRoute=route;if(resetSearch){searchQuery='';$('#point-search').value='';}const list=filteredPoints();if(!list.some(p=>p.id===selectedPoint))selectedPoint=list[0]?.id||0;$$('[data-action="filter"]').forEach(b=>{const active=Number(b.dataset.route)===route;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});refresh();}
 const introAudio = new Audio();
 introAudio.preload = 'none';
-introAudio.src = 'media/mot-phut-cham-cua-viet.mp3';
+introAudio.src = 'media/loi-dan-cua-viet.mp3';
 let narrationRequest = 0;
 
 function stopNarration() {
