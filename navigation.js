@@ -370,9 +370,6 @@ const groupPhotoAlbums = {
   4: [
     ['3959', 'Những đội đua thuyền đi qua dưới chân cầu.'],
     ['4006', 'Thuyền thúng và tàu cá bên bờ.']
-  ],
-  5: [
-    ['3961', 'Toàn cảnh khu cổng chào ven biển nhìn từ trên cao.'],
   ]
 };
 
