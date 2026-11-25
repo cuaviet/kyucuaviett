@@ -9,8 +9,6 @@
   stepMarkup = function (point) {
     const markup = originalStepMarkup(point);
     if (currentStep !== 6 || !point || !Number.isInteger(point.id)) return markup;
-    const formStart = markup.indexOf('<form class="note-form" id="note-form">');
-    if (formStart < 0) return markup;
     const touchId = point.id;
     const formattedId = String(touchId).padStart(2, '0');
 
@@ -36,4 +34,5 @@
   </div>
 </section>`;
   };
+  if (experience.open && currentStep === 6) renderExperience();
 })();
