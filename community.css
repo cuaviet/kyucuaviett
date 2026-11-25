@@ -227,3 +227,59 @@
 .community-delete-confirm { background: #9f3e34 !important; border-color: #9f3e34 !important; color: #fff !important; }
 .community-delete-confirm:hover { background: #842d25 !important; }
 .community-delete-dialog .community-edit-intro { color: #7d4b42; }
+
+/* CHẠM 05 – khôi phục bốn khu vực tải ảnh, luôn nhìn thấy khi mở Khám phá. */
+.cham-five-upload-guide {
+  margin: 12px 0 18px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #315c56;
+}
+.cham-five-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+  margin: 16px 0 22px;
+}
+.cham-five-upload-card {
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid #cee2d9;
+  border-radius: 15px;
+  background: #f8fbf9;
+}
+.cham-five-upload-card > h4 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  line-height: 1.45;
+  color: #174e49;
+}
+.cham-five-upload-number {
+  font-size: 12px;
+  border-radius: 100px;
+  padding: 3px 8px;
+  background: #e0efe9;
+  color: #245e54;
+}
+.cham-five-upload-description {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #49665e;
+}
+.cham-five-upload-card .creative-photo-area {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.cham-five-upload-card .creative-photo-form {
+  padding: 13px;
+}
+.cham-five-upload-card .creative-photo-form input[type="file"] {
+  min-height: 44px;
+}
+@media (max-width: 800px) {
+  .cham-five-upload-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .cham-five-upload-card { padding: 14px; }
+}
