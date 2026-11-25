@@ -1,6 +1,6 @@
 /* CHẠM CỬA VIỆT – chú thích nguồn ảnh cho website và 5 Chạm.
  * Chỉ nêu tác giả/trang báo nếu tài liệu dự án có thông tin hỗ trợ.
- * Theo xác nhận của nhóm dự án, ảnh nội bộ chưa ghi tác giả do nhóm trực tiếp thực hiện.
+ * Không suy diễn quyền tác giả từ tên tệp hoặc việc nhóm cung cấp ảnh.
  * Giữ nguyên ghi nguồn bên ngoài và ảnh lịch sử có xuất xứ riêng.
  * Không thay đổi ảnh, câu hỏi, tính năng upload hoặc Firestore.
  */
@@ -18,7 +18,7 @@
     congLuan: 'https://congluan.vn/quang-tri-hang-chuc-ho-dan-song-mon-vi-du-an-mo-rong-cang-cua-viet-post326674.html'
   };
 
-  const groupPhotographer = { label: 'Nhóm nghiên cứu CHẠM CỬA VIỆT thực hiện.', prefix: 'Ảnh: ' };
+  const groupPhotographer = { label: 'Tư liệu do nhóm nghiên cứu cung cấp; chưa xác nhận người chụp.' };
 
   const exact = {
     'assets/ben-cang-hien-nay.webp': { label: 'Ngọc Tân / Báo Đầu tư', url: links.harbor },
@@ -36,13 +36,73 @@
     'assets/cham-5-bai-bien-cong-chao-2026.jpg': groupPhotographer,
     'assets/cham-4-hai-san-ven-bien.webp': groupPhotographer
   };
+  Object.assign(exact, {
+  "assets/bo-bien-cua-viet.webp": {
+    "label": "Sovaba Travel (trang đăng lại; chưa rõ tác giả gốc)",
+    "url": "https://sovaba.travel/blog/bai-viet-nhung-diem-den-hot-trend-tai-quang-tri-nam-2025",
+    "caption": "Bờ biển Cửa Việt nhìn từ trên cao, với thuyền nhỏ trên bãi cát."
+  },
+  "assets/cang-cua-viet.webp": {
+    "label": "Ngọc Tân / Báo Đầu tư, 04/12/2025 (ngày đăng)",
+    "url": "https://baodautu.vn/quang-tri-co-them-3-cang-bien-duoc-ap-dung-thi-thuc-dien-tu-e-visa-d451059.html",
+    "caption": "Khu cảng Cửa Việt nhìn từ trên cao."
+  },
+  "assets/tuong-dai-chien-thang.webp": {
+    "label": "Hoàng Diệu / Báo Hải quân Việt Nam, tháng 4/2025",
+    "url": "https://baohaiquanvietnam.vn/tin-tuc/vung-3-hoan-thanh-cong-trinh-ton-tao-chinh-trang-tuong-dai-chien-thang-dac-cong-hai-quan-tai-cua-viet",
+    "caption": "Cán bộ, chiến sĩ và đoàn viên chỉnh trang Đài Chiến thắng Đặc công Hải quân tại Cửa Việt."
+  },
+  "assets/anh-chien-su-1973.webp": {
+    "label": "Báo Dân Việt (đăng lại từ Kiến Thức; chưa xác minh tác giả, ngày và địa điểm chụp)",
+    "url": "https://danviet.vn/tran-cua-viet-vong-cung-kursk-trong-chien-tranh-viet-nam-7777949448-d689523.html",
+    "caption": "Ảnh xe tăng và binh sĩ được dùng minh họa trong bài viết về trận Cửa Việt năm 1973."
+  },
+  "assets/cang-ca.webp": {
+    "label": "Thiên Sơn / XANH EWEC, 02/07/2021 (ngày đăng)",
+    "url": "https://xanhx.vn/media/mot-som-mai-hoi-ha-o-cang-ca-lon-nhat-quang-tri-10719.html",
+    "caption": "Cảng cá Cửa Việt (xã Triệu An, huyện Triệu Phong theo địa danh khi bài đăng) lúc rạng sáng."
+  },
+  "assets/cho-ca.webp": {
+    "label": "XANH EWEC, chùm ảnh của Thiên Sơn, 02/07/2021 (ngày đăng)",
+    "url": "https://xanhx.vn/media/mot-som-mai-hoi-ha-o-cang-ca-lon-nhat-quang-tri-10719.html",
+    "caption": "Hoạt động mua bán hải sản tại bến cá Cửa Việt."
+  },
+  "assets/thuyen-thung.webp": {
+    "label": "Lữ Hành Việt Nam (bài ghi ảnh Internet; chưa rõ tác giả gốc)",
+    "url": "https://luhanhvietnam.com.vn/du-lich/kham-pha-lang-chai-cua-viet-quang-tri.html",
+    "caption": "Thuyền gỗ và thuyền thúng trên bãi biển; trang đăng giới thiệu làng chài Cửa Việt."
+  },
+  "assets/tau-thuyen.webp": {
+    "label": "VOV, bài Ngư dân Quảng Trị rộn ràng phiên biển cuối năm (14/01/2025)",
+    "url": "https://vov.vn/kinh-te/ngu-dan-quang-tri-ron-rang-phien-bien-cuoi-nam-post1148171.vov",
+    "caption": "Tàu cá QT 92756-TS tại cảng cá Bắc Cửa Việt."
+  },
+  "assets/tu-lieu-22.webp": {
+    "label": "Biểu trưng VOV; không phải ảnh tư liệu Cửa Việt"
+  },
+  "assets/anh-chup-ban-do.webp": {
+    "label": "Google Earth; ảnh chụp màn hình, không phải ảnh thực địa"
+  },
+  "assets/le-hoi.webp": {
+    "label": "Ảnh minh họa lễ cầu ngư; chưa xác minh địa điểm, thời điểm và nguồn gốc"
+  },
+  "assets/le-hoi-lang-bien.webp": {
+    "label": "Ảnh minh họa nghi lễ ven biển; chưa xác minh địa điểm, thời điểm và nguồn gốc"
+  },
+  "assets/ben-cang-hien-nay.webp": {
+    "label": "Ảnh cảng biển; chưa tìm được bài đăng khớp chính xác, chưa xác minh tác giả"
+  },
+  "assets/cua-song-thach-han.webp": {
+    "label": "Ảnh khu vực cảng/cửa sông; chưa tìm được bản đăng khớp chính xác"
+  }
+});
   const groupPrefixes = [
     'assets/anh-nhom/',
     'assets/cham-2-anh-tu-lieu/',
     'assets/cham-3-anh-tu-lieu/'
   ];
   const groupSource = groupPhotographer;
-  const unknownSource = groupPhotographer;
+  const unknownSource = { label: 'Ảnh sưu tầm; chưa xác minh tác giả, thời điểm và nguồn gốc.' };
 
   function getSource(img) {
     const raw = img.getAttribute('src') || '';
@@ -99,10 +159,12 @@
   function placeForFigure(img, meta, figure) {
     const cap = Array.from(figure.children).find(el => el.tagName === 'FIGCAPTION');
     if (cap) {
-      if (!hasAttribution(cap)) cap.append(creditNode(meta));
+      if (meta.caption) { cap.textContent = meta.caption; cap.append(creditNode(meta)); }
+      else if (!hasAttribution(cap)) cap.append(creditNode(meta));
     } else {
       const figcaption = document.createElement('figcaption');
       figcaption.className = 'generated-photo-caption';
+      if (meta.caption) figcaption.append(document.createTextNode(meta.caption+' '));
       figcaption.append(creditNode(meta));
       figure.append(figcaption);
     }
