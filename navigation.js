@@ -317,7 +317,18 @@ function initPlayer(container) {
       currentIndex = index;
       video.pause();
       notice.hidden = true;
-      if (clip.poster) video.poster = clip.poster;
+      const cap = container.querySelector('figcaption');
+      cap.querySelector('.poster-note')?.remove();
+      if (clip.poster) {
+        video.poster = clip.poster;
+        const photo = findPhoto(clip.poster);
+        if (photo) {
+          const note = document.createElement('small');
+          note.className = 'photo-reference poster-note';
+          note.textContent = 'Ảnh đại diện: ' + photo.caption + ' ' + photo.label;
+          cap.append(note);
+        }
+      }
       else video.removeAttribute('poster');
       video.src = clip.path;
       $$('[data-chapter]', container).forEach((choice, i) => choice.setAttribute('aria-pressed', String(i === index)));
@@ -374,7 +385,7 @@ function groupPhotoAlbum(id) {
     const path = 'assets/anh-nhom/img-' + photo + '.webp';
     return `<figure><a href="${path}" target="_blank" rel="noopener noreferrer" aria-label="Xem ảnh lớn: ${esc(caption)}"><img src="${path}" alt="${esc(caption)}" loading="lazy"></a><figcaption>${esc(caption)}</figcaption></figure>`;
   }).join('');
-  return `<section class="interview-photo-section" aria-labelledby="group-photo-heading"><h4 id="group-photo-heading">Ảnh do chúng tôi sưu tầm/chụp được</h4><p>Chọn ảnh để xem lớn.</p><div class="station-gallery">${figures}</div></section>`;
+  return `<section class="interview-photo-section" aria-labelledby="group-photo-heading"><h4 id="group-photo-heading">Ảnh trong bộ sưu tập của dự án</h4><p>Chọn ảnh để xem lớn.</p><div class="station-gallery">${figures}</div></section>`;
 }
 
 stepMarkup = function (point) {
@@ -402,7 +413,7 @@ stepMarkup = function (point) {
   }
   if (currentStep === 4 && id === 1) {
     return `<div class="station-body"><h3>Nơi dòng sông gặp biển</h3><p>Cửa Việt nằm ở phía đông Quảng Trị, nơi sông Thạch Hãn đổ ra biển Đông. Chọn từng chủ đề để tìm hiểu mối liên hệ giữa dòng sông, cảng và đời sống cư dân ven biển.</p>
-      ${topicMarkup(geographicTopics)}<figure class="station-monument"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa sông và bờ biển Cửa Việt từ trên cao"><figcaption>Toàn cảnh Cửa Việt · Ảnh do chúng tôi sưu tầm/chụp được.</figcaption></figure>
+      ${topicMarkup(geographicTopics)}<figure class="station-monument"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa sông và bờ biển Cửa Việt từ trên cao"><figcaption>Toàn cảnh tại điểm Biển Cửa Việt trên Google Maps, do tài khoản KTSMAP Bùi Hải Giang đóng góp.</figcaption></figure>
       <h4>Cửa Việt qua các thời kỳ</h4>${topicMarkup(geographyTimeline)}
       <div class="read-prompt">Điều gì về Cửa Việt khiến bạn nhớ nhất? Bạn muốn gìn giữ nét đẹp nào của vùng cửa biển?</div>
       <div class="station-quicklinks"><a class="btn btn-outline" href="${stationHash(2, 4)}">Tìm hiểu lịch sử ở Chạm 02</a></div></div>`;
