@@ -101,10 +101,7 @@ function mePhotoGallery() {
     ['ba-tu-lieu-anh-tap-the.webp', 'Ảnh tập thể được lưu giữ qua nhiều năm'],
     ['ba-tu-lieu-giay-chung-nhan.webp', 'Những giấy chứng nhận danh hiệu Dũng sĩ trong bộ tư liệu'],
     ['ba-tu-lieu-anh-ky-niem.webp', 'Ảnh kỷ niệm bên một công trình tưởng niệm'],
-    ['ba-gap-nhom-hoc-sinh.webp', 'Học sinh gặp gỡ và lắng nghe người kể chuyện trong chuyến sưu tầm tư liệu'],
-    ['anh-3.webp', 'Hình ảnh tư liệu về các bằng khen được lưu giữ'],
-    ['anh-4.webp', 'Hình ảnh các giấy khen được lưu giữ'],
-    ['anh-5.webp', 'Hình ảnh nhóm học sinh chụp cùng người kể chuyện']
+    ['ba-gap-nhom-hoc-sinh.webp', 'Học sinh gặp gỡ và lắng nghe người kể chuyện trong chuyến sưu tầm tư liệu']
   ];
   return `<section class="interview-photo-section interview-photo-section--archive" aria-labelledby="cham-two-me-photo-heading">
     <h4 id="cham-two-me-photo-heading">Hình ảnh tư liệu từ cuộc gặp gỡ người kể chuyện</h4>
