@@ -58,12 +58,7 @@ function revealActiveStep() {
   const nav = $('.step-nav', experience);
   const active = $('.step-tab.active', experience);
   if (!nav || !active) return;
-  nav.setAttribute('aria-orientation', compactSteps.matches ? 'horizontal' : 'vertical');
-  if (compactSteps.matches && nav.scrollWidth > nav.clientWidth) {
-    const tab = active.getBoundingClientRect();
-    const rail = nav.getBoundingClientRect();
-    nav.scrollLeft += tab.left - rail.left + (tab.width - rail.width) / 2;
-  }
+  if (!compactSteps.matches) nav.setAttribute('aria-orientation', 'vertical');
 }
 
 compactSteps.addEventListener?.('change', revealActiveStep);

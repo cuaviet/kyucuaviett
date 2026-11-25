@@ -26,8 +26,40 @@ function persist(){try{localStorage.setItem(storageKey,JSON.stringify(state));re
 function toast(text){clearTimeout(toastTimer);const el=$('#toast');el.textContent=text;el.classList.add('visible');toastTimer=setTimeout(()=>el.classList.remove('visible'),4000);}
 function normalize(text){return text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/đ/g,'d');}
 function filteredPoints(){const query=normalize(searchQuery);return points.filter(p=>(!filterRoute||p.route===filterRoute)&&normalize(p.title+' '+p.desc+' '+routes[p.route].title).includes(query));}
-function refresh(){renderPins();renderGrid();renderProgress();}
-function renderPins(){const ids=filteredPoints().map(p=>p.id);$('#map-pins').innerHTML=points.map(p=>`<button class="map-pin ${p.id===selectedPoint?'active':''} ${ids.includes(p.id)?'':'filtered'} ${state.stamps[p.id]?'stamped':''}" style="left:${p.x}%;top:${p.y}%;--pin-color:${routes[p.route].color}" data-action="select" data-id="${p.id}" aria-haspopup="dialog" aria-controls="experience-dialog" aria-label="Chạm ${two(p.id)}: ${p.title}${state.stamps[p.id]?', đã có dấu':''}" aria-pressed="${p.id===selectedPoint}" ${ids.includes(p.id)?'':'disabled'}><img class="stop-photo" src="${embeddedImages[p.image]}" alt=""><div class="stop-copy"><small>CHẠM ${two(p.id)}</small><strong>${p.title}</strong><em>${['Nơi dòng sông gặp biển','Tư liệu và các mốc năm 1973','Lời kể của người dân','Nghề biển, lễ hội và ẩm thực','Góc nhìn và ý tưởng của bạn'][p.id-1]}</em></div><b class="stop-arrow">${icon('arrow')}</b></button>`).join('');$$('.route-line').forEach(p=>p.style.opacity=!filterRoute||Number(p.dataset.path)===filterRoute?'1':'.12');}
+function refresh(){renderPins();renderGrid();renderProgress();renderMapSelection();}
+function renderMapSelection() {
+  const button = $('#map-open-point');
+  const point = filteredPoints().find(item => item.id === selectedPoint);
+  button.hidden = !point;
+  if (point) {
+    button.dataset.id = point.id;
+    button.textContent = 'Mở Chạm ' + two(point.id) + ' – ' + point.title;
+  }
+}
+function awardStamp(id) {
+  if (state.stamps[id]) return false;
+  state.stamps[id] = true;
+  persist();
+  refresh();
+  return true;
+}
+function showStampAward(id) {
+  const container = $('#stamp-award');
+  if (!container) return;
+  const total = points.filter(point => state.stamps[point.id]).length;
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  container.innerHTML = `<strong>Đã nhận dấu Chạm ${two(id)}</strong>
+    <div class="stamp-award-slots">${points.map(point => `<span class="stamp-award-slot ${state.stamps[point.id] ? 'done' : ''}" aria-label="Chạm ${two(point.id)}${state.stamps[point.id] ? ', đã nhận dấu' : ''}">${two(point.id)}${state.stamps[point.id] ? `<b class="${point.id === id && !reducedMotion ? 'stamp-imprint' : ''}">${icon('check')}</b>` : ''}</span>`).join('')}</div>
+    <p>Hộ chiếu ký ức · <b id="stamp-award-count">${reducedMotion ? total : total - 1}/5</b></p>
+    <button class="btn btn-outline" data-action="passport">Mở Hộ chiếu ký ức</button>`;
+  container.scrollIntoView({block: 'nearest'});
+  if (!reducedMotion) setTimeout(() => {
+    const count = container.querySelector('#stamp-award-count');
+    if (count) count.textContent = total + '/5';
+  }, 450);
+}
+
+function renderPins(){const ids=filteredPoints().map(p=>p.id);$('#map-pins').innerHTML=points.map(p=>`<button class="map-pin ${p.id===selectedPoint?'active':''} ${ids.includes(p.id)?'':'filtered'} ${state.stamps[p.id]?'stamped':''}" style="left:${p.x}%;top:${p.y}%;--pin-color:${routes[p.route].color}" data-action="select" data-id="${p.id}" aria-label="Chạm ${two(p.id)}: ${p.title}${state.stamps[p.id]?', đã có dấu':''}" aria-pressed="${p.id===selectedPoint}" ${ids.includes(p.id)?'':'disabled'}><img class="stop-photo" src="${embeddedImages[p.image]}" alt=""><div class="stop-copy"><small>CHẠM ${two(p.id)}</small><strong>${p.title}</strong><em>${['Nơi dòng sông gặp biển','Tư liệu và các mốc năm 1973','Lời kể của người dân','Nghề biển, lễ hội và ẩm thực','Góc nhìn và ý tưởng của bạn'][p.id-1]}</em></div><b class="stop-arrow">${icon('arrow')}</b></button>`).join('');$$('.route-line').forEach(p=>p.style.opacity=!filterRoute||Number(p.dataset.path)===filterRoute?'1':'.12');}
 function renderGrid(){const list=filteredPoints();$('#point-grid').innerHTML=list.map(p=>`<button class="point-card" data-action="open-point" data-id="${p.id}" aria-label="Mở chạm ${two(p.id)}: ${p.title}"><div class="point-card-image"><img src="${embeddedImages[p.image]}" alt="" loading="lazy"><span class="point-number">${two(p.id)}</span>${state.stamps[p.id]?'<span class="point-stamp">✓ Đã chạm</span>':''}</div><p class="micro"><i class="dot" style="background:${routes[p.route].color}"></i>ĐIỂM CHẠM ${two(p.id)}</p><h3>${p.title}</h3><div class="point-card-footer"><span>8 bước trải nghiệm</span>${icon('arrow')}</div></button>`).join('');$('#results-count').textContent=`Hiển thị ${list.length} / 5 điểm chạm`;$('#empty-results').hidden=list.length>0;}
 function renderProgress(){const count=points.filter(p=>state.stamps[p.id]).length;$$('.passport-count').forEach(e=>e.textContent=count+'/5');$('#passport-progress').textContent=count+' / 5';$('#mini-stamps').innerHTML=points.map(p=>`<span class="mini-stamp ${state.stamps[p.id]?'done':''}" title="${p.title}: ${state.stamps[p.id]?'đã hoàn thành':'chưa hoàn thành'}">${state.stamps[p.id]?icon('check'):two(p.id)}</span>`).join('');}
 function applyFilter(route,resetSearch=false){resetMapFocus();filterRoute=route;if(resetSearch){searchQuery='';$('#point-search').value='';}const list=filteredPoints();if(!list.some(p=>p.id===selectedPoint))selectedPoint=list[0]?.id||0;$$('[data-action="filter"]').forEach(b=>{const active=Number(b.dataset.route)===route;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});refresh();}
@@ -88,8 +120,8 @@ function resetMapFocus(restoreFocus=false){
  $('#map-open-status').textContent='Chọn một chạm để mở câu chuyện';
  if(restoreFocus&&returnId&&!$$('dialog[open]').length)$(`.map-pin[data-id="${returnId}"]`)?.focus({preventScroll:true});
 }
-function zoomToPoint(id){if(!filteredPoints().some(p=>p.id===id))return;selectedPoint=id;openPoint(id);}
-function renderExperience(focus=false){const p=points.find(p=>p.id===currentPoint);$('#experience-content').innerHTML=`<div class="experience-head" data-point="${p.id}"><img src="${embeddedImages[p.image]}" alt="Ảnh Cửa Việt hiện tại minh họa chủ đề"><p class="eyebrow">CHẠM ${two(p.id)}</p><h2 id="experience-title">${p.title}</h2><button class="icon-btn" data-action="close" aria-label="Đóng điểm chạm">${icon('close')}</button></div><div class="experience-layout"><div class="step-nav" role="tablist" aria-label="Các bước trải nghiệm" aria-orientation="${window.matchMedia('(max-width:650px)').matches?'horizontal':'vertical'}">${steps.map((s,i)=>`<button class="step-tab ${i===currentStep?'active':''}" id="step-tab-${i}" role="tab" aria-selected="${i===currentStep}" aria-controls="step-panel" tabindex="${i===currentStep?0:-1}" data-action="step" data-step="${i}"><span>${two(i+1)}</span>${s}</button>`).join('')}</div><div class="step-content" id="step-panel" role="tabpanel" aria-labelledby="step-tab-${currentStep}" tabindex="0"><p class="eyebrow">BƯỚC ${two(currentStep+1)} / 08</p>${stepMarkup(p)}<div class="step-footer"><span>${state.stamps[p.id]?'✓ Đã nhận dấu ký ức':'Khám phá theo nhịp của bạn'}</span><div>${currentStep>0?'<button class="btn btn-outline" data-action="step" data-step="'+(currentStep-1)+'">Quay lại</button>':''}${currentStep<7?'<button class="btn btn-primary" data-action="step" data-step="'+(currentStep+1)+'">Tiếp theo '+icon('arrow')+'</button>':'<button class="btn btn-primary" data-action="passport">Hộ chiếu '+icon('book')+'</button>'}</div></div></div></div>`;if(focus){$('#step-panel').focus({preventScroll:true});if(window.matchMedia('(max-width:650px)').matches)$('.step-tab.active').scrollIntoView({block:'nearest',inline:'center'});}}
+function zoomToPoint(id){if(!filteredPoints().some(p=>p.id===id))return;selectedPoint=id;renderPins();renderMapSelection();$(`.map-pin[data-id="${id}"]`)?.focus({preventScroll:true});}
+function renderExperience(focus=false){const p=points.find(p=>p.id===currentPoint);$('#experience-content').innerHTML=`<div class="experience-head" data-point="${p.id}"><img src="${embeddedImages[p.image]}" alt="Ảnh Cửa Việt hiện tại minh họa chủ đề"><p class="eyebrow">CHẠM ${two(p.id)}</p><h2 id="experience-title">${p.title}</h2><button class="icon-btn" data-action="close" aria-label="Đóng điểm chạm">${icon('close')}</button></div><div class="experience-layout"><div class="step-nav" role="tablist" aria-label="Các bước trải nghiệm" aria-orientation="${window.matchMedia('(max-width:650px)').matches?'horizontal':'vertical'}">${steps.map((s,i)=>`<button class="step-tab ${i===currentStep?'active':''}" id="step-tab-${i}" role="tab" aria-selected="${i===currentStep}" aria-controls="step-panel" tabindex="${i===currentStep?0:-1}" data-action="step" data-step="${i}"><span>${two(i+1)}</span>${s}</button>`).join('')}</div><div class="step-content" id="step-panel" role="tabpanel" aria-labelledby="${matchMedia('(max-width: 800px)').matches ? 'mobile-step-title' : 'step-tab-'+currentStep}" tabindex="0"><p class="mobile-step-title" id="mobile-step-title">Bước ${currentStep+1}/8 · ${steps[currentStep]}</p><div class="step-body ${focus ? 'step-enter' : ''}"><p class="eyebrow desktop-step-count">BƯỚC ${two(currentStep+1)} / 08</p>${stepMarkup(p)}<div id="stamp-award" class="stamp-award" role="status"></div></div><div class="step-footer"><span>${state.stamps[p.id]?'✓ Đã nhận dấu ký ức':'Khám phá theo nhịp của bạn'}</span><div>${currentStep>0?'<button class="btn btn-outline" data-action="step" data-step="'+(currentStep-1)+'">Quay lại</button>':''}${currentStep<7?'<button class="btn btn-primary" data-action="step" data-step="'+(currentStep+1)+'">Tiếp theo '+icon('arrow')+'</button>':'<button class="btn btn-primary" data-action="passport">Hộ chiếu '+icon('book')+'</button>'}</div></div></div></div>`;hintComparison();if(focus){$('#step-panel').focus({preventScroll:true});}}
 function quizMarkup(p,kind){const previous=quizResponses[kind][p.id];return `<h3>${kind==='guess'?'Bạn thử đoán xem?':'Bạn còn nhớ điều gì?'}</h3><p>${p.q}</p><div class="quiz-options">${p.options.map((o,i)=>`<button class="quiz-option ${previous===i?(i===p.correct?'correct':'incorrect'):''}" data-action="answer" data-id="${p.id}" data-answer="${i}" data-kind="${kind}"><span>${String.fromCharCode(65+i)}</span>${o}</button>`).join('')}</div><div id="quiz-feedback" aria-live="polite">${previous!==undefined?feedbackMarkup(p,previous,kind):''}</div>${kind==='memory'?'<div class="info-box"><p>Trả lời đúng câu hỏi này để nhận dấu trong hộ chiếu. Bạn có thể quay lại phần Khám phá bất cứ lúc nào.</p></div>':''}`;}
 function feedbackMarkup(p,answer,kind){if(answer===p.correct)return `<div class="feedback">${icon('check')} Chính xác. ${p.explain}${kind==='memory'?'<br><strong>Bạn đã nhận dấu CHẠM '+two(p.id)+' trong hộ chiếu.</strong>':''}</div>`;return '<div class="feedback wrong">Chưa đúng rồi. Hãy xem lại phần Khám phá hoặc thử một đáp án khác. Mỗi lần thử là một lần tìm hiểu.</div>';}
 function stepMarkup(p){switch(currentStep){
@@ -150,7 +182,7 @@ case'continue':openPoint((points.find(p=>!state.stamps[p.id])||points[0]).id);br
 case'download':downloadJournal();break;
  case'certificate':downloadCertificate();break;
 case'narrate':narrate();break;
-case'answer':{const p=points.find(p=>p.id===id);const a=Number(b.dataset.answer),kind=b.dataset.kind;if(!p||!quizResponses[kind])break;quizResponses[kind][id]=a;if(kind==='memory'&&a===p.correct){const first=!state.stamps[id];state.stamps[id]=true;const ok=persist();refresh();if(first&&ok)toast('Đã nhận dấu CHẠM '+two(id)+' — Hành trình đang tiếp nối!');}$$('.quiz-option').forEach(x=>{x.classList.remove('correct','incorrect');if(x===b)x.classList.add(a===p.correct?'correct':'incorrect');});$('#quiz-feedback').innerHTML=feedbackMarkup(p,a,kind);if(kind==='memory'&&a===p.correct)$('.step-footer>span').textContent='✓ Đã nhận dấu ký ức';break;}
+case'answer':{const p=points.find(p=>p.id===id);const a=Number(b.dataset.answer),kind=b.dataset.kind;if(!p||!quizResponses[kind])break;quizResponses[kind][id]=a;if(kind==='memory'&&a===p.correct){if(awardStamp(id))showStampAward(id);}$$('.quiz-option').forEach(x=>{x.classList.remove('correct','incorrect');if(x===b)x.classList.add(a===p.correct?'correct':'incorrect');});$('#quiz-feedback').innerHTML=feedbackMarkup(p,a,kind);if(kind==='memory'&&a===p.correct)$('.step-footer>span').textContent='✓ Đã nhận dấu ký ức';break;}
 case'intro':showUtility('Một miền biển. Nhiều câu chuyện.',`<img class="intro-dialog-image" src="assets/bien-cua-viet.webp" alt="Biển Cửa Việt nhìn từ trên cao"><p>CHẠM CỬA VIỆT đưa bạn đến gần lịch sử và văn hóa địa phương qua những hoạt động nhỏ: quan sát, thử đoán, lắng nghe và ghi lại cảm nhận.</p><p>Khám phá năm điểm chạm để tìm hiểu cảnh quan, lịch sử, con người và nhịp sống Cửa Việt. Mỗi điểm chạm đều có câu hỏi ghi nhớ để bạn sưu tập dấu trong hộ chiếu.</p><button class="btn btn-primary" data-action="continue">Bắt đầu từ điểm chạm đầu tiên ${icon('arrow')}</button>`);break;
 case'transcript':showUtility('Một phút chạm Cửa Việt',`<p>${intro}</p><div class="info-box"><p>Nội dung biên soạn cho trải nghiệm. Lời dẫn sử dụng giọng đọc tổng hợp tiếng Việt.</p></div>`);break;
 case'sources':showSources();break;
@@ -813,8 +845,19 @@ function stationLocationMarkup(id) {
   </section>`;
 }
 
+
+function hintComparison() {
+  const comparison = $('[data-photo-comparison]');
+  if (hintComparison.shown || !comparison || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  try {
+    if (sessionStorage.getItem('comparison-hint-shown')) return;
+    sessionStorage.setItem('comparison-hint-shown', '1');
+  } catch {}
+  hintComparison.shown = true;
+  comparison.classList.add('compare-hint');
+}
 function photoComparison(past, present, wide = false, rangeId = 'compare-range') {
-  return `<div class="compare-wrap ${wide ? 'compare-cham-one' : ''}"><img src="${present.src}" alt="${present.alt}"><div class="compare-top"><img src="${past.src}" alt="${past.alt}"></div><span class="compare-label">${past.label}</span><span class="compare-label right">${present.label}</span><span class="compare-handle"></span><input id="${rangeId}" type="range" min="0" max="100" value="50" aria-label="So sánh ảnh tư liệu và hiện tại"></div><div class="compare-help"><label for="${rangeId}">Kéo để khám phá hai ảnh</label><span>50%</span></div>`;
+  return `<div data-photo-comparison class="compare-wrap ${wide ? 'compare-cham-one' : ''}"><img src="${present.src}" alt="${present.alt}"><div class="compare-top"><img src="${past.src}" alt="${past.alt}"></div><span class="compare-label">${past.label}</span><span class="compare-label right">${present.label}</span><span class="compare-handle"></span><input id="${rangeId}" type="range" min="0" max="100" value="50" aria-label="So sánh ảnh tư liệu và hiện tại"></div><div class="compare-help"><label for="${rangeId}">Kéo để khám phá hai ảnh</label><span>50%</span></div>`;
 }
 
 const baseStepMarkup=stepMarkup;
@@ -831,12 +874,12 @@ stepMarkup=function(p){
  if(currentStep===1||currentStep===5)return bankMarkup(p,currentStep===1?'guess':'memory');
  if(currentStep===2 && p.id<=2) {
   const past = p.id===1
-    ? {src: chamOneOriginal, alt: 'Tàu thuyền tại Cửa Việt năm 1967', label: 'TƯ LIỆU · 1967'}
+    ? {src: chamOneOriginal, alt: 'Tàu thuyền tại Cửa Việt năm 1967', label: '1967'}
     : {src: docAssets.past, alt: 'Ảnh tư liệu chiến sự Cửa Việt tháng 1 năm 1973', label: 'TƯ LIỆU · 1973'};
   const present = {
     src: p.id===1 ? chamOneToday : chamTwoToday,
     alt: p.id===1 ? 'Cảng Cửa Việt nhìn từ trên cao' : 'Toàn cảnh Cửa Việt hiện nay · ảnh do chúng tôi sưu tầm/chụp được',
-    label: 'CỬA VIỆT HIỆN NAY'
+    label: 'Hiện nay'
   };
   return `<h3>Kéo để chạm quá khứ.</h3><p>${p.id===1?'Quan sát tàu thuyền trong ảnh tư liệu năm 1967 và cảng Cửa Việt trong ảnh đương đại. Đây là hai địa điểm, góc chụp khác nhau trong khu vực Cửa Việt; không phải ảnh trước – sau của cùng một vị trí.':'Quan sát ảnh chiến sự tại Cửa Việt tháng 1/1973 và ảnh cảng Cửa Việt hiện nay. Hai ảnh ghi lại hai thời điểm khác nhau; hãy chú ý sự thay đổi của tàu thuyền và không gian cảng.'}</p>${photoComparison(past, present, p.id===1)}<p class="source-note">${p.id===1?'Ảnh tàu thuyền trên sông Cửa Việt, ngày 15/3/1967: Kenneth L. Fuller / U.S. DefenseImagery, mã DM-ST-85-09352. <a href="https://commons.wikimedia.org/wiki/File:LCVP_LCU_and_LCM_on_Cua_Viet_river_1967.JPEG" target="_blank" rel="noopener noreferrer">Xem bản lưu ảnh</a>. Ảnh cảng Cửa Việt: Ngọc Tân / <a href="https://baodautu.vn/quang-tri-co-them-3-cang-bien-duoc-ap-dung-thi-thuc-dien-tu-e-visa-d451059.html" target="_blank" rel="noopener noreferrer">Báo Đầu tư</a> (bài viết tháng 12/2025; không ghi ngày chụp).':'Ảnh chiến sự: xe tăng T-54 và bộ đội cơ động ở Cửa Việt, tháng 1/1973; tư liệu do Báo Dân Việt đăng trong bài “Trận Cửa Việt: Vòng cung Kursk trong Chiến tranh Việt Nam”. Ảnh hiện nay: toàn cảnh Cửa Việt do chúng tôi sưu tầm/chụp được.'}</p>`;
  }
@@ -859,7 +902,7 @@ function bankMarkup(p,kind){const qs=questionBanks[p.id][kind],key=p.id+'-'+kind
 let mediaUrl;
 document.addEventListener('change',e=>{if(e.target.id!=='interview-file')return;const f=e.target.files[0];if(!f)return;if(mediaUrl)URL.revokeObjectURL(mediaUrl);mediaUrl=URL.createObjectURL(f);if(!f.type.startsWith('video/')){toast('Vui lòng chọn tệp video.');return;}const el=document.createElement('video');el.controls=true;el.playsInline=true;el.src=mediaUrl;el.className='local-player';$('#interview-player').replaceChildren(el);});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;
- if(b.dataset.action==='bank-answer'){const kind=b.dataset.kind,key=currentPoint+'-'+kind;const qs=questionBanks[currentPoint][kind];bankAnswers[key]||={};bankAnswers[key][Number(b.dataset.q)]=Number(b.dataset.value);if(kind==='memory'&&qs.every((q,i)=>bankAnswers[key][i]===q.correct)){state.stamps[currentPoint]=true;persist();refresh();toast('Đã nhận dấu CHẠM '+two(currentPoint)+'!');}const pos=experience.scrollTop;renderExperience();experience.scrollTop=pos;}
+ if(b.dataset.action==='bank-answer'){const kind=b.dataset.kind,key=currentPoint+'-'+kind;const qs=questionBanks[currentPoint][kind];bankAnswers[key]||={};bankAnswers[key][Number(b.dataset.q)]=Number(b.dataset.value);const earned=kind==='memory'&&qs.every((q,i)=>bankAnswers[key][i]===q.correct)&&awardStamp(currentPoint);const pos=experience.scrollTop;renderExperience();experience.scrollTop=pos;if(earned)showStampAward(currentPoint);}
  if(b.dataset.action==='quiz-reset'){delete bankAnswers[currentPoint+'-'+b.dataset.kind];renderExperience();}
  if(b.dataset.action==='gallery')showUtility('Một khung hình Cửa Việt',`<img class="full-photo" src="${b.dataset.key==='past'?chamOneOriginal:docAssets[b.dataset.key]}" alt="${esc(b.dataset.caption)}"><p>${esc(b.dataset.caption)}</p>`);
  if(b.dataset.action==='project'){openPoint(5);currentStep=6;renderExperience();if(!$('#memory-note').value)$('#memory-note').value=b.dataset.type+'\n\n';$('#memory-note').focus();$('#note-length').textContent=$('#memory-note').value.length;}
@@ -948,7 +991,7 @@ function applyTeacherTextCorrections() {
   const oldRouteSection = document.querySelector('#journeys');
   if (oldRouteSection) oldRouteSection.remove();
   document.querySelectorAll('a[href="#journeys"]').forEach(link => {
-    link.setAttribute('href', '#touch-heading');
+    link.setAttribute('href', '#memory-map');
     const name = (link.textContent || '').trim();
     if (name === 'Hành trình' || name === 'Hành trình khám phá') link.textContent = '5 điểm chạm';
   });

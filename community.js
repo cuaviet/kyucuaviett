@@ -322,6 +322,7 @@
       );
     }
 
+    let showAllPosts = false;
     function paintFeed() {
       feed.replaceChildren();
       const seen = new Set();
@@ -331,8 +332,26 @@
         if (seen.has(item.id)) continue;
         seen.add(item.id);
         if (!isVisiblePost(item.data()) && (!viewerUid || item.data().authorUid !== viewerUid)) continue;
-        feed.append(renderCard(item));
+        if (!showAllPosts && !isVisiblePost(item.data())) continue;
+        const card = renderCard(item);
+        if (!showAllPosts) {
+          const message = card.querySelector('p');
+          const toggle = document.createElement('button');
+          toggle.type = 'button';
+          toggle.className = 'text-btn community-read-more';
+          toggle.textContent = 'Đọc tiếp';
+          toggle.setAttribute('aria-expanded', 'false');
+          message.classList.add('community-message-preview');
+          toggle.addEventListener('click', () => {
+            const collapsed = message.classList.toggle('community-message-preview');
+            toggle.textContent = collapsed ? 'Đọc tiếp' : 'Thu gọn';
+            toggle.setAttribute('aria-expanded', String(!collapsed));
+          });
+          message.after(toggle);
+        }
+        feed.append(card);
         shown++;
+        if (!showAllPosts && shown === 3) break;
       }
       if (!shown) {
         const note = document.createElement('p');
@@ -340,7 +359,8 @@
         note.textContent = 'Chưa có lời nhắn nào. Hãy trở thành người đầu tiên lưu một ký ức về Cửa Việt!';
         feed.append(note);
       }
-      moreButton.hidden = !canLoadMore;
+      moreButton.hidden = showAllPosts ? !canLoadMore : all.length <= shown;
+      moreButton.textContent = showAllPosts ? 'Xem thêm ký ức cũ' : 'Xem tất cả bài chia sẻ';
       paintTouchFeed();
     }
 
@@ -425,6 +445,11 @@
     );
 
     moreButton.addEventListener('click', async () => {
+      if (!showAllPosts) {
+        showAllPosts = true;
+        paintFeed();
+        return;
+      }
       const last = older.length ? older[older.length - 1] : newest[newest.length - 1];
       if (!last) return;
       moreButton.disabled = true;
