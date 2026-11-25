@@ -95,26 +95,7 @@ showUtility = function (title, markup) {
 };
 
 const originalStationMarkup = stepMarkup;
-const chamTwoPhotos = [
-  ['IMG_3733.jpeg', 'Học sinh chụp ảnh cùng người kể chuyện'],
-  ['IMG_3728.jpeg', 'Ảnh các giấy chứng nhận dũng sĩ'],
-  ['IMG_3723.jpeg', 'Ảnh giấy chứng nhận huy hiệu 50 năm tuổi Đảng'],
-  ['IMG_3722.jpeg', 'Ảnh huân chương kháng chiến'],
-  ['IMG_3721.jpeg', 'Ảnh kỷ niệm chương chiến sĩ cách mạng bị địch bắt tù, đày'],
-  ['IMG_3720.jpeg', 'Ảnh huân chương độc lập'],
-  ['IMG_3719.jpeg', 'Ảnh tập thể được lưu giữ trong khung']
-];
-
-function chamTwoPhotoGallery() {
-  return `<section class="interview-photo-section" aria-labelledby="interview-photo-heading">
-    <h4 id="interview-photo-heading">Hình ảnh tư liệu</h4>
-    <p>Hình ảnh do chúng tôi sưu tầm/chụp được. Chọn ảnh để xem lớn.</p>
-    <div class="interview-photo-grid">${chamTwoPhotos.map(([name, description]) =>
-      `<a href="assets/cham-2-anh-tu-lieu/${name}" target="_blank" rel="noopener noreferrer" aria-label="Xem lớn: ${esc(description)}"><img src="assets/cham-2-anh-tu-lieu/${name}" alt="${esc(description)}" loading="lazy"></a>`).join('')}</div>
-  </section>`;
-}
-
-function chamThreePhotoGallery() {
+function mePhotoGallery() {
   const photos = [
     ['ba-tu-lieu-bang-khen.webp', 'Bằng khen của Ủy ban Nhân dân Cách mạng tỉnh Quảng Trị trong bộ tư liệu được lưu giữ'],
     ['ba-tu-lieu-anh-tap-the.webp', 'Ảnh tập thể được lưu giữ qua nhiều năm'],
@@ -125,8 +106,8 @@ function chamThreePhotoGallery() {
     ['anh-4.webp', 'Hình ảnh các giấy khen được lưu giữ'],
     ['anh-5.webp', 'Hình ảnh nhóm học sinh chụp cùng người kể chuyện']
   ];
-  return `<section class="interview-photo-section interview-photo-section--archive" aria-labelledby="cham-three-photo-heading">
-    <h4 id="cham-three-photo-heading">Hình ảnh tư liệu từ cuộc gặp gỡ người kể chuyện</h4>
+  return `<section class="interview-photo-section interview-photo-section--archive" aria-labelledby="cham-two-me-photo-heading">
+    <h4 id="cham-two-me-photo-heading">Hình ảnh tư liệu từ cuộc gặp gỡ người kể chuyện</h4>
     <p>Những tấm ảnh, giấy chứng nhận và kỷ niệm do nhóm dự án sưu tầm, ghi lại. Chọn ảnh để xem nguyên bản.</p>
     <div class="interview-photo-grid interview-photo-grid--archive">${photos.map(([name, description]) =>
       `<figure class="interview-archive-card"><a href="assets/cham-3-anh-tu-lieu/${name}" target="_blank" rel="noopener noreferrer" aria-label="Xem lớn: ${esc(description)}"><img src="assets/cham-3-anh-tu-lieu/${name}" alt="${esc(description)}" loading="lazy"></a><figcaption>${esc(description)}</figcaption></figure>`).join('')}</div>
@@ -277,7 +258,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json?v=4').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=5').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {
@@ -393,15 +374,15 @@ function groupPhotoAlbum(id) {
 
 stepMarkup = function (point) {
   const { id } = point;
-  // Chạm 03 được dành riêng để bổ sung tư liệu mới vào lần cập nhật sau.
-  // Giữ nguyên hồ sơ nguồn ở app.js và media/ để không làm mất dữ liệu đã sưu tầm.
-  if (id === 3) {
-    return `<div class="station-body"><h3>Chạm 3 – Đang bổ sung tư liệu</h3><p>Hình ảnh, video và câu chuyện của điểm chạm này sẽ được cập nhật sau.</p></div>`;
+  // Chỉ để trống bước “Nghe người thật kể” của Chạm 3.
+  // Các bước khác của Chạm 3 vẫn hoạt động bình thường.
+  if (id === 3 && currentStep === 3) {
+    return `<div class="station-body"><h3>Nghe người thật kể</h3><p>Hình ảnh và video của phần này sẽ được bổ sung sau.</p></div>`;
   }
   if (currentStep === 3) {
     const prompts = id >= 3 ? stationDocuments[id][4].html : '';
     const chapterNote = id === 2 ? '<p>Đối chiếu lời kể với các mốc và video tư liệu năm 1973 trong phần Khám phá.</p>' : '';
-    return `<div class="station-body"><h3>Nghe người thật kể</h3>${chapterNote}${mediaShell('cham-' + id, 'Nghe người thật kể — Chạm ' + two(id))}${id === 2 ? `<h4>Video lời kể bổ sung</h4>${mediaShell('cham-2-me', 'Video lời kể bổ sung — Chạm 02')}${chamTwoPhotoGallery()}${chamThreePhotoGallery()}` : ''}
+    return `<div class="station-body"><h3>Nghe người thật kể</h3>${chapterNote}${mediaShell('cham-' + id, 'Nghe người thật kể — Chạm ' + two(id))}${id === 2 ? mePhotoGallery() : ''}
       <div class="read-prompt"><strong>Sau khi xem</strong><p>${interviewPrompts[id - 1]}</p></div>
       ${prompts ? `<div class="station-topics"><details><summary>Gợi ý phỏng vấn</summary>${prompts}</details></div>` : ''}
       <div class="station-quicklinks"><button class="btn btn-outline" data-action="step" data-step="6">Ghi lại cảm nhận</button><button class="btn btn-outline" data-action="step" data-step="4">Mở phần khám phá</button></div></div>`;
