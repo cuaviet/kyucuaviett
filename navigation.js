@@ -258,7 +258,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json?v=5').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=6').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {
@@ -379,10 +379,18 @@ stepMarkup = function (point) {
   if (id === 3 && currentStep === 3) {
     return `<div class="station-body"><h3>Nghe người thật kể</h3><p>Hình ảnh và video của phần này sẽ được bổ sung sau.</p></div>`;
   }
+  if (currentStep === 3 && id === 2) {
+    // Chỉ hiển thị đúng video + ảnh chuyển từ Chạm 03; không dùng tư liệu Chạm 02 cũ.
+    return `<div class="station-body"><h3>Nghe người thật kể</h3>
+      ${mediaShell('cham-2', 'Cuộc trò chuyện cùng mệ — Chạm 02')}
+      ${mePhotoGallery()}
+      <div class="read-prompt"><strong>Sau khi xem</strong><p>${interviewPrompts[1]}</p></div>
+      <div class="station-quicklinks"><button class="btn btn-outline" data-action="step" data-step="6">Ghi lại cảm nhận</button><button class="btn btn-outline" data-action="step" data-step="4">Mở phần khám phá</button></div></div>`;
+  }
   if (currentStep === 3) {
     const prompts = id >= 3 ? stationDocuments[id][4].html : '';
-    const chapterNote = id === 2 ? '<p>Đối chiếu lời kể với các mốc và video tư liệu năm 1973 trong phần Khám phá.</p>' : '';
-    return `<div class="station-body"><h3>Nghe người thật kể</h3>${chapterNote}${mediaShell('cham-' + id, 'Nghe người thật kể — Chạm ' + two(id))}${id === 2 ? mePhotoGallery() : ''}
+    return `<div class="station-body"><h3>Nghe người thật kể</h3>
+      ${mediaShell('cham-' + id, 'Nghe người thật kể — Chạm ' + two(id))}
       <div class="read-prompt"><strong>Sau khi xem</strong><p>${interviewPrompts[id - 1]}</p></div>
       ${prompts ? `<div class="station-topics"><details><summary>Gợi ý phỏng vấn</summary>${prompts}</details></div>` : ''}
       <div class="station-quicklinks"><button class="btn btn-outline" data-action="step" data-step="6">Ghi lại cảm nhận</button><button class="btn btn-outline" data-action="step" data-step="4">Mở phần khám phá</button></div></div>`;
