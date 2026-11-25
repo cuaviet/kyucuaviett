@@ -31,8 +31,46 @@ function renderPins(){const ids=filteredPoints().map(p=>p.id);$('#map-pins').inn
 function renderGrid(){const list=filteredPoints();$('#point-grid').innerHTML=list.map(p=>`<button class="point-card" data-action="open-point" data-id="${p.id}" aria-label="Mở chạm ${two(p.id)}: ${p.title}"><div class="point-card-image"><img src="${embeddedImages[p.image]}" alt="" loading="lazy"><span class="point-number">${two(p.id)}</span>${state.stamps[p.id]?'<span class="point-stamp">✓ Đã chạm</span>':''}</div><p class="micro"><i class="dot" style="background:${routes[p.route].color}"></i>ĐIỂM CHẠM ${two(p.id)}</p><h3>${p.title}</h3><div class="point-card-footer"><span>8 bước trải nghiệm</span>${icon('arrow')}</div></button>`).join('');$('#results-count').textContent=`Hiển thị ${list.length} / 5 điểm chạm`;$('#empty-results').hidden=list.length>0;}
 function renderProgress(){const count=points.filter(p=>state.stamps[p.id]).length;$$('.passport-count').forEach(e=>e.textContent=count+'/5');$('#passport-progress').textContent=count+' / 5';$('#mini-stamps').innerHTML=points.map(p=>`<span class="mini-stamp ${state.stamps[p.id]?'done':''}" title="${p.title}: ${state.stamps[p.id]?'đã hoàn thành':'chưa hoàn thành'}">${state.stamps[p.id]?icon('check'):two(p.id)}</span>`).join('');}
 function applyFilter(route,resetSearch=false){resetMapFocus();filterRoute=route;if(resetSearch){searchQuery='';$('#point-search').value='';}const list=filteredPoints();if(!list.some(p=>p.id===selectedPoint))selectedPoint=list[0]?.id||0;$$('[data-action="filter"]').forEach(b=>{const active=Number(b.dataset.route)===route;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});refresh();}
-function stopNarration(){if('speechSynthesis'in window)window.speechSynthesis.cancel();speaking=false;$$('[data-action="narrate"]').forEach(b=>{b.innerHTML=icon('play');b.setAttribute('aria-label','Nghe thuyết minh tự động');b.closest('.audio-card')?.classList.remove('playing');});$$('.audio-indicator').forEach(e=>e.textContent='Sẵn sàng');}
-function narrate(context){if(speaking){stopNarration();return;}if(!('speechSynthesis'in window)||!('SpeechSynthesisUtterance'in window)){toast('Thiết bị chưa hỗ trợ giọng đọc. Bạn vẫn có thể đọc toàn bộ nội dung.');return;}const text=context==='intro'?intro:points.find(p=>p.id===Number(context))?.text.join(' ');if(!text)return;const utter=new SpeechSynthesisUtterance(text);utter.lang='vi-VN';utter.rate=.91;const vi=window.speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith('vi'));if(vi)utter.voice=vi;utter.onend=()=>stopNarration();utter.onerror=e=>{if(e.error!=='canceled'&&e.error!=='interrupted')toast('Giọng đọc chưa sẵn sàng trên thiết bị. Hãy đọc nội dung bên dưới.');stopNarration();};speaking=true;$$(`[data-action="narrate"][data-context="${context}"]`).forEach(b=>{b.innerHTML=icon('stop');b.setAttribute('aria-label','Dừng thuyết minh');b.closest('.audio-card')?.classList.add('playing');});$$('.audio-indicator').forEach(e=>e.textContent='Đang đọc');window.speechSynthesis.speak(utter);}
+const introAudio = new Audio();
+introAudio.preload = 'none';
+introAudio.src = 'media/mot-phut-cham-cua-viet.mp3';
+let narrationRequest = 0;
+
+function stopNarration() {
+  narrationRequest++;
+  introAudio.pause();
+  introAudio.currentTime = 0;
+  speaking = false;
+  const button = $('[data-action="narrate"][data-context="intro"]');
+  button.innerHTML = icon('play');
+  button.setAttribute('aria-label', 'Nghe thuyết minh');
+  button.closest('.audio-card').classList.remove('playing');
+  $('.audio-indicator').textContent = 'Sẵn sàng';
+}
+
+introAudio.addEventListener('ended', stopNarration);
+
+async function narrate() {
+  if (speaking) {
+    stopNarration();
+    return;
+  }
+  const request = ++narrationRequest;
+  const button = $('[data-action="narrate"][data-context="intro"]');
+  speaking = true;
+  button.innerHTML = icon('stop');
+  button.setAttribute('aria-label', 'Dừng thuyết minh');
+  button.closest('.audio-card').classList.add('playing');
+  $('.audio-indicator').textContent = 'Đang tải';
+  try {
+    await introAudio.play();
+    if (request === narrationRequest) $('.audio-indicator').textContent = 'Đang phát';
+  } catch {
+    if (request !== narrationRequest) return;
+    stopNarration();
+    toast('Chưa phát được âm thanh. Bạn có thể thử lại hoặc đọc lời dẫn.');
+  }
+}
 function waveMarkup(){return Array.from({length:40},(_,i)=>`<i style="--h:${3+(i*7%14)}px;--d:${i*.07}s"></i>`).join('');}
 $$('.waveform').forEach(e=>e.innerHTML=waveMarkup());
 function showDialog(dialog){if(!dialog.open)dialog.showModal();document.body.classList.add('dialog-open');}
@@ -111,10 +149,10 @@ case'passport':openPassport();break;
 case'continue':openPoint((points.find(p=>!state.stamps[p.id])||points[0]).id);break;
 case'download':downloadJournal();break;
  case'certificate':downloadCertificate();break;
-case'narrate':narrate(b.dataset.context);break;
+case'narrate':narrate();break;
 case'answer':{const p=points.find(p=>p.id===id);const a=Number(b.dataset.answer),kind=b.dataset.kind;if(!p||!quizResponses[kind])break;quizResponses[kind][id]=a;if(kind==='memory'&&a===p.correct){const first=!state.stamps[id];state.stamps[id]=true;const ok=persist();refresh();if(first&&ok)toast('Đã nhận dấu CHẠM '+two(id)+' — Hành trình đang tiếp nối!');}$$('.quiz-option').forEach(x=>{x.classList.remove('correct','incorrect');if(x===b)x.classList.add(a===p.correct?'correct':'incorrect');});$('#quiz-feedback').innerHTML=feedbackMarkup(p,a,kind);if(kind==='memory'&&a===p.correct)$('.step-footer>span').textContent='✓ Đã nhận dấu ký ức';break;}
 case'intro':showUtility('Một miền biển. Nhiều câu chuyện.',`<img class="intro-dialog-image" src="assets/bien-cua-viet.webp" alt="Biển Cửa Việt nhìn từ trên cao"><p>CHẠM CỬA VIỆT đưa bạn đến gần lịch sử và văn hóa địa phương qua những hoạt động nhỏ: quan sát, thử đoán, lắng nghe và ghi lại cảm nhận.</p><p>Khám phá năm điểm chạm để tìm hiểu cảnh quan, lịch sử, con người và nhịp sống Cửa Việt. Mỗi điểm chạm đều có câu hỏi ghi nhớ để bạn sưu tập dấu trong hộ chiếu.</p><button class="btn btn-primary" data-action="continue">Bắt đầu từ điểm chạm đầu tiên ${icon('arrow')}</button>`);break;
-case'transcript':showUtility('Một phút chạm Cửa Việt',`<p>${intro}</p><div class="info-box"><p>Nội dung biên soạn cho trải nghiệm. Giọng đọc tự động của thiết bị, không phải bản ghi nhân chứng.</p></div>`);break;
+case'transcript':showUtility('Một phút chạm Cửa Việt',`<p>${intro}</p><div class="info-box"><p>Nội dung biên soạn cho trải nghiệm. Lời dẫn sử dụng giọng đọc tổng hợp tiếng Việt.</p></div>`);break;
 case'sources':showSources();break;
 case'privacy':showUtility('Hành trình này là của bạn',`<p>Dấu hộ chiếu và cảm nhận được lưu bằng bộ nhớ của trình duyệt trên thiết bị đang dùng. Trang không yêu cầu tên, số điện thoại hoặc tài khoản riêng để ghi cảm nhận.</p><p>Ghi chép không tự động gửi cho giáo viên, nhóm nghiên cứu hoặc hiển thị với người khác. Bạn có thể dùng “Tải nhật ký” trong hộ chiếu để giữ một bản riêng. Xóa dữ liệu trình duyệt hoặc chuyển sang thiết bị khác có thể khiến tiến trình không còn.</p><p>Các liên kết bài báo và Google Maps mở trang bên ngoài; dịch vụ đó có chính sách riêng. Trang không yêu cầu quyền truy cập vị trí, micro hoặc camera.</p><p>Phông chữ được đóng gói cùng giao diện, không cần tải từ dịch vụ phông chữ bên ngoài khi sử dụng.</p>`);break;
 case'top':window.scrollTo({top:0,behavior:'smooth'});break;
