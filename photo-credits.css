@@ -107,3 +107,16 @@ button[data-action="gallery"] > .image-source-gallery a { pointer-events: none; 
   .image-source-under { font-size: 9px; }
   .experience-head + .image-source-under { padding: 6px 15px; }
 }
+
+/* Chạm 02 – hợp nhất nguồn ảnh thành một chú thích dưới thanh kéo. */
+.source-note--inline-comparison {
+  display: block;
+  margin: 7px 0 17px;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #586e67;
+}
+@media (max-width: 650px) {
+  .source-note--inline-comparison { font-size: 11px; }
+}
