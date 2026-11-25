@@ -277,7 +277,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json?v=3').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=4').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {
@@ -393,10 +393,15 @@ function groupPhotoAlbum(id) {
 
 stepMarkup = function (point) {
   const { id } = point;
+  // Chạm 03 được dành riêng để bổ sung tư liệu mới vào lần cập nhật sau.
+  // Giữ nguyên hồ sơ nguồn ở app.js và media/ để không làm mất dữ liệu đã sưu tầm.
+  if (id === 3) {
+    return `<div class="station-body"><h3>Chạm 3 – Đang bổ sung tư liệu</h3><p>Hình ảnh, video và câu chuyện của điểm chạm này sẽ được cập nhật sau.</p></div>`;
+  }
   if (currentStep === 3) {
     const prompts = id >= 3 ? stationDocuments[id][4].html : '';
     const chapterNote = id === 2 ? '<p>Đối chiếu lời kể với các mốc và video tư liệu năm 1973 trong phần Khám phá.</p>' : '';
-    return `<div class="station-body"><h3>Nghe người thật kể</h3>${chapterNote}${mediaShell('cham-' + id, 'Nghe người thật kể — Chạm ' + two(id))}${id === 2 ? chamTwoPhotoGallery() : id === 3 ? chamThreePhotoGallery() : ''}
+    return `<div class="station-body"><h3>Nghe người thật kể</h3>${chapterNote}${mediaShell('cham-' + id, 'Nghe người thật kể — Chạm ' + two(id))}${id === 2 ? `<h4>Video lời kể bổ sung</h4>${mediaShell('cham-2-me', 'Video lời kể bổ sung — Chạm 02')}${chamTwoPhotoGallery()}${chamThreePhotoGallery()}` : ''}
       <div class="read-prompt"><strong>Sau khi xem</strong><p>${interviewPrompts[id - 1]}</p></div>
       ${prompts ? `<div class="station-topics"><details><summary>Gợi ý phỏng vấn</summary>${prompts}</details></div>` : ''}
       <div class="station-quicklinks"><button class="btn btn-outline" data-action="step" data-step="6">Ghi lại cảm nhận</button><button class="btn btn-outline" data-action="step" data-step="4">Mở phần khám phá</button></div></div>`;
