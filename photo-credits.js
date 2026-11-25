@@ -113,6 +113,8 @@
     }
   }
   function creditComparison(comparison) {
+    // Chạm 02 đã có chú thích ngay dưới ảnh; tránh thêm dòng chữ nhỏ trùng lặp.
+    if (comparison.hasAttribute('data-consolidated-caption')) return;
     if (comparison.dataset.imageCreditsDone === '1') return;
     comparison.dataset.imageCreditsDone = '1';
     const images = comparison.querySelectorAll('img');
