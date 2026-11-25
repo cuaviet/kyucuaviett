@@ -21,7 +21,7 @@
   const groupPhotographer = { label: 'Tư liệu do nhóm nghiên cứu cung cấp; chưa xác nhận người chụp.' };
 
   const exact = {
-    'assets/ben-cang-hien-nay.webp': { label: 'Ngọc Tân / Báo Đầu tư', url: links.harbor },
+    'assets/ben-cang-hien-nay.webp': { label: 'Nhóm nghiên cứu CHẠM CỬA VIỆT thực hiện.', prefix: 'Ảnh: ' },
     'assets/nhip-song-ben-ca.webp': { label: 'VOV', url: links.fishing },
     'assets/cua-viet-keo-luoi-rung.jpg': { label: 'S.H / XANH EWEC', url: links.xanh },
     'assets/cua-viet-u-chuop-nuoc-mam.avif': { label: 'Viết Hảo / Báo Nhà báo và Công luận', url: links.nuocmam },
@@ -90,7 +90,7 @@
     "label": "Ảnh minh họa nghi lễ ven biển; chưa xác minh địa điểm, thời điểm và nguồn gốc"
   },
   "assets/ben-cang-hien-nay.webp": {
-    "label": "Ảnh cảng biển; chưa tìm được bài đăng khớp chính xác, chưa xác minh tác giả"
+    "label": "Nhóm nghiên cứu CHẠM CỬA VIỆT thực hiện.", "prefix": "Ảnh: "
   },
   "assets/cua-song-thach-han.webp": {
     "label": "Ảnh khu vực cảng/cửa sông; chưa tìm được bản đăng khớp chính xác"
