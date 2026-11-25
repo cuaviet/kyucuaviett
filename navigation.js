@@ -255,7 +255,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json?v=6').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=7').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {
@@ -333,7 +333,16 @@ function initPlayer(container) {
       if (currentIndex + 1 < clips.length) select(currentIndex + 1, true);
       else toggle.textContent = 'Phát lại';
     });
-    video.addEventListener('error', () => { notice.hidden = false; });
+    video.addEventListener('error', () => {
+      const clip = clips[currentIndex];
+      if (clip.fallback && video.getAttribute('src') !== clip.fallback) {
+        // Trong thời gian tệp video mới đang được đưa lên, vẫn phát được video cũ.
+        video.src = clip.fallback;
+        video.load();
+        return;
+      }
+      notice.hidden = false;
+    });
     $('button', notice).addEventListener('click', () => select(currentIndex, true));
     $$('[data-chapter]', container).forEach(choice => choice.addEventListener('click', () =>
       select(Number(choice.dataset.chapter))));
