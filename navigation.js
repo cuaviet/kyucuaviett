@@ -113,7 +113,7 @@ const chamTwoPhotos = [
 function chamTwoPhotoGallery() {
   return `<section class="interview-photo-section" aria-labelledby="interview-photo-heading">
     <h4 id="interview-photo-heading">Hình ảnh tư liệu</h4>
-    <p>Hình ảnh do nhóm dự án cung cấp. Chọn ảnh để xem lớn.</p>
+    <p>Hình ảnh do chúng tôi sưu tầm/chụp được. Chọn ảnh để xem lớn.</p>
     <div class="interview-photo-grid">${chamTwoPhotos.map(([name, description]) =>
       `<a href="assets/cham-2-anh-tu-lieu/${name}" target="_blank" rel="noopener noreferrer" aria-label="Xem lớn: ${esc(description)}"><img src="assets/cham-2-anh-tu-lieu/${name}" alt="${esc(description)}" loading="lazy"></a>`).join('')}</div>
   </section>`;
@@ -127,7 +127,7 @@ function chamThreePhotoGallery() {
   ];
   return `<section class="interview-photo-section" aria-labelledby="cham-three-photo-heading">
     <h4 id="cham-three-photo-heading">Hình ảnh tư liệu</h4>
-    <p>Hình ảnh do nhóm dự án cung cấp. Chọn ảnh để xem lớn.</p>
+    <p>Hình ảnh do chúng tôi sưu tầm/chụp được. Chọn ảnh để xem lớn.</p>
     <div class="interview-photo-grid">${photos.map(([name, description]) =>
       `<a href="assets/cham-3-anh-tu-lieu/${name}" target="_blank" rel="noopener noreferrer" aria-label="Xem lớn: ${esc(description)}"><img src="assets/cham-3-anh-tu-lieu/${name}" alt="${esc(description)}" loading="lazy"></a>`).join('')}</div>
   </section>`;
@@ -337,7 +337,7 @@ function groupPhotoAlbum(id) {
     const path = 'assets/anh-nhom/img-' + photo + '.webp';
     return `<figure><a href="${path}" target="_blank" rel="noopener noreferrer" aria-label="Xem ảnh lớn: ${esc(caption)}"><img src="${path}" alt="${esc(caption)}" loading="lazy"></a><figcaption>${esc(caption)}</figcaption></figure>`;
   }).join('');
-  return `<section class="interview-photo-section" aria-labelledby="group-photo-heading"><h4 id="group-photo-heading">Ảnh do nhóm dự án cung cấp</h4><p>Chọn ảnh để xem lớn.</p><div class="station-gallery">${figures}</div></section>`;
+  return `<section class="interview-photo-section" aria-labelledby="group-photo-heading"><h4 id="group-photo-heading">Ảnh do chúng tôi sưu tầm/chụp được</h4><p>Chọn ảnh để xem lớn.</p><div class="station-gallery">${figures}</div></section>`;
 }
 
 stepMarkup = function (point) {
@@ -352,7 +352,7 @@ stepMarkup = function (point) {
   }
   if (currentStep === 4 && id === 1) {
     return `<div class="station-body"><h3>Nơi dòng sông gặp biển</h3><p>Cửa Việt nằm ở phía đông Quảng Trị, nơi sông Thạch Hãn đổ ra biển Đông. Chọn từng chủ đề để tìm hiểu mối liên hệ giữa dòng sông, cảng và đời sống cư dân ven biển.</p>
-      ${topicMarkup(geographicTopics)}<figure class="station-monument"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa sông và bờ biển Cửa Việt từ trên cao"><figcaption>Toàn cảnh Cửa Việt · Ảnh do nhóm dự án cung cấp.</figcaption></figure>
+      ${topicMarkup(geographicTopics)}<figure class="station-monument"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa sông và bờ biển Cửa Việt từ trên cao"><figcaption>Toàn cảnh Cửa Việt · Ảnh do chúng tôi sưu tầm/chụp được.</figcaption></figure>
       <h4>Cửa Việt qua các thời kỳ</h4>${topicMarkup(geographyTimeline)}
       <div class="read-prompt">Điều gì về Cửa Việt khiến bạn nhớ nhất? Bạn muốn gìn giữ nét đẹp nào của vùng cửa biển?</div>
       <div class="station-quicklinks"><a class="btn btn-outline" href="${stationHash(2, 4)}">Tìm hiểu lịch sử ở Chạm 02</a></div></div>`;
