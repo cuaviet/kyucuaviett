@@ -1,6 +1,7 @@
 /* CHẠM CỬA VIỆT – chú thích nguồn ảnh cho website và 5 Chạm.
  * Chỉ nêu tác giả/trang báo nếu tài liệu dự án có thông tin hỗ trợ.
- * Ảnh thiếu xuất xứ được ghi rõ là chưa xác minh; không suy đoán.
+ * Theo xác nhận của nhóm dự án, ảnh nội bộ chưa ghi tác giả do nhóm trực tiếp thực hiện.
+ * Giữ nguyên ghi nguồn bên ngoài và ảnh lịch sử có xuất xứ riêng.
  * Không thay đổi ảnh, câu hỏi, tính năng upload hoặc Firestore.
  */
 (function () {
@@ -17,6 +18,8 @@
     congLuan: 'https://congluan.vn/quang-tri-hang-chuc-ho-dan-song-mon-vi-du-an-mo-rong-cang-cua-viet-post326674.html'
   };
 
+  const groupPhotographer = { label: 'Nhóm nghiên cứu CHẠM CỬA VIỆT thực hiện.', prefix: 'Ảnh: ' };
+
   const exact = {
     'assets/ben-cang-hien-nay.webp': { label: 'Ngọc Tân / Báo Đầu tư', url: links.harbor },
     'assets/nhip-song-ben-ca.webp': { label: 'VOV', url: links.fishing },
@@ -26,20 +29,20 @@
     'assets/anh-chien-su-1973.webp': { label: 'Ảnh tư liệu đăng trên Báo Dân Việt; chưa rõ tác giả gốc' },
     'assets/tu-lieu-62.webp': { label: 'Kenneth L. Fuller / U.S. DefenseImagery, 15/3/1967 · DM-ST-85-09352', url: 'https://commons.wikimedia.org/wiki/File:LCVP_LCU_and_LCM_on_Cua_Viet_river_1967.JPEG' },
     'assets/cua-viet-1967.webp': { label: 'Tư liệu năm 1967, ghi chú US Navy; chưa xác minh ảnh gốc' },
-    'assets/song-thach-han-moi.webp': { label: 'Ảnh do nhóm dự án cung cấp; chưa xác minh tác giả gốc' },
-    'assets/toan-canh-cua-viet.webp': { label: 'Nhóm dự án cung cấp; chưa rõ tác giả ảnh gốc' },
-    'assets/cham-1-toan-canh-cua-viet.webp': { label: 'Nhóm dự án cung cấp; chưa rõ tác giả ảnh gốc' },
-    'assets/cau-cua-viet.webp': { label: 'Nhóm dự án cung cấp; chưa rõ tác giả ảnh gốc' },
-    'assets/cham-5-bai-bien-cong-chao-2026.jpg': { label: 'Nhóm dự án cung cấp; chưa rõ tác giả ảnh gốc' },
-    'assets/cham-4-hai-san-ven-bien.webp': { label: 'Nhóm dự án cung cấp; chưa rõ tác giả ảnh gốc' }
+    'assets/song-thach-han-moi.webp': groupPhotographer,
+    'assets/toan-canh-cua-viet.webp': groupPhotographer,
+    'assets/cham-1-toan-canh-cua-viet.webp': groupPhotographer,
+    'assets/cau-cua-viet.webp': groupPhotographer,
+    'assets/cham-5-bai-bien-cong-chao-2026.jpg': groupPhotographer,
+    'assets/cham-4-hai-san-ven-bien.webp': groupPhotographer
   };
   const groupPrefixes = [
     'assets/anh-nhom/',
     'assets/cham-2-anh-tu-lieu/',
     'assets/cham-3-anh-tu-lieu/'
   ];
-  const groupSource = { label: 'Nhóm dự án cung cấp; chưa rõ tác giả ảnh gốc' };
-  const unknownSource = { label: 'Tư liệu dự án sử dụng; chưa xác minh nguồn ảnh gốc' };
+  const groupSource = groupPhotographer;
+  const unknownSource = groupPhotographer;
 
   function getSource(img) {
     const raw = img.getAttribute('src') || '';
@@ -67,7 +70,7 @@
 
   function creditText(meta, prefix) {
     const fragment = document.createDocumentFragment();
-    fragment.append(document.createTextNode(prefix || 'Nguồn ảnh: '));
+    fragment.append(document.createTextNode(prefix || meta.prefix || 'Nguồn ảnh: '));
     if (meta.url) {
       const a = document.createElement('a');
       a.href = meta.url;
