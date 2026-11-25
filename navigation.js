@@ -100,7 +100,7 @@ function mePhotoGallery() {
     ['ba-tu-lieu-bang-khen.webp', 'Bằng khen của Ủy ban Nhân dân Cách mạng tỉnh Quảng Trị trong bộ tư liệu được lưu giữ'],
     ['ba-tu-lieu-anh-tap-the.webp', 'Ảnh tập thể được lưu giữ qua nhiều năm'],
     ['ba-tu-lieu-giay-chung-nhan.webp', 'Những giấy chứng nhận danh hiệu Dũng sĩ trong bộ tư liệu'],
-    ['ba-tu-lieu-anh-ky-niem.webp', 'Ảnh kỷ niệm bên một công trình tưởng niệm'],
+    ['ba-tu-lieu-anh-ky-niem.webp', 'Ảnh lưu niệm của mệ Trần Thị Lành (bí danh Trần Thị Quyền) cùng Phó Đô đốc Nguyễn Văn Tình'],
     ['ba-gap-nhom-hoc-sinh.webp', 'Học sinh gặp gỡ và lắng nghe người kể chuyện trong chuyến sưu tầm tư liệu']
   ];
   return `<section class="interview-photo-section interview-photo-section--archive" aria-labelledby="cham-two-me-photo-heading">
