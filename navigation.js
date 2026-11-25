@@ -194,9 +194,10 @@ const interviewPrompts = [
 ];
 const geographicTopics = [
   ['Sông Thạch Hãn', 'Dòng sông dẫn nước từ đất liền về Cửa Việt rồi đổ ra biển Đông. Đường thủy gắn vùng cửa biển với các địa bàn ở phía trong.', {
-    src: 'assets/cua-song-thach-han.webp',
-    width: 1200,
-    height: 675,
+    src: 'assets/song-thach-han-moi.webp',
+    fallback: 'assets/cua-song-thach-han.webp',
+    width: 1794,
+    height: 877,
     caption: 'Cửa sông Thạch Hãn tại Cửa Việt nhìn từ trên cao.'
   }],
   ['Cảng Cửa Việt', 'Vị trí ở cửa sông giúp cảng kết nối vận tải đường biển, vận chuyển hàng hóa và dịch vụ phục vụ kinh tế địa phương.', {
@@ -264,7 +265,7 @@ function topicMarkup(items) {
         : '';
       figure = `<figure class="station-monument">
         <a href="${src}" target="_blank" rel="noopener noreferrer" aria-label="Xem ảnh lớn: ${caption}">
-          <img src="${src}" width="${photo.width}" height="${photo.height}" alt="${caption}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <img src="${src}" width="${photo.width}" height="${photo.height}" alt="${caption}" loading="lazy" decoding="async" referrerpolicy="no-referrer"${photo.fallback ? ` onerror="this.onerror=null;this.parentElement.href='${esc(photo.fallback)}';this.width=1200;this.height=675;this.src='${esc(photo.fallback)}'"` : ''}>
         </a>
         <figcaption>${caption}${credit}</figcaption>
       </figure>`;
