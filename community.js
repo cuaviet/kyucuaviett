@@ -20,7 +20,72 @@
     return validDisplayName(name) ? name : null;
   }
   const containsIdentityLabel = value => /(?:họ\s*(?:và\s*)?tên|(?:em|tôi|mình)\s+tên|lớp\s*[:–-]?\s*\d{1,2}\s*[a-zđ](?:\s*\d{1,2})?\b|mã học sinh|\b0\d{9}\b)/iu.test(value);
-  const isVisiblePost = data => Boolean(displayAuthor(data)) && !containsIdentityLabel(data.message || '');
+  // Only reviewed versions of older public submissions may reappear anonymously.
+  const reviewedLegacyVersions = new Set([
+    '05a3f6c7eb97154eae21f026d3f7f8d394f47ea8650114a2eca1f35d2f92cccd',
+    '091c474936221f6568180ce9c270984a40c5b885f4a59054655f17bd238fe0af',
+    '15085f10d1a38e95e17f6bf41b57a47eb2d334b307218f3bef84fc559d55fe8f',
+    '15b3eeb08bdbbd742675605606c6552391cccafbfa7f422361197b7fb2c6b375',
+    '168228e3e6ece4c3d3a935f58caa8b1d6563d5ec2e9a03ea7d2920ad5ed46237',
+    '22d9e281dadb5659b394f7305340d5ecb6f8d4d0265809ea9eb56c7b2c287f32',
+    '331f5e2d734be22b7f8f30b1c5d7f6727f84034023a0133353a13b968196961c',
+    '390a1692852f732f20d843a2a81f187245d32b7171675755b1b063be5f6dc5ce',
+    '46a44319608092fc846f511ce6a089d2acdcdf4889093c755f6487014411e35e',
+    '4cfcc25ad1c5cae5e87119260346794212b4c4160a88b41c7e05e0047d5018eb',
+    '51610e6389bfd66b06f14682e977b947419b5e4557efbfc8c27b67be4ea9565b',
+    '525841eff33116fb3b6b7aad4c31d9051e237377e26ab9d37eef173b88426a62',
+    '52b647a58925b59ac58335a4b98c4bbffc2c0473cf6fa335a08f2a66e3ebc9d8',
+    '5773fb6e7d4f82d4a2e1086d4890a55918fbfb73ce4d0a57b10ac3d3402993ff',
+    '5e7733c2e61edec1c9676332ae922ff11e37411a2b07330e10600e517c0f7534',
+    '6329ced3689f161c357ade67fcb3ca2383683a8f14c344169147743b5df6d0c3',
+    '68108ec86ba82735bdb15a08e55507e4230506c8120878504c52ddcceb2c8f0e',
+    '6e9613907c0a6de7542ad3d050418acb67b925a4145940c4455522e036908e79',
+    '6f580f08998028ff660f95ca0746c5583525b4b1c236711cd2a030e976b2eda3',
+    '84b3e4a626fb36ca752867d8bebad10cd5ffd2aec36eaab641d94aee7a261002',
+    '909ae4b2703cbc5f9725d8663b1b3749666c6dee4f7e9665dd0c542fd85105e0',
+    '92d58298fc8c9f6e0287c6640e211f9f8c13937bef173148760389a5c418e799',
+    '9754f6a320d349f46a796b86011a2816a5ddd1473034fe57a8593f1a36d27658',
+    '98da67375830cc6370aa7004af0e9c8dba7221cedabf5ac758d2536e159432b7',
+    '9944278a5b6849b4122ba531855b500369857eed0dd5d20405a37c140b664884',
+    'a2cc97641b80889db8c93e7d46d3e66173b711e3130f681d35aa1a2f4bee3e0c',
+    'a3911fb66db3537adea72c5ff2aac94903ddbebef6f33d0d27453d9249a5895b',
+    'a4d49405056b2bd692f194a2809158c516e7166f159cae438a8f980f3a3d4fcf',
+    'a50c7a30e2a9afba2bb08f1519a8cce0a8f8bc03a107cf7af4ec3fa269cc23bf',
+    'a6b24efe58910471ebad1d2f95f59a85344596be34b0da53351568d9f88bf4ea',
+    'a94d8f1dbc7b6843ab97d20ad63ce441993c3b3b5778347457ede622840cef05',
+    'abaebd1fe13b93985e154c349685ad9cb0607a5ba9953795567afc2878922b3e',
+    'bbc9f4f634c3039c762711efb366e93d4bd474462b22e368da1a67d1b41554dc',
+    'bf54bb9574ca93ffaa3f2590d9ea0899efe4f695268335bdbd3fc7d281e449ac',
+    'c35ee1c975c029c66aafdc70e0015036b78f063ca51c0f7ec62f5770c14f8f16',
+    'c4fcff3ea5ab05c63e779aab57953f894f7cdfa7134dfa56559f62701a1fa8a9',
+    'ca8312f4640066c44a011f55b055fa2860e0765e0c216672061e29b7afa930a4',
+    'd0ba4d17bdc3b9fec6495b27d80b83e40a4fc1515cfeaebd47d9402d0539d0b9',
+    'd28b9920883c1308b5969e6dbcc2f116c9faa9b1d6fea6350db84c3cb2922cf9',
+    'd48051fa4102c2364d2a0e63c7c5fefb130146d7d2c596be324262990b22a84b',
+    'e07ef74054f850a880b9951a8e4d489d72624df6b56cbd2aa1110f466448eb72',
+    'e234b92f7b3da79281b5a5deb834ab657ea89f4f83205b7a950ed40f3b32dfbd',
+    'fcc2f61c091ccc633bd7d600f3914fe9e065d04a130ce7e3d4ef086b53d7a9c2',
+    'fe2d2a3f9fbb3934f9356818c259e3faf62f90e5273a1a8d2018e540281db338',
+    'ff0e7f75b371a48994f320f0fa8c3ef9bb5f427f8e29b6f78c4f5b51cebc76d8',
+  ]);
+  const reviewedSnapshots = new WeakSet();
+  const isVisiblePost = snapshot => {
+    const data = snapshot.data();
+    return reviewedSnapshots.has(snapshot)
+      || (Boolean(displayAuthor(data)) && !containsIdentityLabel(data.message || ''));
+  };
+  async function checkReviewedVersions(snapshots) {
+    if (!window.crypto?.subtle) return;
+    const encoder = new TextEncoder();
+    await Promise.all(snapshots.map(async snapshot => {
+      const data = snapshot.data();
+      if (displayAuthor(data) || typeof data.message !== 'string') return;
+      const bytes = encoder.encode(JSON.stringify([snapshot.id, data.message]));
+      const digest = await window.crypto.subtle.digest('SHA-256', bytes);
+      const hex = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+      if (reviewedLegacyVersions.has(hex)) reviewedSnapshots.add(snapshot);
+    }));
+  }
   const messageField = document.getElementById('community-message');
   const status = document.getElementById('community-status');
   const feed = document.getElementById('community-feed');
@@ -54,7 +119,7 @@
     const top = document.createElement('div');
     top.className = 'community-entry-top';
     const author = document.createElement('strong');
-    author.textContent = isVisiblePost(data) ? displayAuthor(data) : anonymousAuthor;
+    author.textContent = isVisiblePost(snapshot) ? displayAuthor(data) || anonymousAuthor : anonymousAuthor;
     const time = document.createElement('time');
     time.textContent = dateText(data.createdAt);
     const rawMessage = String(data.message || '').slice(0, 600);
@@ -67,7 +132,7 @@
     }
     top.append(author, time);
     const paragraph = document.createElement('p');
-    paragraph.textContent = isVisiblePost(data)
+    paragraph.textContent = isVisiblePost(snapshot)
       ? rawMessage.slice(touchPrefix?.[0].length || 0)
       : 'Bài cũ đang ẩn. Bạn có thể sửa nội dung và đồng ý đăng lại, hoặc xóa bài.';
     article.append(top, paragraph);
@@ -339,7 +404,7 @@
       for (const item of all) {
         if (seen.has(item.id)) continue;
         seen.add(item.id);
-        if (!isVisiblePost(item.data()) && (!viewerUid || item.data().authorUid !== viewerUid)) continue;
+        if (!isVisiblePost(item) && (!viewerUid || item.data().authorUid !== viewerUid)) continue;
         feed.append(renderCard(item));
         shown++;
       }
@@ -391,7 +456,7 @@
         return timeB - timeA;
       };
       const mine = related.filter(item => viewerUid && item.data().authorUid === viewerUid).sort(byCreatedAt);
-      const others = related.filter(item => isVisiblePost(item.data()) && item.data().authorUid !== viewerUid).sort(byCreatedAt);
+      const others = related.filter(item => isVisiblePost(item) && item.data().authorUid !== viewerUid).sort(byCreatedAt);
       const recent = mine.slice(0, 12).concat(others.slice(0, 8));
       if (recent.length) {
         recent.forEach(item => touchFeed.append(renderCard(item)));
@@ -428,6 +493,7 @@
         canLoadMore = newest.length === PAGE_SIZE || older.length > 0 && canLoadMore;
         statusText(feedStatus, 'Những ký ức mới nhất từ cộng đồng', false);
         paintFeed();
+        checkReviewedVersions(snapshot.docs).then(paintFeed).catch(console.warn);
       },
       error => {
         statusText(feedStatus, 'Chưa thể tải lời nhắn từ máy chủ. Kiểm tra kết nối và quyền đọc dữ liệu.', true);
@@ -443,6 +509,7 @@
         const snapshot = await firebaseStore.getDocs(
           firebaseStore.query(collectionRef, firebaseStore.orderBy('createdAt', 'desc'), firebaseStore.startAfter(last), firebaseStore.limit(PAGE_SIZE))
         );
+        await checkReviewedVersions(snapshot.docs);
         older = older.concat(snapshot.docs);
         canLoadMore = snapshot.docs.length === PAGE_SIZE;
         paintFeed();
