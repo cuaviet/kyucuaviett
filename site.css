@@ -261,28 +261,44 @@ dialog::backdrop { backdrop-filter: blur(4px); }
   .point-enter .step-content { animation: coast-arrive .65s .32s ease-out both; }
 }
 
-/* Show both full photographs in Chạm 5 while keeping the comparison slider. */
-.aerial-comparison {
-  margin-top: 28px;
-}
+/* Chạm 05: crop both photos into the same landscape comparison viewport,
+   eliminating side bars while preserving the slider and the originals. */
+.aerial-comparison { margin-top: 28px; }
 
 .compare-wrap.compare-cham-five {
   width: 100%;
-  max-width: 800px;
+  max-width: 860px;
   height: auto;
   aspect-ratio: 16 / 9;
-  max-height: 420px;
-  margin-inline: auto;
-  background: #e7ece6;
+  max-height: none;
+  margin: 14px auto 0;
+  border-radius: 16px;
+  background: #dbe9e7;
+  box-shadow: 0 5px 22px rgba(24, 67, 62, .12);
 }
-.compare-cham-five > img,
-.compare-cham-five .compare-top img {
+.compare-wrap.compare-cham-five > img,
+.compare-wrap.compare-cham-five .compare-top img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
 }
-.compare-cham-five .compare-top { background: #e7ece6; }
+.compare-wrap.compare-cham-five > img { object-position: 50% 63%; }
+.compare-wrap.compare-cham-five .compare-top img { object-position: 50% 68%; }
+.compare-wrap.compare-cham-five .compare-top { background: transparent; }
+.compare-cham-five-caption {
+  max-width: 860px;
+  margin: 9px auto 16px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #586f68;
+}
+@media (max-width: 650px) {
+  .compare-wrap.compare-cham-five { aspect-ratio: 3 / 2; border-radius: 12px; }
+  .compare-cham-five-caption { font-size: 11px; }
+}
 
 
 /* Chạm 1 / Bước 01: cắt khung chụp Google Earth, chỉ giữ phần bản đồ.
