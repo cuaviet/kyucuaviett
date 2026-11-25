@@ -48,9 +48,11 @@
   ],
   "cham-3-quyen": [
     {
-      "path": "media/interview-4745.mp4",
+      "path": "media/Cham_3_Kham_pha_Phan_A.mp4",
+      "fallback": "media/interview-4745.mp4",
       "start": 0,
-      "end": 226
+      "end": 214,
+      "title": "Video mới – Khám phá mục a"
     }
   ]
 }
