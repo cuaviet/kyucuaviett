@@ -15,39 +15,10 @@
   ],
   "cham-2": [
     {
-      "path": "media/cham-2-1.mp4",
-      "poster": "media/cham-2-1.webp",
+      "path": "media/interview-4733.mp4",
       "start": 0,
-      "end": 197,
-      "title": "Gặp người kể chuyện và nghe về Cửa Việt thời chiến"
-    },
-    {
-      "path": "media/cham-2-2.mp4",
-      "poster": "media/cham-2-2.webp",
-      "start": 197,
-      "end": 394,
-      "title": "Chuyện ở tổ du kích"
-    },
-    {
-      "path": "media/cham-2-3.mp4",
-      "poster": "media/cham-2-3.webp",
-      "start": 394,
-      "end": 591,
-      "title": "Những người cùng hoạt động trong kháng chiến"
-    },
-    {
-      "path": "media/cham-2-4.mp4",
-      "poster": "media/cham-2-4.webp",
-      "start": 591,
-      "end": 788,
-      "title": "Hồi tưởng của người trong cuộc"
-    },
-    {
-      "path": "media/cham-2-5.mp4",
-      "poster": "media/cham-2-5.webp",
-      "start": 788,
-      "end": 986,
-      "title": "Nhìn lại những năm tháng giữ quê hương"
+      "end": 190,
+      "title": "Video phỏng vấn người kể chuyện"
     }
   ],
   "cham-2-tu-lieu": [
@@ -58,13 +29,7 @@
       "end": 483
     }
   ],
-  "cham-3": [
-    {
-      "path": "media/interview-4733.mp4",
-      "start": 0,
-      "end": 190
-    }
-  ],
+  "cham-3": [],
   "cham-4": [
     {
       "path": "media/cham-4-1.mp4",
@@ -86,14 +51,6 @@
       "path": "media/interview-4745.mp4",
       "start": 0,
       "end": 226
-    }
-  ],
-  "cham-2-me": [
-    {
-      "path": "media/interview-4733.mp4",
-      "start": 0,
-      "end": 190,
-      "title": "Phỏng vấn bổ sung 1"
     }
   ]
 }
