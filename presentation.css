@@ -541,3 +541,76 @@ dialog::backdrop {
   0% { opacity: 0; transform: translateY(-10px) scale(1.45) rotate(-12deg); }
   68% { opacity: 1; transform: scale(.87) rotate(-5deg); }
 }
+
+#gallery .section-heading {
+  align-items: end;
+  gap: 8px 28px;
+  margin-bottom: 24px;
+}
+#gallery .section-intro { margin: 0; }
+#gallery .new-gallery { gap: clamp(12px, 1.7vw, 24px); }
+.gallery-card {
+  min-width: 0;
+  padding: 7px 7px 12px;
+  border: 1px solid #d7e6e2;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 5px 18px #183b4209;
+}
+.new-gallery .gallery-card button {
+  display: block;
+  width: 100%;
+  border-radius: 11px;
+  background: #fff;
+  color: #183b42;
+}
+.new-gallery .gallery-image {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  background: #e9f3f2;
+}
+.new-gallery .gallery-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.new-gallery .gallery-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 11px 6px 2px;
+  color: #183b42;
+  font-size: clamp(13px, 1.13vw, 16px);
+  font-weight: 700;
+}
+.gallery-title .icon {
+  flex: none;
+  width: 29px;
+  height: 29px;
+  padding: 7px;
+  border-radius: 50%;
+  color: #12695f;
+  background: #e9f5f0;
+}
+.gallery-card button:is(:hover, :focus-visible) .icon {
+  color: white;
+  background: #12695f;
+}
+.gallery-card > .image-source-credit {
+  margin: 2px 6px 0;
+  padding: 0;
+  color: #415a56;
+  font-size: 11px;
+  line-height: 1.5;
+}
+@media (max-width: 650px) {
+  #gallery .section-heading { align-items: start; margin-bottom: 16px; }
+  .new-gallery .gallery-title { padding-inline: 3px; }
+  .gallery-title .icon { width: 24px; height: 24px; padding: 5px; }
+  .gallery-card > .image-source-credit { margin-inline: 3px; }
+}

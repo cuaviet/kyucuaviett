@@ -158,6 +158,11 @@
       addOverlay(img, meta, overlay);
       return;
     }
+    const galleryCard = img.closest('.gallery-card');
+    if (galleryCard) {
+      galleryCard.append(creditNode(meta, 'image-source-gallery'));
+      return;
+    }
     const galleryButton = img.closest('button[data-action="gallery"]');
     if (galleryButton) {
       galleryButton.append(creditNode(meta, 'image-source-gallery'));
