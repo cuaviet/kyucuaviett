@@ -415,7 +415,16 @@ stepMarkup = function (point) {
     return `<div class="station-body"><h3>Nơi dòng sông gặp biển</h3><p>Cửa Việt nằm ở phía đông Quảng Trị, nơi sông Thạch Hãn đổ ra biển Đông. Chọn từng chủ đề để tìm hiểu mối liên hệ giữa dòng sông, cảng và đời sống cư dân ven biển.</p>
       ${topicMarkup(geographicTopics)}<figure class="station-monument"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa sông và bờ biển Cửa Việt từ trên cao"><figcaption>Toàn cảnh tại điểm Biển Cửa Việt trên Google Maps, do tài khoản KTSMAP Bùi Hải Giang đóng góp.</figcaption></figure>
       <h4>Cửa Việt qua các thời kỳ</h4>${topicMarkup(geographyTimeline)}
-      <div class="read-prompt">Điều gì về Cửa Việt khiến bạn nhớ nhất? Bạn muốn gìn giữ nét đẹp nào của vùng cửa biển?</div>
+      <form class="cham-one-discovery-note" id="cham-one-discovery-note-form">
+        <h4>Ghi chú của bạn</h4>
+        <label for="cham-one-discovery-note-text">Điều gì về Cửa Việt khiến bạn nhớ nhất? Bạn muốn gìn giữ nét đẹp nào của vùng cửa biển?</label>
+        <textarea id="cham-one-discovery-note-text" name="note" rows="4" minlength="3" maxlength="800" required placeholder="Viết cảm nhận hoặc chú thích của bạn tại đây…">${esc(state.notes[1]?.text || '')}</textarea>
+        <div class="cham-one-discovery-note-actions">
+          <button class="btn btn-primary" type="submit">Lưu ghi chú</button>
+          <span class="cham-one-discovery-note-count"><span data-cham-one-note-length>${(state.notes[1]?.text || '').length}</span>/800 ký tự</span>
+        </div>
+        <p class="cham-one-discovery-note-status" role="status" aria-live="polite">${state.notes[1]?.text ? 'Đã có ghi chú được lưu trên thiết bị này. Bạn có thể chỉnh sửa rồi lưu lại.' : 'Ghi chú được lưu trên thiết bị của bạn và có thể xem lại trong Hộ chiếu ký ức.'}</p>
+      </form>
       <div class="station-quicklinks"><a class="btn btn-outline" href="${stationHash(2, 4)}">Tìm hiểu lịch sử ở Chạm 02</a></div></div>`;
   }
   if (currentStep === 4 && id === 2) {
@@ -444,6 +453,30 @@ stepMarkup = function (point) {
   }
   return markup;
 };
+
+// Chạm 01 / Khám phá – lưu ghi chú vào chính Hộ chiếu ký ức của người học.
+document.addEventListener('input', event => {
+  if (event.target.id !== 'cham-one-discovery-note-text') return;
+  const count = event.target.closest('form')?.querySelector('[data-cham-one-note-length]');
+  if (count) count.textContent = String(event.target.value.length);
+});
+document.addEventListener('submit', event => {
+  const form = event.target;
+  if (form.id !== 'cham-one-discovery-note-form') return;
+  event.preventDefault();
+  const text = form.elements.note.value.trim();
+  const status = form.querySelector('.cham-one-discovery-note-status');
+  if (text.length < 3 || text.length > 800) {
+    status.textContent = 'Vui lòng ghi ít nhất 3 và không quá 800 ký tự.';
+    form.elements.note.focus();
+    return;
+  }
+  state.notes[1] = { text: text, at: new Date().toISOString() };
+  const saved = persist();
+  status.textContent = saved
+    ? 'Đã lưu ghi chú vào Hộ chiếu ký ức trên thiết bị này. Bạn có thể chỉnh sửa và lưu lại.'
+    : 'Ghi chú chưa thể lưu vào trình duyệt. Hãy kiểm tra chế độ riêng tư hoặc quyền lưu trữ.';
+});
 
 const drawExperience = renderExperience;
 renderExperience = function (focus = false) {
