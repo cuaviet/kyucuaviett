@@ -96,6 +96,88 @@
     "label": "Ảnh khu vực cảng/cửa sông; chưa tìm được bản đăng khớp chính xác"
   }
 });
+  Object.assign(exact, {
+  "assets/tu-lieu-32.webp": {
+    "caption": "Mã QR dẫn đến nội dung tham khảo.",
+    "label": "Mã QR; không phải ảnh tư liệu."
+  },
+  "assets/tu-lieu-33.webp": {
+    "caption": "Hình ảnh quảng bá du lịch có cổng chào Cửa Việt.",
+    "label": "Chưa xác minh ảnh gốc; không dùng làm minh chứng thực địa."
+  },
+  "assets/tu-lieu-34.webp": {
+    "caption": "Hoạt động mua bán cá.",
+    "label": "Chưa xác minh tác giả, địa điểm, thời điểm chụp."
+  },
+  "assets/tu-lieu-35.webp": {
+    "caption": "Người dân kéo lưới trên bãi biển.",
+    "label": "Ảnh minh họa nghề đánh cá; chưa xác minh địa điểm, năm chụp và tác giả; không khẳng định chụp tại Cửa Việt."
+  },
+  "assets/tu-lieu-36.webp": {
+    "caption": "Người dân mang lưới đánh cá.",
+    "label": "Ảnh minh họa nghề đánh cá; chưa xác minh địa điểm, năm chụp và tác giả; không khẳng định chụp tại Cửa Việt."
+  },
+  "assets/tu-lieu-37.webp": {
+    "caption": "Người đánh cá bằng dụng cụ nâng lưới.",
+    "label": "Ảnh minh họa nghề đánh cá; chưa xác minh địa điểm, năm chụp và tác giả; không khẳng định chụp tại Cửa Việt."
+  },
+  "assets/tu-lieu-38.webp": {
+    "caption": "Các đội đua thuyền rồng trên sông.",
+    "label": "Chưa xác minh tác giả, địa điểm, thời điểm chụp."
+  },
+  "assets/tu-lieu-39.webp": {
+    "caption": "Hoạt động đua thuyền truyền thống.",
+    "label": "Chưa xác minh tác giả, địa điểm, thời điểm chụp."
+  },
+  "assets/tu-lieu-40.webp": {
+    "caption": "Trao giải đua thuyền truyền thống tại Cửa Việt, ngày 29/3/2024 (theo phông sự kiện trong ảnh).",
+    "label": "Chưa xác minh tác giả ảnh."
+  },
+  "assets/tu-lieu-41.webp": {
+    "caption": "Thuyền cá và người lao động dưới ánh mặt trời.",
+    "label": "Chưa xác minh tác giả, địa điểm, thời điểm chụp."
+  },
+  "assets/tu-lieu-44.webp": {
+    "caption": "Cá được phơi trên các vỉ, nhìn từ trên cao.",
+    "label": "Chưa xác minh tác giả, địa điểm, thời điểm chụp."
+  },
+  "assets/tu-lieu-47.webp": {
+    "caption": "Người lao động phân loại cá tại bến vào sáng sớm.",
+    "label": "XANH EWEC (theo dấu nhận diện trên ảnh; chưa xác minh chính xác bài đăng)."
+  },
+  "assets/tu-lieu-51.webp": {
+    "caption": "Thuyền gỗ trên bãi cát ven biển.",
+    "label": "Chưa xác minh tác giả, địa điểm, thời điểm chụp."
+  },
+  "assets/tu-lieu-52.webp": {
+    "caption": "Hình ảnh quảng bá du lịch có cổng chào Cửa Việt.",
+    "label": "Chưa xác minh ảnh gốc; không dùng làm minh chứng thực địa."
+  },
+  "assets/thuyen-va-ngu-cu.webp": {
+    "caption": "Thuyền gỗ và ngư cụ trong ảnh đen trắng.",
+    "label": "Ảnh minh họa nghề đánh cá; chưa xác minh địa điểm, năm chụp và tác giả; không khẳng định chụp tại Cửa Việt."
+  },
+  "assets/thuyen-danh-ca.webp": {
+    "caption": "Tàu cá trên mặt nước.",
+    "label": "Chưa xác minh tác giả, địa điểm, thời điểm chụp."
+  },
+  "assets/cua-bien-tu-tren-cao.webp": {
+    "caption": "Khu vực cửa sông và cảng nhìn từ trên cao.",
+    "label": "Chưa xác minh tác giả và thời điểm chụp."
+  },
+  "assets/anh-nhom/img-3986.webp": {
+    "caption": "Cổng chào du lịch Cửa Việt và đoàn xe.",
+    "label": "Tư liệu nhóm cung cấp; chưa xác nhận người chụp."
+  },
+  "assets/anh-nhom/img-4006.webp": {
+    "caption": "Người dân và lực lượng hỗ trợ bên các thuyền thúng.",
+    "label": "Tư liệu nhóm cung cấp; chưa xác nhận người chụp."
+  },
+  "assets/tuong-dai-lich-su.webp": {
+    "caption": "Công trình tưởng niệm chiến thắng Cửa Việt.",
+    "label": "Chưa xác minh tác giả và thời điểm chụp."
+  }
+});
   const groupPrefixes = [
     'assets/anh-nhom/',
     'assets/cham-2-anh-tu-lieu/',
@@ -187,7 +269,8 @@
     if (!sources.length) return;
     sources.forEach((meta, i) => {
       if (i) note.append(' · ');
-      note.append(creditText(meta, sources.length > 1 ? 'Ảnh ' + (i + 1) + ': ' : 'Nguồn ảnh: '));
+      if (meta.caption) note.append(meta.caption + ' ');
+      note.append(creditText(meta, 'Nguồn ảnh: '));
     });
     const help = comparison.nextElementSibling;
     (help && help.classList.contains('compare-help') ? help : comparison).insertAdjacentElement('afterend', note);
