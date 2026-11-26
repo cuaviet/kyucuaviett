@@ -70,6 +70,11 @@ const photoCatalog = {
       "Trang chủ"
     ]
   },
+  "assets/cham-1-toan-canh-cua-viet.webp": {
+    "caption": "Toàn cảnh cửa sông và khu vực cảng Cửa Việt nhìn từ trên cao.",
+    "label": "Ảnh trong bộ sưu tập của dự án; chưa xác định tác giả và thời điểm chụp.",
+    "locations": ["Trang chủ", "Chạm 1", "Chạm 3"]
+  },
   "assets/cang-cua-viet.webp": {
     "label": "Ngọc Tân / Báo Đầu tư, 04/12/2025 (ngày đăng)",
     "url": "https://baodautu.vn/quang-tri-co-them-3-cang-bien-duoc-ap-dung-thi-thuc-dien-tu-e-visa-d451059.html",
