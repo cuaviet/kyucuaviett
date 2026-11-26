@@ -1,5 +1,10 @@
 /* Hồ sơ ảnh biên tập của CHẠM CỬA VIỆT. Ngày đối chiếu 25/11/2026. */
 const photoCatalog = {
+  "assets/cham-3-cau-cua-viet.webp": {
+    "caption": "Cầu Cửa Việt bắc qua sông Thạch Hãn.",
+    "label": "Ảnh do nhóm dự án CHẠM CỬA VIỆT cung cấp.",
+    "locations": ["Chạm 3"]
+  },
   "assets/cham-2-tran-cua-viet-1973.jpg": {"caption":"Quân Giải phóng truy kích trong trận Cửa Việt (31/1/1973).","label":"Thông tấn xã Việt Nam – Trận Cửa Việt (31/1/1973)","url":"https://nvsk.vnanet.vn/tran-cua-viet-31-1-1973-1-33439.vna","locations":["Chạm 2"]},
   "assets/cham-2-bien-cua-viet-hien-nay.jpg": {"caption":"Bờ biển Cửa Việt nhìn từ trên cao.","label":"Báo Nhân Dân – Du lịch Gio Linh bứt phá","url":"https://nhandan.vn/special/du-lich-Gio-Linh-but-pha/index.html","locations":["Chạm 2"]},
 
