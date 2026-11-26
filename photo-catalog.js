@@ -1,5 +1,7 @@
 /* Hồ sơ ảnh biên tập của CHẠM CỬA VIỆT. Ngày đối chiếu 25/11/2026. */
 const photoCatalog = {
+  "assets/cham-3-wood-cv.webp": {"caption":"Thuyền gỗ nhỏ cùng ngư cụ bên bờ sông.","label":"Ảnh do đội KHKT CHẠM CỬA VIỆT cung cấp (đã chỉnh sửa).","locations":["Chạm 3"]},
+  "assets/cham-3-steel-cv.webp": {"caption":"Tàu cá vỏ thép tại Quảng Trị.","label":"Báo Nhân Dân","url":"https://nhandan.vn/quang-tri-ban-giao-tau-vo-thep-dau-tien-dong-moi-theo-nghi-dinh-67cp-post259395.html","locations":["Chạm 3"]},
   "assets/cham-3-cau-cua-viet.webp": {
     "caption": "Cầu Cửa Việt bắc qua sông Thạch Hãn.",
     "label": "Ảnh do nhóm dự án CHẠM CỬA VIỆT cung cấp.",
