@@ -31,9 +31,10 @@ const photoCatalog = {
   "assets/cang-ca.webp": {
     "label": "Thiên Sơn / XANH EWEC, 02/07/2021 (ngày đăng)",
     "url": "https://xanhx.vn/media/mot-som-mai-hoi-ha-o-cang-ca-lon-nhat-quang-tri-10719.html",
-    "caption": "Cảng cá Cửa Việt (xã Triệu An, huyện Triệu Phong theo địa danh khi bài đăng) lúc rạng sáng.",
+    "caption": "Nhịp sống rạng sáng tại cảng cá Cửa Việt, bờ Nam cửa sông Thạch Hãn (xã Triệu An, huyện Triệu Phong theo địa danh khi bài đăng).",
     "locations": [
-      "Trang chủ"
+      "Trang chủ",
+      "Chạm 3"
     ]
   },
   "assets/tu-lieu-62.webp": {
