@@ -900,13 +900,13 @@ stepMarkup=function(p){
  if(currentStep===2 && p.id<=2) {
   const past = p.id===1
     ? {src: chamOneOriginal, alt: 'Tàu thuyền tại Cửa Việt năm 1967', label: '1967'}
-    : {src: docAssets.past, alt: 'Chỉnh trang Đài Chiến thắng Đặc công Hải quân ở Cửa Việt', label: 'ĐÀI CHIẾN THẮNG'};
+    : {src: 'assets/cham-2-tran-cua-viet-1973.jpg', alt: 'Quân Giải phóng truy kích trong trận Cửa Việt', label: 'Năm 1973'};
   const present = {
-    src: p.id===1 ? chamOneToday : chamTwoToday,
+    src: p.id===1 ? chamOneToday : 'assets/cham-2-bien-cua-viet-hien-nay.jpg',
     alt: p.id===1 ? 'Toàn cảnh cửa sông và tàu thuyền tại cảng Cửa Việt' : 'Toàn cảnh Cửa Việt hiện nay',
     label: 'Hiện nay'
   };
-  return `<h3>Quan sát hai bức ảnh</h3><p>${p.id===1?"Đối chiếu xuồng trên sông Cửa Việt năm 1967 với tàu thuyền ở khu vực cảng hiện nay. Hai ảnh chụp từ các góc khác nhau.":"Quan sát Đài Chiến thắng Đặc công Hải quân ở bờ Bắc rồi kéo thanh trượt để xem toàn cảnh khu vực cửa sông."}</p>${photoComparison(past, present, p.id===1, "compare-range", true)}`;
+  return `<h3>Quan sát hai bức ảnh</h3><p>${p.id===1?"Đối chiếu xuồng trên sông Cửa Việt năm 1967 với tàu thuyền ở khu vực cảng hiện nay. Hai ảnh chụp từ các góc khác nhau.":"Kéo thanh trượt để xem ảnh tư liệu trận Cửa Việt năm 1973 và cảnh biển Cửa Việt hiện nay. Hai ảnh ghi lại những góc nhìn khác nhau."}</p>${photoComparison(past, present, p.id===1, "compare-range", true)}`;
  }
  let html=baseStepMarkup(p);
  if(p.id===2&&currentStep===3){html=`<h3>Nghe người thật kể</h3><p>Câu chuyện về Cửa Việt qua video tư liệu bạn cung cấp.</p><video controls playsinline preload="metadata" aria-label="Video người thật kể về Cửa Việt" style="display:block;width:100%;max-width:960px;height:auto;margin:14px auto;border-radius:12px;background:#102526"><source src="media/interview-4733.mp4" type="video/mp4">Trình duyệt của bạn không hỗ trợ phát video MP4.</video><p class="source-note">Video do bạn cung cấp.</p>`;}else if(currentStep===3){html+=`<details class="timeline-entry"><summary>Góc nghe người thật kể</summary><p>Hãy chọn một video phỏng vấn đã được người kể đồng ý cho sử dụng để lắng nghe và khám phá.</p><label class="listen-field">Chọn tệp âm thanh hoặc video<input type="file" id="interview-file" accept="video/*"></label><div id="interview-player"></div><p class="source-note">Video bạn chọn chỉ phát trên thiết bị hiện tại, không tự động gửi lên website; hãy chọn lại khi mở trang lần sau.</p><h4>Câu hỏi gợi mở</h4><ul><li>Bác nhớ nhất điều gì về Cửa Việt trước đây?</li><li>Đời sống và nghề biển đã thay đổi như thế nào?</li><li>Bác muốn nhắn điều gì với thế hệ trẻ?</li></ul></details>`;}
