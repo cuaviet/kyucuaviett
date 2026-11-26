@@ -78,7 +78,7 @@ const photoCatalog = {
   },
   "assets/cham-1-toan-canh-cua-viet.webp": {
     "caption": "Toàn cảnh cửa sông và khu vực cảng Cửa Việt nhìn từ trên cao.",
-    "label": "Ảnh trong bộ sưu tập của dự án; chưa xác định tác giả và thời điểm chụp.",
+    "label": "Nguồn ảnh: Google Earth. Nhóm dự án CHẠM CỬA VIỆT chụp màn hình lúc 13h30 ngày 25/11/2026.",
     "locations": ["Trang chủ", "Chạm 1", "Chạm 3"]
   },
   "assets/cang-cua-viet.webp": {
