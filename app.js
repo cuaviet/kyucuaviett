@@ -1,5 +1,5 @@
 'use strict';
-const embeddedImages={"coast": "assets/bien-cua-viet.webp", "harbor": "assets/cang-cua-viet.webp", "boats": "assets/tu-lieu-22.webp", "fishing": "assets/toan-canh-cua-viet.webp"};
+const embeddedImages={"coast": "assets/bien-cua-viet.webp", "harbor": "assets/cham-1-toan-canh-cua-viet.webp", "boats": "assets/tu-lieu-22.webp", "fishing": "assets/toan-canh-cua-viet.webp"};
 const $ = (s, root = document) => root.querySelector(s);
 const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 const icon = name => `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -877,10 +877,10 @@ stepMarkup=function(p){
     : {src: docAssets.past, alt: 'Chỉnh trang Đài Chiến thắng Đặc công Hải quân ở Cửa Việt', label: 'ĐÀI CHIẾN THẮNG'};
   const present = {
     src: p.id===1 ? chamOneToday : chamTwoToday,
-    alt: p.id===1 ? 'Cảnh tàu hàng neo tại cảng' : 'Toàn cảnh Cửa Việt hiện nay',
+    alt: p.id===1 ? 'Toàn cảnh cửa sông và tàu thuyền tại cảng Cửa Việt' : 'Toàn cảnh Cửa Việt hiện nay',
     label: 'Hiện nay'
   };
-  return `<h3>Quan sát hai bức ảnh</h3><p>${p.id===1?"Đối chiếu xuồng trên sông Cửa Việt năm 1967 với tàu hàng tại bến cảng. Hai ảnh chụp từ các góc khác nhau.":"Quan sát Đài Chiến thắng Đặc công Hải quân ở bờ Bắc rồi kéo thanh trượt để xem toàn cảnh khu vực cửa sông."}</p>${photoComparison(past, present, p.id===1, "compare-range", true)}`;
+  return `<h3>Quan sát hai bức ảnh</h3><p>${p.id===1?"Đối chiếu xuồng trên sông Cửa Việt năm 1967 với tàu thuyền ở khu vực cảng hiện nay. Hai ảnh chụp từ các góc khác nhau.":"Quan sát Đài Chiến thắng Đặc công Hải quân ở bờ Bắc rồi kéo thanh trượt để xem toàn cảnh khu vực cửa sông."}</p>${photoComparison(past, present, p.id===1, "compare-range", true)}`;
  }
  let html=baseStepMarkup(p);
  if(p.id===2&&currentStep===3){html=`<h3>Nghe người thật kể</h3><p>Câu chuyện về Cửa Việt qua video tư liệu bạn cung cấp.</p><video controls playsinline preload="metadata" aria-label="Video người thật kể về Cửa Việt" style="display:block;width:100%;max-width:960px;height:auto;margin:14px auto;border-radius:12px;background:#102526"><source src="media/interview-4733.mp4" type="video/mp4">Trình duyệt của bạn không hỗ trợ phát video MP4.</video><p class="source-note">Video do bạn cung cấp.</p>`;}else if(currentStep===3){html+=`<details class="timeline-entry"><summary>Góc nghe người thật kể</summary><p>Hãy chọn một video phỏng vấn đã được người kể đồng ý cho sử dụng để lắng nghe và khám phá.</p><label class="listen-field">Chọn tệp âm thanh hoặc video<input type="file" id="interview-file" accept="video/*"></label><div id="interview-player"></div><p class="source-note">Video bạn chọn chỉ phát trên thiết bị hiện tại, không tự động gửi lên website; hãy chọn lại khi mở trang lần sau.</p><h4>Câu hỏi gợi mở</h4><ul><li>Bác nhớ nhất điều gì về Cửa Việt trước đây?</li><li>Đời sống và nghề biển đã thay đổi như thế nào?</li><li>Bác muốn nhắn điều gì với thế hệ trẻ?</li></ul></details>`;}
@@ -919,7 +919,7 @@ stationDocuments["3"]["3"].html=`<h3>Hai góc nhìn về nghề biển</h3><p>Qu
 )}<section class="aerial-comparison" aria-labelledby="aerial-comparison-title">
   <h3 id="aerial-comparison-title">Hai góc nhìn từ trên cao</h3>
   ${photoComparison(
-    {src: 'assets/cang-cua-viet.webp', alt: 'Khu cảng Cửa Việt từ trên cao', label: 'CẢNG CỬA VIỆT'},
+    {src: 'assets/cham-1-toan-canh-cua-viet.webp', alt: 'Khu cảng Cửa Việt từ trên cao', label: 'CẢNG CỬA VIỆT'},
     {src: 'assets/toan-canh-cua-viet.webp', alt: 'Khu dân cư, cảng và bờ biển Cửa Việt nhìn từ trên cao', label: 'ẢNH TOÀN CẢNH'},
     true,
     'compare-aerial-range'
@@ -963,10 +963,10 @@ points.find(p=>p.id===5).text=["Ở Chạm năm, bạn có thể chia sẻ hình
 
 const chamTwoToday='assets/toan-canh-cua-viet.webp';
 const chamOneOriginal='assets/tu-lieu-62.webp';
-const chamOneToday='assets/cang-cua-viet.webp';
+const chamOneToday='assets/cham-1-toan-canh-cua-viet.webp';
 embeddedImages.chamOneToday=chamOneToday;points.find(p=>p.id===1).image="chamOneToday";
 refresh();
-embeddedImages.station1="assets/cang-cua-viet.webp";points.find(p=>p.id===1).image='station1';
+embeddedImages.station1="assets/cham-1-toan-canh-cua-viet.webp";points.find(p=>p.id===1).image='station1';
 embeddedImages.station2="https://baolaichau.vn/uploaded/post/2025/04/26/2ca9b30a-2103-4f94-9322-ce83c0503513.jpg";points.find(p=>p.id===2).image='station2';
 embeddedImages.station3="assets/toan-canh-cua-viet.webp";points.find(p=>p.id===3).image='station3';
 embeddedImages.station4="assets/nhip-song-ben-ca.webp";points.find(p=>p.id===4).image='station4';
