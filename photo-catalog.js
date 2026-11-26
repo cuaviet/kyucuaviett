@@ -42,7 +42,7 @@ const photoCatalog = {
     "caption": "Nhịp sống rạng sáng tại cảng cá Cửa Việt, bờ Nam cửa sông Thạch Hãn (xã Triệu An, huyện Triệu Phong theo địa danh khi bài đăng).",
     "locations": [
       "Trang chủ",
-      "Chạm 3"
+      "Chạm 4"
     ]
   },
   "assets/tu-lieu-62.webp": {
