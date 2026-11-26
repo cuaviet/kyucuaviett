@@ -54,10 +54,10 @@ const photoCatalog = {
       "Chạm 3"
     ]
   },
-  "assets/tuong-dai-chien-thang.webp": {
-    "label": "Hoàng Diệu / Báo Hải quân Việt Nam, tháng 4/2025",
-    "url": "https://baohaiquanvietnam.vn/tin-tuc/vung-3-hoan-thanh-cong-trinh-ton-tao-chinh-trang-tuong-dai-chien-thang-dac-cong-hai-quan-tai-cua-viet",
-    "caption": "Cán bộ, chiến sĩ và đoàn viên chỉnh trang Đài Chiến thắng Đặc công Hải quân tại Cửa Việt.",
+  "https://baolaichau.vn/uploaded/post/2025/04/26/2ca9b30a-2103-4f94-9322-ce83c0503513.jpg": {
+    "label": "Báo Lai Châu điện tử, 26/4/2025",
+    "url": "https://baolaichau.vn/ninh-quoc-phong/hoan-thanh-cong-trinh-ton-tao-chinh-trang-tuong-dai-chien-thang-dac-cong-hai-quan-tai-cua-viet-1157850",
+    "caption": "Lễ dâng hoa, dâng hương tại Đài chiến thắng Đặc công Hải quân ở Cửa Việt.",
     "locations": [
       "Trang chủ",
       "Chạm 2"
