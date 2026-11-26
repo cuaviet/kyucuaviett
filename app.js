@@ -51,7 +51,7 @@ function showStampAward(id, newlyEarned = false) {
   const received = Boolean(state.stamps[id]);
   container.innerHTML = `<div style="display:flex;align-items:center;gap:10px">${badgeMedal(id, received)}<strong>${received ? 'Đã nhận' : 'Chưa nhận'} huy hiệu Chạm ${two(id)}</strong></div>
     ${received ? '' : '<p>Hãy mở đủ 8 bước rồi quay lại bước này để nhận huy hiệu.</p>'}
-    <div class="stamp-award-slots">${points.map(point => `<span class="stamp-award-slot ${state.stamps[point.id] ? 'done' : ''}" aria-label="Chạm ${two(point.id)}${state.stamps[point.id] ? ', đã nhận huy hiệu' : ''}">${two(point.id)}${state.stamps[point.id] ? `<b class="${point.id === id && animate ? 'stamp-imprint' : ''}">${icon('check')}</b>` : ''}</span>`).join('')}</div>
+    <div class="stamp-award-slots">${points.map(point => `<span class="stamp-award-slot ${state.stamps[point.id] ? 'done' : ''}" aria-label="Chạm ${two(point.id)}${state.stamps[point.id] ? ', đã nhận huy hiệu' : ''}"><span aria-hidden="true" style="font:700 1.35rem/1 Georgia,serif;opacity:${state.stamps[point.id] ? 1 : 0.55}">${badgeSymbol(point.id)}</span>${state.stamps[point.id] ? `<b class="${point.id === id && animate ? 'stamp-imprint' : ''}">${icon('check')}</b>` : ''}</span>`).join('')}</div>
     <p>Hộ chiếu ký ức · <b id="stamp-award-count">${animate ? total - 1 : total}/5</b></p>
     ${total === 5 ? masterBadge(total) : ''}<button class="btn btn-outline" data-action="passport">Mở Hộ chiếu ký ức</button>`;
   if (newlyEarned) container.scrollIntoView({block: 'nearest'});
@@ -63,7 +63,7 @@ function showStampAward(id, newlyEarned = false) {
 
 function renderPins(){const ids=filteredPoints().map(p=>p.id);$('#map-pins').innerHTML=points.map(p=>`<button class="map-pin ${p.id===selectedPoint?'active':''} ${ids.includes(p.id)?'':'filtered'} ${state.stamps[p.id]?'stamped':''}" style="left:${p.x}%;top:${p.y}%;--pin-color:${routes[p.route].color}" data-action="open-point" data-id="${p.id}" aria-haspopup="dialog" aria-controls="experience-dialog" aria-label="Chạm ${two(p.id)}: ${p.title}${state.stamps[p.id]?', đã có huy hiệu':''}" aria-pressed="${p.id===selectedPoint}" ${ids.includes(p.id)?'':'disabled'}><img class="stop-photo" src="${embeddedImages[p.image]}" alt=""><div class="stop-copy"><small>CHẠM ${two(p.id)}</small><strong>${p.title}</strong><em>${['Nơi dòng sông gặp biển','Tư liệu và các mốc năm 1973','Lời kể của người dân','Nghề biển, lễ hội và ẩm thực','Góc nhìn và ý tưởng của bạn'][p.id-1]}</em></div><b class="stop-arrow">${icon('arrow')}</b></button>`).join('');$$('.route-line').forEach(p=>p.style.opacity=!filterRoute||Number(p.dataset.path)===filterRoute?'1':'.12');}
 function renderGrid(){const list=filteredPoints();$('#point-grid').innerHTML=list.map(p=>`<button class="point-card" data-action="open-point" data-id="${p.id}" aria-label="Mở chạm ${two(p.id)}: ${p.title}"><div class="point-card-image"><img src="${embeddedImages[p.image]}" alt="" loading="lazy"><span class="point-number">${two(p.id)}</span>${state.stamps[p.id]?'<span class="point-stamp">✓ Đã chạm</span>':''}</div><p class="micro"><i class="dot" style="background:${routes[p.route].color}"></i>ĐIỂM CHẠM ${two(p.id)}</p><h3>${p.title}</h3><div class="point-card-footer"><span>8 bước trải nghiệm</span>${icon('arrow')}</div></button>`).join('');$('#results-count').textContent=`Hiển thị ${list.length} / 5 điểm chạm`;$('#empty-results').hidden=list.length>0;}
-function renderProgress(){const count=points.filter(p=>state.stamps[p.id]).length;$$('.passport-count').forEach(e=>e.textContent=count+'/5');$('#passport-progress').textContent=count+' / 5';$('#mini-stamps').innerHTML=points.map(p=>`<span class="mini-stamp ${state.stamps[p.id]?'done':''}" title="${p.title}: ${state.stamps[p.id]?'đã hoàn thành':'chưa hoàn thành'}">${state.stamps[p.id]?icon('check'):two(p.id)}</span>`).join('');}
+function renderProgress(){const count=points.filter(p=>state.stamps[p.id]).length;$$('.passport-count').forEach(e=>e.textContent=count+'/5');$('#passport-progress').textContent=count+' / 5';$('#mini-stamps').innerHTML=points.map(p=>`<span class="mini-stamp ${state.stamps[p.id]?'done':''}" title="${p.title}: ${state.stamps[p.id]?'đã hoàn thành':'chưa hoàn thành'}"><span aria-hidden="true" style="font:700 1rem/1 Georgia,serif;opacity:${state.stamps[p.id] ? 1 : 0.55}">${badgeSymbol(p.id)}</span></span>`).join('');}
 function applyFilter(route,resetSearch=false){resetMapFocus();filterRoute=route;if(resetSearch){searchQuery='';$('#point-search').value='';}const list=filteredPoints();if(!list.some(p=>p.id===selectedPoint))selectedPoint=list[0]?.id||0;$$('[data-action="filter"]').forEach(b=>{const active=Number(b.dataset.route)===route;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});refresh();}
 const introAudio = new Audio();
 introAudio.preload = 'none';
@@ -134,11 +134,13 @@ case 5:return quizMarkup(p,'memory');
 case 6:return `<h3>Điều gì ở lại trong bạn?</h3><p>${p.prompt}</p>`;
 case 7:{const next=points.filter(x=>x.id!==p.id).sort((a,b)=>(a.route===p.route?0:1)-(b.route===p.route?0:1)||a.id-b.id).slice(0,3);return `<h3>Câu chuyện tiếp theo là gì?</h3><p>${state.stamps[p.id]?'Bạn đã mang theo một huy hiệu mới.':'Khám phá đủ 8 bước của Chạm để nhận huy hiệu, rồi chọn chủ đề tiếp theo.'} Chọn một chủ đề để đi tiếp.</p><div class="next-points">${next.map(n=>`<button class="next-point" data-action="open-point" data-id="${n.id}"><span>${two(n.id)}</span><div><strong>${n.title}</strong><small>${routes[n.route].title}${state.stamps[n.id]?' · Đã nhận huy hiệu':''}</small></div>${icon('arrow')}</button>`).join('')}</div>`;}
 }}
+function badgeSymbol(id) {
+  return ['⚓︎', '✦', '❝', '≈', '✎', '★'][id - 1];
+}
 function badgeMedal(id, earned) {
-  const symbols = ['⚓', '✦', '❝', '≈', '✎', '★'];
   const colors = ['#086f82', '#80553c', '#68518c', '#247652', '#235c9b', '#896018'];
   const color = earned ? colors[id - 1] : '#65716f';
-  return `<span aria-hidden="true" style="display:grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:50%;border:3px double ${color};background:radial-gradient(circle at 32% 25%,#fff,${earned ? '#f7e5ad' : '#ecefed'});color:${color};font:700 1.6rem/1 Georgia,serif;box-shadow:0 2px 4px #173e4026">${earned ? symbols[id - 1] : two(id)}</span>`;
+  return `<span aria-hidden="true" style="display:grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:50%;border:3px double ${color};background:radial-gradient(circle at 32% 25%,#fff,${earned ? '#f7e5ad' : '#ecefed'});color:${color};font:700 1.6rem/1 Georgia,serif;box-shadow:0 2px 4px #173e4026">${badgeSymbol(id)}</span>`;
 }
 function masterBadge(count) {
   const earned = count === 5;
