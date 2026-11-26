@@ -199,7 +199,7 @@ $$('dialog').forEach(d=>{d.addEventListener('click',e=>{if(e.target!==d)return;c
 $$('#mobile-menu a').forEach(a=>a.addEventListener('click',()=>{$('#mobile-menu').hidden=true;const b=$('[data-action="menu"]');b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Mở menu');}));
 window.addEventListener('scroll',()=>{$('.to-top').hidden=window.scrollY<650;},{passive:true});
 window.addEventListener('pagehide',stopNarration);
-const docAssets={"past": "assets/tuong-dai-chien-thang.webp", "present": "assets/toan-canh-cua-viet.webp", "monument": "assets/tuong-dai-chien-thang.webp", "boatsDoc": "assets/cua-viet-keo-luoi-rung.jpg", "beachDoc": "assets/tu-lieu-31.webp"};
+const docAssets={"past": "https://baolaichau.vn/uploaded/post/2025/04/26/2ca9b30a-2103-4f94-9322-ce83c0503513.jpg", "present": "assets/toan-canh-cua-viet.webp", "monument": "https://baolaichau.vn/uploaded/post/2025/04/26/2ca9b30a-2103-4f94-9322-ce83c0503513.jpg", "boatsDoc": "assets/cua-viet-keo-luoi-rung.jpg", "beachDoc": "assets/tu-lieu-31.webp"};
 embeddedImages.boats=docAssets.boatsDoc;
 embeddedImages.harbor=docAssets.present;
 const questionBanks={
@@ -938,7 +938,7 @@ function stationCompare(p) {
 stepMarkup=function(p){
  if(p.id<3){
   let html=previousStationMarkup(p);
-  if(p.id===2 && currentStep===0) html+=`<figure class="station-monument"><img src="https://media-cdn.xanhx.vn/storage/newsportal/2025/5/7/31352/Chien-Cong-Hien-Hach.jpg" width="1181" height="886" alt="Đài Chiến thắng Đặc công Hải quân ở bờ Bắc Cửa Việt." loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Ảnh chụp Đài Chiến thắng Đặc công Hải quân ở bờ Bắc Cửa Việt. Tượng đài Chiến thắng Cửa Việt ở bờ Nam ghi dấu trận đánh tháng 1/1973. Nguồn ảnh: <a href="https://xanhx.vn/ky-su/nhung-chien-cong-hien-hach-tren-chien-truong-quang-tri-31352.html" target="_blank" rel="noopener noreferrer">Đ.T / XANH EWEC</a></figcaption></figure>`;
+  if(p.id===2 && currentStep===0) html+=`<figure class="station-monument"><img src="https://baolaichau.vn/uploaded/post/2025/04/26/2ca9b30a-2103-4f94-9322-ce83c0503513.jpg" alt="Lễ dâng hương tại Đài chiến thắng Đặc công Hải quân ở Cửa Việt, Quảng Trị." loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Đoàn công tác Vùng 3 Hải quân và đại diện địa phương dâng hương, dâng hoa tưởng niệm các anh hùng liệt sĩ tại Đài chiến thắng Đặc công Hải quân, Cửa Việt (26/4/2025). Nguồn ảnh: <a href="https://baolaichau.vn/ninh-quoc-phong/hoan-thanh-cong-trinh-ton-tao-chinh-trang-tuong-dai-chien-thang-dac-cong-hai-quan-tai-cua-viet-1157850" target="_blank" rel="noopener noreferrer">Báo Lai Châu</a>.</figcaption></figure>`;
   return html;
  }
  if(currentStep===1||currentStep===5)return bankMarkup(p,currentStep===1?'guess':'memory');
@@ -967,7 +967,7 @@ const chamOneToday='assets/cang-cua-viet.webp';
 embeddedImages.chamOneToday=chamOneToday;points.find(p=>p.id===1).image="chamOneToday";
 refresh();
 embeddedImages.station1="assets/cang-cua-viet.webp";points.find(p=>p.id===1).image='station1';
-embeddedImages.station2="assets/tuong-dai-chien-thang.webp";points.find(p=>p.id===2).image='station2';
+embeddedImages.station2="https://baolaichau.vn/uploaded/post/2025/04/26/2ca9b30a-2103-4f94-9322-ce83c0503513.jpg";points.find(p=>p.id===2).image='station2';
 embeddedImages.station3="assets/toan-canh-cua-viet.webp";points.find(p=>p.id===3).image='station3';
 embeddedImages.station4="assets/nhip-song-ben-ca.webp";points.find(p=>p.id===4).image='station4';
 embeddedImages.station5="assets/bien-cua-viet.webp";points.find(p=>p.id===5).image='station5';
