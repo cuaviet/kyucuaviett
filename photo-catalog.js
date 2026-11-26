@@ -1,12 +1,17 @@
 /* Hồ sơ ảnh biên tập của CHẠM CỬA VIỆT. Ngày đối chiếu 25/11/2026. */
 const photoCatalog = {
+  "https://baoquangtri.vn/file/2c97e081942a2a4401942a2ce33c0003/062026/1_18_20260607063130.jpg": {
+    "caption": "Toàn cảnh cảng cá và cửa biển Cửa Việt.",
+    "label": "Nguyễn Hải / Báo Quảng Trị, 07/06/2026",
+    "url": "https://baoquangtri.vn/phong-su-ky-su/phong-su-anh/202606/phoi-ca-o-cua-viet-bef28fc/",
+    "locations": ["Chạm 4"]
+  },
   "assets/bien-cua-viet.webp": {
     "caption": "Dải bờ biển Cửa Việt nhìn từ trên cao.",
     "label": "Phóng sự ảnh của Tùng Đinh và Xuân Hào, đăng 27/4/2024",
     "url": "https://nongnghiepmoitruong.vn/ve-cua-viet-giup-cac-runner-trai-nghiem-bien-xanh-cat-trang-nang-vang-i383664.html",
     "locations": [
       "Trang chủ",
-      "Chạm 4",
       "Chạm 5"
     ]
   },
