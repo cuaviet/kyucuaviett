@@ -972,7 +972,9 @@ stepMarkup=function(p){
  if(currentStep===0){content+=stationLocationMarkup(p.id)+documentPhotos(d.photos);if(p.id===3)content+=`<h4>Nhịp sống ở cảng cá Nam Cửa Việt</h4><figure class="station-monument"><img src="assets/cang-ca.webp" alt="Tàu cá cập bến và người dân mua bán hải sản tại cảng cá Cửa Việt ở bờ Nam" loading="lazy" decoding="async"><figcaption>Nhịp sống buổi sớm tại cảng cá Cửa Việt, bờ Nam cửa sông Thạch Hãn. Nguồn ảnh: <a href="https://xanhx.vn/media/mot-som-mai-hoi-ha-o-cang-ca-lon-nhat-quang-tri-10719.html" target="_blank" rel="noopener noreferrer">Thiên Sơn / XANH EWEC (02/7/2021)</a>.</figcaption></figure>
    <section class="discovery-video" aria-labelledby="cham-three-reel-title">
      <h4 id="cham-three-reel-title">Thước phim về Cửa Việt</h4>
-     <iframe title="Thước phim về Cửa Việt của Trần Anh Linh trên Facebook" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2998556687200340%2F&amp;show_text=false&amp;width=320" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen style="display:block;width:100%;max-width:320px;aspect-ratio:9/16;border:0;border-radius:12px"></iframe>
+     <video controls playsinline preload="none" poster="assets/cang-ca.webp" aria-label="Thước phim về Cửa Việt của Trần Anh Linh" style="display:block;width:100%;height:auto;border-radius:12px">
+       <source src="media/cham-3-cang-ca-cua-viet.mp4" type="video/mp4">
+     </video>
      <p class="source-note">Video: Trần Anh Linh. <a href="https://www.facebook.com/reel/2998556687200340/" target="_blank" rel="noopener noreferrer">Xem Reel gốc trên Facebook</a>.</p>
    </section>`;}
 
