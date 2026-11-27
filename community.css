@@ -283,3 +283,24 @@
   .cham-five-upload-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .cham-five-upload-card { padding: 14px; }
 }
+
+/* Thu gọn danh sách ký ức (community-collapse.js) */
+.community-feed.is-collapsed > .community-entry:nth-of-type(n + 5) { display: none; }
+.community-list.feed-collapsed .community-more { display: none !important; }
+.community-toggle { display: flex; width: 100%; margin-top: 14px; font-weight: 700; }
+.community-toggle[hidden] { display: none; }
+.community-entry.is-clamped:not(.is-open) > p {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.community-readmore {
+  margin-top: 6px;
+  padding: 2px 0;
+  color: var(--glass-accent, #074e76);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
