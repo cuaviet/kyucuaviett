@@ -1050,3 +1050,449 @@ dialog::backdrop {
     background: #fff;
   }
 }
+
+/* ==========================================================================
+   LIQUID GLASS 2 — kính lỏng trong suốt kiểu iOS
+   Chỉnh toàn bộ hiệu ứng kính tại các biến --lg-* ngay dưới đây.
+   ========================================================================== */
+:root {
+  --lg-blur: 18px;
+  --lg-blur-panel: 26px;
+  --lg-sat: 190%;
+  --lg-clear: .12;          /* độ trắng ở giữa tấm kính: càng nhỏ càng trong */
+  --lg-sheen: .42;          /* độ sáng của vệt sáng chạy theo con trỏ */
+  --lg-edge: rgb(255 255 255 / .6);
+  --lg-rim:
+    inset 0 1px 0 rgb(255 255 255 / .95),
+    inset 0 -1px 0 rgb(255 255 255 / .38),
+    inset 1px 0 0 rgb(255 255 255 / .5),
+    inset -1px 0 0 rgb(255 255 255 / .32),
+    inset 0 12px 22px -16px rgb(255 255 255 / .9),
+    inset 0 -12px 24px -16px rgb(120 220 255 / .55);
+  --lg-drop: 0 1px 2px rgb(8 42 60 / .07), 0 14px 34px -12px rgb(8 42 60 / .3);
+  --lg-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --lg-ambient-base: #e9f5fa;
+  --lg-header-h: 86px;
+}
+
+/* --- Nền màu động phía sau để kính có thứ để "nhìn xuyên qua" --- */
+body {
+  background: var(--lg-ambient-base);
+  background-attachment: scroll;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: -20vmax;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38vmax 30vmax at 14% 24%, rgb(52 190 210 / .5), transparent 70%),
+    radial-gradient(34vmax 30vmax at 86% 16%, rgb(116 152 255 / .38), transparent 70%),
+    radial-gradient(36vmax 28vmax at 74% 80%, rgb(255 196 128 / .5), transparent 70%),
+    radial-gradient(34vmax 30vmax at 22% 84%, rgb(96 222 184 / .38), transparent 70%),
+    radial-gradient(30vmax 24vmax at 52% 50%, rgb(255 255 255 / .55), transparent 72%);
+  animation: lg-ambient 48s ease-in-out infinite alternate;
+}
+
+@keyframes lg-ambient {
+  50% { transform: translate3d(3vmax, -2vmax, 0) rotate(4deg) scale(1.04); }
+  100% { transform: translate3d(-3vmax, 2vmax, 0) rotate(-3deg) scale(1.08); }
+}
+
+:is(.map-section, .point-section, .story-section, .closing) {
+  background: transparent;
+  border-block: 0;
+}
+
+/* --- Bề mặt kính chung --- */
+:is(.site-header, .mobile-bottom, .mobile-menu:not([hidden]), .hero .hero-content,
+    .btn-passport, .hero-actions .btn, .point-card, .journey-editorial, .gallery-card button,
+    .story-layout, .creative-launch, .community-section, .passport-banner, .about-section, .footer,
+    .filter, .search, .audio-card, .creation-options button, .about-accordions details,
+    .story-label, .to-top, .menu-toggle, .map-canvas, .community-form, .community-entry,
+    .story-shortcuts a, .btn-primary, .btn-outline, .closing .btn, .cover-postcard,
+    .hero .cover-frame figcaption > *) {
+  background:
+    radial-gradient(130% 110% at var(--lg-x, 18%) var(--lg-y, -30%), rgb(255 255 255 / var(--lg-sheen)), rgb(255 255 255 / 0) 55%),
+    linear-gradient(145deg, rgb(255 255 255 / calc(var(--lg-clear) + .2)), rgb(255 255 255 / var(--lg-clear)) 45%, rgb(255 255 255 / calc(var(--lg-clear) + .1)));
+  border: 1px solid var(--lg-edge);
+  box-shadow: var(--lg-rim), var(--lg-drop);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  backdrop-filter: blur(var(--lg-blur)) var(--lg-refract,) saturate(var(--lg-sat)) brightness(1.04);
+}
+
+/* Tấm lớn: mờ mạnh hơn để chữ luôn dễ đọc */
+:is(.story-layout, .creative-launch, .community-section, .passport-banner, .about-section,
+    .footer, .journey-editorial, .map-canvas, .hero .hero-content) {
+  --lg-blur: var(--lg-blur-panel);
+  --lg-clear: .2;
+}
+
+.map-canvas {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Viền ánh cầu vồng như kính iPhone */
+:is(.site-header, .hero .hero-content, .hero-actions .btn, .btn-passport, .point-card,
+    .gallery-card button)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 1.5px;
+  background:
+    conic-gradient(from var(--lg-angle, 210deg) at 50% 50%,
+      rgb(255 255 255 / .95), rgb(160 236 255 / .25) 12%, rgb(255 255 255 / 0) 22%,
+      rgb(255 214 245 / .55) 36%, rgb(255 255 255 / 0) 48%,
+      rgb(255 255 255 / .9) 58%, rgb(150 255 226 / .35) 70%, rgb(255 255 255 / 0) 82%,
+      rgb(190 200 255 / .5) 92%, rgb(255 255 255 / .95));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: .9;
+}
+
+:is(.hero-actions .btn, .btn-passport, .point-card) {
+  position: relative;
+}
+
+.gallery-card button {
+  overflow: hidden;
+}
+
+/* --- Phản hồi "chất lỏng" khi chạm và rê chuột --- */
+:is(.btn, .filter, .icon-btn, .btn-passport, .story-shortcuts a, .point-card, .gallery-card button,
+    .creation-options button, .audio-play, .mobile-bottom > :is(a, button)) {
+  transition:
+    background .3s, border-color .3s, box-shadow .35s, color .25s,
+    transform .45s var(--lg-spring), scale .45s var(--lg-spring), translate .45s var(--lg-spring);
+}
+
+@media (hover: hover) {
+  :is(.btn, .filter, .icon-btn, .btn-passport, .story-shortcuts a):hover:not(:disabled) {
+    scale: 1.035;
+  }
+
+  :is(.point-card, .gallery-card button, .creation-options button):hover {
+    scale: 1.012;
+    --lg-sheen: .6;
+  }
+}
+
+:is(.btn, .filter, .icon-btn, .btn-passport, .story-shortcuts a, .audio-play,
+    .mobile-bottom > :is(a, button)):active:not(:disabled) {
+  scale: .95;
+  transition-duration: .12s;
+}
+
+:is(.point-card, .gallery-card button, .creation-options button):active {
+  scale: .985;
+}
+
+/* --- Thanh trên cùng --- */
+.site-header {
+  --lg-clear: .28;
+  --lg-blur: 14px;
+  --lg-sat: 160%;
+}
+
+.site-header .desktop-nav {
+  background: rgb(255 255 255 / .14);
+  border-color: rgb(255 255 255 / .55);
+  box-shadow: inset 0 1px 4px rgb(10 60 90 / .1), 0 1px 0 rgb(255 255 255 / .7);
+}
+
+/* --- Đầu trang: ảnh biển tràn màn hình, kính nổi lên trên --- */
+.hero {
+  margin-top: calc(-1 * var(--lg-header-h));
+  padding:
+    calc(var(--lg-header-h) + clamp(28px, 6vh, 70px))
+    max(5.7vw, calc((100vw - 1320px) / 2))
+    clamp(40px, 9vh, 100px);
+  min-height: max(640px, 100svh);
+  align-content: center;
+  background: #0f5466;
+  border-radius: 0 0 clamp(28px, 4vw, 56px) clamp(28px, 4vw, 56px);
+}
+
+.hero-shade,
+.tide-lines {
+  display: none;
+}
+
+.hero .cover-frame {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  display: block;
+  margin: 0;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: #0f5466;
+}
+
+.hero .cover-frame .cover-image {
+  position: absolute;
+  inset: 0;
+}
+
+.hero .cover-frame .hero-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% 50%;
+  filter: saturate(1.18) brightness(1.03);
+}
+
+.hero .cover-image::after {
+  display: block;
+  box-shadow: none;
+  background:
+    linear-gradient(180deg, rgb(4 38 52 / .22), rgb(4 38 52 / 0) 26%),
+    linear-gradient(0deg, rgb(4 38 52 / .28), rgb(4 38 52 / 0) 30%);
+}
+
+.hero .cover-image > .glass-refraction {
+  display: none;
+}
+
+.hero .cover-frame figcaption {
+  position: absolute;
+  inset: auto clamp(14px, 3vw, 40px) clamp(16px, 3vw, 34px) auto;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  max-width: min(440px, 70vw);
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.hero .cover-frame figcaption > * {
+  --lg-clear: .16;
+  --lg-blur: 14px;
+  display: inline-block;
+  max-width: 100%;
+  margin: 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: #0f3c4d;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.hero .cover-frame figcaption a {
+  color: inherit;
+}
+
+.cover-postcard {
+  --lg-clear: .2;
+  left: auto;
+  right: max(6vw, calc((100vw - 1320px) / 2 + 20px));
+  bottom: clamp(120px, 20vh, 210px);
+  z-index: -1;
+  width: clamp(150px, 14vw, 220px);
+  padding: 7px;
+  border-radius: 20px;
+  transform: rotate(5deg);
+}
+
+.cover-postcard img {
+  border-radius: 14px;
+}
+
+.cover-postcard .photo-reference {
+  display: block;
+  margin: 6px 4px 1px;
+  color: #123d4d;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.hero .hero-content {
+  width: min(600px, 50%);
+  --lg-blur: 8px;
+  --lg-sat: 150%;
+  --lg-clear: .3;
+  --lg-sheen: .5;
+}
+
+.hero .hero-content::before {
+  padding: 2px;
+}
+
+.hero h1 > strong,
+.hero .hero-desc {
+  color: #0d3442;
+}
+
+.hero .hero-desc {
+  font-weight: 500;
+}
+
+.hero-actions .btn {
+  --lg-clear: .3;
+  color: #0b3f5c;
+  font-weight: 700;
+}
+
+.hero-actions .btn-gold {
+  --lg-clear: .55;
+  --lg-sheen: .7;
+}
+
+/* --- Thẻ, nút, ô nhập --- */
+.point-card {
+  --lg-clear: .16;
+}
+
+.point-card-image {
+  width: 100%;
+}
+
+.filter:is(.active, [aria-pressed="true"]),
+.station-chapters button[aria-pressed="true"] {
+  --lg-clear: .55;
+  border-color: #fff;
+}
+
+.story-label {
+  --lg-clear: .26;
+  background-color: transparent;
+}
+
+.mobile-menu:not([hidden]) {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.closing .btn,
+.btn-primary {
+  --lg-clear: .38;
+}
+
+.btn-primary:disabled {
+  --lg-clear: .08;
+  opacity: .7;
+}
+
+dialog::backdrop {
+  background: rgb(214 236 248 / .45);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+}
+
+/* --- Điện thoại --- */
+@media (max-width: 900px) {
+  :root { --lg-header-h: 69px; }
+}
+
+@media (max-width: 750px) {
+  :root {
+    --lg-blur-panel: 18px;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: end;
+    min-height: max(600px, 100svh);
+    padding:
+      calc(var(--lg-header-h) + 70px)
+      12px
+      calc(86px + env(safe-area-inset-bottom));
+    border-radius: 0 0 30px 30px;
+  }
+
+  .hero .cover-frame {
+    position: absolute;
+    inset: 0;
+    grid-row: auto;
+    aspect-ratio: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .hero .cover-frame .hero-photo {
+    object-position: 76% 40%;
+  }
+
+  .hero .cover-frame figcaption {
+    inset: calc(var(--lg-header-h) + 10px) 12px auto auto;
+    max-width: calc(100% - 24px);
+  }
+
+  .hero .cover-frame figcaption > * {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .hero .hero-content {
+    width: 100%;
+    grid-row: auto;
+    padding: 22px 18px 18px;
+    --lg-clear: .26;
+  }
+
+  .hero h1 {
+    font-size: clamp(50px, 14vw, 66px);
+  }
+
+  .hero .hero-desc {
+    font-size: 14px;
+  }
+
+  .cover-postcard {
+    display: none;
+  }
+
+  .mobile-bottom {
+    --lg-clear: .34;
+    --lg-blur: 20px;
+    --lg-sat: 150%;
+    border-radius: 28px;
+  }
+
+  .mobile-bottom::before {
+    content: '';
+  }
+}
+
+/* --- Người dùng tắt hiệu ứng trong suốt: dùng nền đặc, dễ đọc --- */
+@media (prefers-reduced-transparency: reduce) {
+  body::before { display: none; }
+
+  :is(.site-header, .mobile-bottom, .hero .hero-content, .btn-passport, .hero-actions .btn,
+      .point-card, .journey-editorial, .gallery-card button, .story-layout, .creative-launch,
+      .community-section, .passport-banner, .about-section, .footer, .filter, .search,
+      .audio-card, .creation-options button, .about-accordions details, .story-label,
+      .to-top, .menu-toggle, .community-form, .community-entry, .story-shortcuts a,
+      .btn-primary, .btn-outline, .closing .btn, .cover-postcard,
+      .hero .cover-frame figcaption > *) {
+    background: var(--glass-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+}
