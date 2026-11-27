@@ -302,28 +302,28 @@ const photoCatalog = {
       "Chạm 5"
     ]
   },
-  "media/cham-1-1.webp": {
+  "media/cham-1-1.webp?v=hd": {
     "caption": "Học sinh trò chuyện với người dân trong video Chạm 1, phần đầu.",
     "label": "Khung hình của video do nhóm dự án cung cấp.",
     "locations": [
       "Chạm 1"
     ]
   },
-  "media/cham-1-2.webp": {
+  "media/cham-1-2.webp?v=hd": {
     "caption": "Buổi trò chuyện với người dân trong phần tiếp theo của video Chạm 1.",
     "label": "Khung hình của video do nhóm dự án cung cấp.",
     "locations": [
       "Chạm 1"
     ]
   },
-  "media/cham-4-1.webp": {
+  "media/cham-4-1.webp?v=hd": {
     "caption": "Học sinh trò chuyện với người kể trong video Chạm 4.",
     "label": "Khung hình của video do nhóm dự án cung cấp.",
     "locations": [
       "Chạm 4"
     ]
   },
-  "media/cham-5-1.webp": {
+  "media/cham-5-1.webp?v=hd": {
     "caption": "Hai người trẻ đứng trước bãi biển trong video Chạm 5.",
     "label": "Khung hình của video do nhóm dự án cung cấp.",
     "locations": [

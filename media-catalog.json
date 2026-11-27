@@ -1,21 +1,21 @@
 {
   "cham-1": [
     {
-      "path": "media/cham-1-1.mp4",
-      "poster": "media/cham-1-1.webp",
+      "path": "media/cham-1-1.mp4?v=hd",
+      "poster": "media/cham-1-1.webp?v=hd",
       "start": 0,
       "end": 148
     },
     {
-      "path": "media/cham-1-2.mp4",
-      "poster": "media/cham-1-2.webp",
+      "path": "media/cham-1-2.mp4?v=hd",
+      "poster": "media/cham-1-2.webp?v=hd",
       "start": 148,
       "end": 297
     }
   ],
   "cham-2": [
     {
-      "path": "media/interview-4733.mp4",
+      "path": "media/interview-4733.mp4?v=hd",
       "start": 0,
       "end": 190,
       "title": "Phỏng vấn mệ Trần Thị Lành (bí danh Trần Thị Quyền)"
@@ -23,7 +23,7 @@
   ],
   "cham-2-tu-lieu": [
     {
-      "path": "media/cham-2-tu-lieu-1.mp4",
+      "path": "media/cham-2-tu-lieu-1.mp4?v=hd",
       "start": 0,
       "end": 483
     }
@@ -31,24 +31,24 @@
   "cham-3": [],
   "cham-4": [
     {
-      "path": "media/cham-4-1.mp4",
-      "poster": "media/cham-4-1.webp",
+      "path": "media/cham-4-1.mp4?v=hd",
+      "poster": "media/cham-4-1.webp?v=hd",
       "start": 0,
       "end": 141
     }
   ],
   "cham-5": [
     {
-      "path": "media/cham-5-1.mp4",
-      "poster": "media/cham-5-1.webp",
+      "path": "media/cham-5-1.mp4?v=hd",
+      "poster": "media/cham-5-1.webp?v=hd",
       "start": 0,
       "end": 216
     }
   ],
   "cham-3-quyen": [
     {
-      "path": "media/Cham_3_Kham_pha_Phan_A.mp4",
-      "fallback": "media/interview-4745.mp4",
+      "path": "media/Cham_3_Kham_pha_Phan_A.mp4?v=hd",
+      "fallback": "media/interview-4745.mp4?v=hd",
       "start": 0,
       "end": 214,
       "title": "Video mới – Khám phá mục a"
