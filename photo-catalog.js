@@ -324,8 +324,8 @@ const photoCatalog = {
       "Chạm 1"
     ]
   },
-  "media/cham-4-1.webp?v=hd": {
-    "caption": "Học sinh trò chuyện với người kể trong video Chạm 4.",
+  "media/cham-4-phong-van-bac-chien.webp": {
+    "caption": "Khung hình trong video phỏng vấn bác Chiến.",
     "label": "Khung hình của video do nhóm dự án cung cấp.",
     "locations": [
       "Chạm 4"

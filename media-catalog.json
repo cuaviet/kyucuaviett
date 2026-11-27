@@ -31,10 +31,11 @@
   "cham-3": [],
   "cham-4": [
     {
-      "path": "media/cham-4-1.mp4?v=hd",
-      "poster": "media/cham-4-1.webp?v=hd",
+      "path": "media/cham-4-phong-van-bac-chien.mp4",
+      "poster": "media/cham-4-phong-van-bac-chien.webp",
       "start": 0,
-      "end": 141
+      "end": 362,
+      "title": "Phỏng vấn bác Chiến"
     }
   ],
   "cham-5": [

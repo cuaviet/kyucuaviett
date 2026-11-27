@@ -285,7 +285,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json?v=12').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=13').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {
@@ -324,7 +324,7 @@ function initPlayer(container) {
     container.innerHTML = `<figure>${choices}<video controls playsinline preload="none" aria-label="${esc(title)}">Trình duyệt chưa hỗ trợ phát video.</video>
       <p class="media-notice" role="status" hidden>Video tạm thời chưa tải được. <button type="button" class="btn btn-outline">Thử lại</button></p>
       <div class="video-toolbar"><button type="button" class="btn btn-primary video-toggle">Phát video</button></div>
-      <figcaption>${key === 'cham-2'
+      <figcaption>${key === 'cham-4' ? 'Phỏng vấn bác Chiến.' : key === 'cham-2'
         ? 'Phỏng vấn mệ Trần Thị Lành (bí danh Trần Thị Quyền), du kích từng hoạt động tại xã Cửa Việt (Gio Hải cũ) trong kháng chiến chống Mỹ. Những ký ức được mệ chia sẻ là tư liệu quý để thế hệ trẻ tìm hiểu và trân trọng lịch sử quê hương.'
         : 'Video tư liệu do nhóm dự án cung cấp.' + (clips.length > 1 ? ' Bạn có thể chuyển đến từng phần hoặc phát liên tục từ đầu.' : '')}</figcaption></figure>`;
     const video = $('video', container);
@@ -432,7 +432,7 @@ stepMarkup = function (point) {
   if (currentStep === 3) {
     const prompts = id >= 3 ? stationDocuments[id][4].html : '';
     return `<div class="station-body"><h3>Nghe người thật kể</h3>
-      ${mediaShell('cham-' + id, 'Nghe người thật kể — Chạm ' + two(id))}
+      ${mediaShell('cham-' + id, id === 4 ? 'Phỏng vấn bác Chiến' : 'Nghe người thật kể — Chạm ' + two(id))}
       <div class="read-prompt"><strong>Sau khi xem</strong><p>${interviewPrompts[id - 1]}</p></div>
       ${prompts ? `<div class="station-topics"><details><summary>Gợi ý phỏng vấn</summary>${prompts}</details></div>` : ''}
       <div class="station-quicklinks"><button class="btn btn-outline" data-action="step" data-step="6">Ghi lại cảm nhận</button><button class="btn btn-outline" data-action="step" data-step="4">Mở phần khám phá</button></div></div>`;
