@@ -6,7 +6,14 @@
   --glass-tint:
     radial-gradient(ellipse at 16% 0%, #ffffffb3, #ffffff00 57%),
     linear-gradient(155deg, #ffffff4d 0%, #ffffff05 48%, #b5dcf32e 100%);
-  --glass-highlight: inset 0 1px 1px #fff, inset 1px 0 1px #ffffff9c, inset 0 -1px 1px #3b719b38;
+  --glass-highlight: inset 0 1px 1px #fff, inset 1px 0 1px #ffffff9c, inset -1px -1px 1px #9eddf98c;
+  --glass-glint: conic-gradient(from 220deg, #9ff3e200, #b8d6fcf2 15%, #ffffffe6 24%, #ffd1eea4 32%, #ffffff00 49%, #d7f8ffa8 69%, #d4fbf3e8 79%, #c3b3e55e 89%, #9ff3e200);
+  --glass-liquid:
+    radial-gradient(ellipse 34% 92% at 91% 15%, #ffffff00 51%, #ffffffc4 54%, #9beeee95 57%, #91aff12d 67%, #ffffff00 76%),
+    radial-gradient(ellipse 72% 76% at 15% 115%, #6eb2e22e 53%, #a9f0ed87 55%, #fffffff0 58%, #98dffc5e 61%, #ffffff00 66%),
+    radial-gradient(ellipse 65% 91% at 109% 104%, #a8d7f584 36%, #d4e7ff 48%, #cfb7ee70 55%, #fff9 60%, #ffffff00 68%),
+    radial-gradient(ellipse at 30% -12%, #fffefa, #e7f8f41e 64%),
+    linear-gradient(130deg, #d3eafa, #e8f7f8 44%, #badcf4 80%, #d9e9ff);
   --glass-shadow: 0 0 0 1px #46739121, 0 3px 8px #2b567b17, 0 15px 29px -9px #2b567b3b, var(--glass-highlight);
   --glass-control:
     linear-gradient(150deg, #ffffffeb 0%, #effaff6b 45%, #a5d9f77d 100%),
@@ -19,13 +26,17 @@
   --glass-radius: clamp(18px, 2.55vw, 32px);
   --glass-paper: #f2f9ff;
   --glass-blue: #086fae;
+  --glass-action:
+    radial-gradient(ellipse at 12% 0%, #ffffffe0, #ffffff00 72%),
+    linear-gradient(155deg, #f5fdff36 14%, #aee3fd50 77%, #b5dbf750);
+  --glass-action-hover:
+    radial-gradient(ellipse at 12% 0%, #ffffffe8, #ffffff00 73%),
+    linear-gradient(155deg, #eaf9ff70 14%, #90d5ff78 77%, #b2cfed63);
 }
 
 body {
-  background:
-    radial-gradient(ellipse 68% 38% at 3% 17%, #caeaff, transparent) 0 0 / 100% 1150px,
-    radial-gradient(ellipse 63% 39% at 97% 72%, #dbe9ff, transparent) 0 0 / 100% 1150px,
-    linear-gradient(160deg, #f0f9ff, #f8fbff 47%, #ebf7ff);
+  background: var(--glass-liquid);
+  background-attachment: fixed;
   background-color: var(--glass-paper);
 }
 
@@ -108,11 +119,7 @@ body {
 }
 
 .hero-shade {
-  background:
-    radial-gradient(ellipse at 5% 6%, #eefcff, transparent 41%),
-    radial-gradient(ellipse at 0% 76%, #98d8fb, transparent 58%),
-    radial-gradient(ellipse at 90% 100%, #9cdde5, transparent 58%),
-    linear-gradient(133deg, #d4eeff 0%, #f1faff 61%, #c9e7ff 100%);
+  background: var(--glass-liquid);
 }
 
 .hero .hero-content {
@@ -174,7 +181,7 @@ body {
 }
 
 .hero-actions .btn-gold:hover {
-  background: linear-gradient(155deg, #fff, #aff0ff 65%, #a7d7ff);
+  background: var(--glass-action-hover);
 }
 
 .hero-actions .btn-glass {
@@ -184,7 +191,7 @@ body {
 
 .hero-actions .btn-glass:hover {
   border-color: #c2e7ff;
-  background: #ffffffd6;
+  background: var(--glass-action-hover);
 }
 
 .map-section {
@@ -323,9 +330,9 @@ dialog::backdrop {
   }
 
   .hero .hero-content {
-    background: linear-gradient(90deg, #f8fdff78 0%, #f8fdff50 55%, #f8fdff10 100%), var(--glass-tint);
-    -webkit-backdrop-filter: blur(3px) saturate(115%);
-    backdrop-filter: blur(3px) saturate(115%);
+    background: linear-gradient(94deg, #f8fdff78 0%, #f8fdff45 58%, #f7fdff1a 100%), var(--glass-tint);
+    -webkit-backdrop-filter: blur(2px) saturate(122%);
+    backdrop-filter: blur(2px) saturate(122%);
   }
 
   .map-pin {
@@ -404,10 +411,7 @@ dialog::backdrop {
 .story-section,
 .closing {
   border-block: 1px solid var(--glass-edge);
-  background:
-    radial-gradient(ellipse at 10% 63%, #c5eaff, transparent 60%),
-    radial-gradient(ellipse at 90% 0%, #dae5ff, transparent 59%),
-    linear-gradient(145deg, #edf8ff, #f9fcff);
+  background: linear-gradient(145deg, #f0fbf492, #eff7ff56), var(--glass-liquid);
 }
 
 :is(.story-layout, .creation, .creative-launch, .community-section, .passport-banner, .about-section, .footer) {
@@ -582,10 +586,10 @@ dialog::backdrop {
 .step-content .btn-primary,
 .community-form .btn-primary,
 .community-touch-form .btn-primary {
-  background: linear-gradient(160deg, #1273a6, #075989 74%);
-  color: #fff;
-  border-color: #08689e;
-  box-shadow: 0 5px 16px #12649435, inset 0 1px 1px #ccefffad;
+  background: var(--glass-action);
+  color: #0b4565;
+  border-color: #f9feffce;
+  box-shadow: var(--glass-shadow);
 }
 
 .closing .btn:hover,
@@ -593,9 +597,9 @@ dialog::backdrop {
 .step-content .btn-primary:hover:not(:disabled),
 .community-form .btn-primary:hover:not(:disabled),
 .community-touch-form .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(160deg, #0b6c9e, #065484 75%);
-  color: #fff;
-  border-color: #065484;
+  background: var(--glass-action-hover);
+  color: #083d5b;
+  border-color: #efffff;
 }
 
 .btn-outline,
@@ -605,7 +609,7 @@ dialog::backdrop {
 .compare-handle::after,
 .quiz-option:not(.correct):not(.incorrect) {
   color: var(--glass-accent);
-  background: var(--glass-tint), #f4faffde;
+  background: var(--glass-tint), #f4faff3b;
   border: 1px solid #b9d9ed;
   box-shadow: var(--glass-highlight);
 }
@@ -832,7 +836,7 @@ dialog::backdrop {
 .glass-report :is(button, select, input[type="file"]) {
   border: 1px solid #b9d7e9;
   border-radius: 999px;
-  background: var(--glass-tint), #f8fcff;
+  background: var(--glass-tint), #f8fcff55;
   color: var(--glass-accent);
   box-shadow: var(--glass-highlight);
 }
@@ -844,9 +848,9 @@ dialog::backdrop {
 
 .glass-reference nav a[aria-current],
 .glass-report button:not(.secondary):not(:disabled) {
-  color: #fff;
-  border-color: #136e9c;
-  background: linear-gradient(150deg, #1e82b4, #0b5486);
+  color: #0b4565;
+  border-color: #8ec2dc;
+  background: var(--glass-action);
 }
 
 .glass-reference #list > li {
@@ -870,5 +874,179 @@ dialog::backdrop {
   .glass-report :is(.card, .metric, .question, .note) {
     background: #fff;
     box-shadow: none;
+  }
+}
+
+/* The clear center and bevel sit on separate layers so labels stay sharp. */
+.glass-refraction {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.cover-image > .glass-refraction {
+  z-index: 1;
+}
+
+.cover-image::after {
+  z-index: 2;
+  box-shadow: inset 0 2px 2px #fff9, inset 0 -2px 3px #c5f5ff70;
+}
+
+.cover-image.has-glass-refraction .hero-photo {
+  animation: none;
+}
+
+.map-pin > .glass-refraction {
+  opacity: .83;
+}
+
+.map-pin.has-glass-refraction > :is(img, span) {
+  position: relative;
+}
+
+:is(.hero-content, .site-header, .mobile-bottom) {
+  outline: 1px solid #fcffff80;
+  outline-offset: -1px;
+}
+
+.hero .hero-content::before,
+.glass-nav-indicator::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 2px;
+  background: var(--glass-glint);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.desktop-nav {
+  position: relative;
+}
+
+.glass-nav-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: var(--glass-nav-width, 0px);
+  height: var(--glass-nav-height, 0px);
+  transform: translate3d(var(--glass-nav-x, 0px), var(--glass-nav-y, 0px), 0);
+  border-radius: 999px;
+  pointer-events: none;
+  background: linear-gradient(150deg, #ffffffb5, #e6f7fc2b 55%, #a0dbf058);
+  box-shadow: inset 0 1px 5px #ffffffc9, inset 0 -2px 5px #94d4e87a, 0 3px 10px #1a597a23;
+  opacity: 0;
+  transition: transform .38s cubic-bezier(.22,.73,.24,1.21), width .38s cubic-bezier(.22,.73,.24,1.21), opacity .16s;
+}
+
+.glass-nav-indicator.is-visible {
+  opacity: 1;
+}
+
+.desktop-nav:has(.glass-nav-indicator) a:hover {
+  background: transparent;
+}
+
+:is(.desktop-nav, .mobile-bottom) > :is(a, button) {
+  z-index: 1;
+}
+
+@media (max-width: 750px) {
+  body { background-attachment: scroll; }
+
+  .hero .hero-content {
+    background: linear-gradient(145deg, #f7fcff85, #ffffff1a 65%, #e0f7ff24), var(--glass-tint);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-nav-indicator {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-refraction,
+  .glass-nav-indicator {
+    display: none;
+  }
+
+  .hero .hero-content,
+  .site-header,
+  .mobile-bottom,
+  .map-pin {
+    background: var(--glass-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Keep controls clear, including native file buttons and smaller actions. */
+:is(.btn, .icon-btn, .circle-btn, .filter, .step-tab, .community-edit-btn, .community-delete-btn,
+    .story-shortcuts a, .audio-card .audio-play, .station-chapters button,
+    .glass-report button, .glass-reference nav a):not(.community-delete-confirm) {
+  text-shadow: 0 1px 1px #ffffff6b;
+}
+
+:is(.hero-actions .btn, .btn-primary, .btn-outline, .btn-passport, .icon-btn, .circle-btn,
+    .filter, .step-tab.active, .audio-card .audio-play, .community-edit-btn, .community-delete-btn,
+    .story-shortcuts a, .station-chapters button):not(.community-delete-confirm) {
+  border-color: #f9ffffd4;
+  box-shadow: var(--glass-shadow);
+}
+
+:is(.icon-btn, .circle-btn, .filter:not(.active), .community-edit-btn, .community-delete-btn,
+    .station-chapters button:not([aria-pressed="true"]), .btn-passport) {
+  background: var(--glass-tint), #f7fcff26;
+}
+
+:is(.step-tab.active, .audio-card .audio-play, .story-shortcuts a,
+    .station-chapters button[aria-pressed="true"], .compare-handle::after) {
+  background: var(--glass-action);
+}
+
+:is(.station-chapters button, .icon-btn, .circle-btn, .community-edit-btn, .community-delete-btn):hover:not(:disabled) {
+  color: var(--glass-accent);
+  background: var(--glass-action-hover);
+}
+
+.creation-options button {
+  background: var(--glass-panel), #f7fcff18;
+}
+
+:is(.glass-report, .glass-reference) {
+  background: var(--glass-liquid);
+  background-attachment: fixed;
+}
+
+::file-selector-button {
+  padding: .45em .8em;
+  margin-inline-end: .55em;
+  color: var(--glass-accent);
+  border: 1px solid #e1f5ff;
+  border-radius: 999px;
+  background: var(--glass-action);
+}
+
+@media (forced-colors: active) {
+  .glass-refraction,
+  .glass-nav-indicator,
+  .hero .hero-content::before {
+    display: none;
+  }
+}
+
+@media print {
+  :is(.glass-report, .glass-reference) {
+    background: #fff;
   }
 }
