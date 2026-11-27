@@ -230,6 +230,12 @@ const photoCatalog = {
       "Chạm 4"
     ]
   },
+  "https://cdn.congluan.vn/images/7ff2bcc12de97b34c15f66d2ae8be67c6ce3ede8007ee23e7552d294ef2b52d4/anh-1-2-.jpg.avif": {
+    "caption": "Cá cơm sau khi hấp chín được phơi khô tại xã Cửa Việt, Quảng Trị.",
+    "label": "Viết Hảo / Báo Nhà báo & Công luận, 23/3/2026 (ngày đăng)",
+    "url": "https://congluan.vn/quang-tri-can-khan-truong-di-doi-hang-chuc-ho-dan-hap-ca-ra-khoi-khu-dan-cu-post339397.html",
+    "locations": ["Chạm 4"]
+  },
   "https://vnanet.vn/Data/Articles/2025/08/10/8201100/vna_potal_ngu_dan_quang_tri_co_thu_nhap_cao_nho_danh_bat_luong_lon_ca_com_ca_nuc_stand.jpg": {
     "caption": "Thương lái mua cá cơm ở bến cá Bắc Cửa Việt, tháng 8/2025.",
     "label": "Tường Vi, TTXVN",
