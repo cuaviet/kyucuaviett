@@ -1,0 +1,309 @@
+:root {
+  --glass-ink: #153e4c;
+  --glass-accent: #075c66;
+  --glass-edge: #ffffffdf;
+  --glass-solid: #f1fafb;
+  --glass-tint: linear-gradient(155deg, #fffffff0, #eaf8fad4 72%, #d8eff3cf);
+  --glass-highlight: inset 0 1px 1px #fff, inset 0 -1px 0 #83bac23d;
+  --glass-shadow: 0 12px 32px #194f6320, var(--glass-highlight);
+}
+
+body {
+  background: linear-gradient(155deg, #f5fcfd, #fff 40%, #eaf7f8);
+}
+
+.site-header {
+  top: 10px;
+  width: min(1352px, calc(100% - 40px));
+  margin: 10px auto 0;
+  overflow: hidden;
+  border-radius: 34px;
+}
+
+.site-header::after {
+  height: 2px;
+  background: var(--glass-accent);
+}
+
+.site-header,
+.mobile-bottom,
+.mobile-menu:not([hidden]),
+.btn-passport,
+.hero-actions .btn-glass,
+.map-pin,
+.gallery-card button,
+.point-card,
+.journey-editorial,
+.utility-dialog {
+  background: var(--glass-solid);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+}
+
+.site-header .nav-wrap {
+  width: calc(100% - 36px);
+  height: 64px;
+}
+
+.desktop-nav {
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #fff9;
+  border-radius: 999px;
+  background: #d2e9ee6e;
+  box-shadow: inset 0 1px 4px #17526a12;
+}
+
+.desktop-nav a {
+  padding: 8px 13px;
+  border-radius: 999px;
+}
+
+.desktop-nav a:hover {
+  color: var(--glass-accent);
+  background: #fffc;
+}
+
+.desktop-nav a::after {
+  display: none;
+}
+
+.site-header .brand-symbol {
+  background: linear-gradient(155deg, #25858e, #104a59);
+  color: #e8ffff;
+  box-shadow: 0 4px 12px #10576b2e, var(--glass-highlight);
+}
+
+.btn,
+.filter,
+.passport-count {
+  border-radius: 999px;
+}
+
+.btn-passport {
+  color: var(--glass-accent);
+  border-color: #fff;
+}
+
+.passport-count {
+  background: #cdebf0;
+  color: #124958;
+}
+
+.hero-shade {
+  background:
+    radial-gradient(ellipse at 7% 10%, #fffaf0 0%, transparent 52%),
+    radial-gradient(ellipse at 17% 100%, #c8edf1 0%, transparent 53%),
+    linear-gradient(145deg, #fff 24%, #e2f6fa 100%);
+}
+
+.cover-frame {
+  border: 1px solid var(--glass-edge);
+  box-shadow: 0 16px 42px #2050652d, -6px 5px 0 #fff9, -12px 9px 0 #d7edf499;
+}
+
+@media (width > 750px) {
+  .cover-postcard {
+    bottom: max(12%, 78px);
+  }
+}
+
+.cover-frame figcaption {
+  background: var(--glass-tint);
+}
+
+.hero-actions .btn-gold,
+.hero-actions .btn-gold:hover {
+  background: linear-gradient(165deg, #267d87, #135265 75%);
+  border-color: #438e98;
+  color: #fff;
+  box-shadow: 0 8px 22px #174e6640, inset 0 1px 1px #d6faffb0;
+}
+
+.hero-actions .btn-gold:hover {
+  background: linear-gradient(165deg, #21747f, #104354 75%);
+}
+
+.hero-actions .btn-glass {
+  color: var(--glass-accent);
+  border-color: #fff;
+}
+
+.map-section {
+  background:
+    radial-gradient(ellipse at 10% 5%, #e5f8fd, transparent 60%),
+    linear-gradient(155deg, #f7fcfb, #e9f6f5 62%, #e5f3f9);
+}
+
+.map-canvas,
+.journey-editorial,
+.point-card,
+.gallery-card button,
+.passport-banner {
+  border-radius: var(--curve-card);
+}
+
+.map-canvas {
+  border-color: var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+}
+
+.map-pin {
+  color: var(--glass-ink);
+  border-radius: 20px;
+}
+
+.map-pin:hover,
+.map-pin.active {
+  color: var(--glass-ink);
+  background: #fff;
+  border-color: #76b0bb;
+  box-shadow: var(--glass-shadow);
+}
+
+.map-pin .stop-copy em {
+  color: #385b65;
+}
+
+.map-pin .stop-category {
+  color: #3d6169 !important;
+}
+
+.stop-arrow {
+  background: linear-gradient(145deg, #fff, #c8e9ef);
+  box-shadow: var(--glass-highlight);
+}
+
+.filter {
+  border-color: #badce2;
+  background: #f8fdfe;
+  color: var(--glass-ink);
+}
+
+.filter:is(.active, [aria-pressed="true"]) {
+  background: #125566;
+  color: #fff;
+  border-color: #125566;
+}
+
+.filter:is(.active, [aria-pressed="true"]) b {
+  color: inherit;
+}
+
+.point-card,
+.gallery-card button,
+.journey-editorial {
+  background: var(--glass-tint);
+}
+
+.passport-banner {
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+}
+
+dialog::backdrop {
+  background: #d5edf4a8;
+}
+
+.experience-head .icon-btn,
+.utility-header .icon-btn,
+.menu-toggle,
+.to-top {
+  color: var(--glass-ink);
+  background: var(--glass-solid);
+  border-color: var(--glass-edge);
+  box-shadow: var(--glass-highlight);
+}
+
+.experience-dialog {
+  --step-nav-surface: #eff8f9;
+  --step-divider: #cde4e8;
+}
+
+.step-tab:is(.active, [aria-selected="true"]) {
+  background: #d9eef0;
+  color: #124756;
+  box-shadow: inset 0 -3px var(--glass-accent);
+}
+
+:where(.site-header, .hero, .map-section, .point-section, .mobile-bottom)
+  :is(a, button):focus-visible {
+  outline-color: var(--glass-accent);
+  outline-offset: 2px;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header,
+  .mobile-bottom,
+  .map-pin {
+    background: var(--glass-tint);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+  }
+
+  .map-pin:is(:hover, .active) {
+    background: linear-gradient(150deg, #fffffff7, #e6f8f8e8);
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    top: 6px;
+    width: calc(100% - 16px);
+    margin-top: 6px;
+    border-radius: 25px;
+  }
+
+  .site-header .nav-wrap {
+    width: calc(100% - 20px);
+    height: 57px;
+  }
+
+  .mobile-menu:not([hidden]) {
+    padding: 8px 14px 12px;
+    border: 0;
+    border-top: 1px solid #c7e3e7;
+    box-shadow: none;
+  }
+
+  .mobile-menu a {
+    padding-inline: 12px;
+    border-radius: 12px;
+  }
+
+  .mobile-menu a:is(:hover, :focus-visible) {
+    background: #fff;
+  }
+
+  .site-header .menu-toggle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 650px) {
+  .mobile-bottom {
+    bottom: max(8px, env(safe-area-inset-bottom));
+    left: 10px;
+    right: 10px;
+    height: 58px;
+    padding: 5px 12px;
+    border-radius: 25px;
+  }
+
+  .mobile-bottom :is(a, button) {
+    min-height: 44px;
+    padding-inline: 8px;
+    border-radius: 16px;
+    color: var(--glass-accent);
+  }
+
+  .mobile-bottom .passport-count {
+    right: -6px;
+  }
+
+  .to-top,
+  .toast {
+    bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+}
