@@ -1,16 +1,10 @@
 {
   "cham-1": [
     {
-      "path": "media/cham-1-1.mp4?v=hd",
-      "poster": "media/cham-1-1.webp?v=hd",
+      "path": "media/cham-1-nghe-nguoi-ke.mp4",
+      "poster": "media/cham-1-nghe-nguoi-ke.webp",
       "start": 0,
-      "end": 148
-    },
-    {
-      "path": "media/cham-1-2.mp4?v=hd",
-      "poster": "media/cham-1-2.webp?v=hd",
-      "start": 148,
-      "end": 297
+      "end": 204
     }
   ],
   "cham-2": [

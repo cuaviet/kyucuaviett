@@ -310,15 +310,8 @@ const photoCatalog = {
       "Chạm 5"
     ]
   },
-  "media/cham-1-1.webp?v=hd": {
-    "caption": "Học sinh trò chuyện với người dân trong video Chạm 1, phần đầu.",
-    "label": "Khung hình của video do nhóm dự án cung cấp.",
-    "locations": [
-      "Chạm 1"
-    ]
-  },
-  "media/cham-1-2.webp?v=hd": {
-    "caption": "Buổi trò chuyện với người dân trong phần tiếp theo của video Chạm 1.",
+  "media/cham-1-nghe-nguoi-ke.webp": {
+    "caption": "Khung hình trong video phỏng vấn ở Chạm 1.",
     "label": "Khung hình của video do nhóm dự án cung cấp.",
     "locations": [
       "Chạm 1"
