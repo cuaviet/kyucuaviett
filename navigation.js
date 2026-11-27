@@ -285,7 +285,7 @@ function topicMarkup(items) {
 let mediaCatalog;
 function loadMediaCatalog() {
   if (!mediaCatalog) {
-    mediaCatalog = fetch('media-catalog.json?v=14').then(response => {
+    mediaCatalog = fetch('media-catalog.json?v=15').then(response => {
       if (!response.ok) throw new Error('Không tải được danh sách video.');
       return response.json();
     }).catch(error => {
@@ -419,7 +419,7 @@ stepMarkup = function (point) {
   // Chỉ để trống bước “Nghe người thật kể” của Chạm 3.
   // Các bước khác của Chạm 3 vẫn hoạt động bình thường.
   if (id === 3 && currentStep === 3) {
-    return `<div class="station-body"><h3>Nghe người thật kể</h3><video controls playsinline preload="metadata" aria-label="Video nghe người thật kể tại Chạm 3" style="display:block;width:100%;height:auto;aspect-ratio:16/9;background:#102526;border-radius:12px"><source src="media/cham-3-nghe-nguoi-that-ke.mp4?v=hd" type="video/mp4">Trình duyệt không hỗ trợ phát video MP4.</video><p class="source-note">Video do nhóm dự án CHẠM CỬA VIỆT cung cấp.</p></div>`;
+    return `<div class="station-body"><h3>Nghe người thật kể</h3><video poster="media/posters/cham-3-nghe-nguoi-that-ke.webp?v=1" controls playsinline preload="metadata" aria-label="Video nghe người thật kể tại Chạm 3" style="display:block;width:100%;height:auto;aspect-ratio:16/9;background:#102526;border-radius:12px"><source src="media/cham-3-nghe-nguoi-that-ke.mp4?v=hd" type="video/mp4">Trình duyệt không hỗ trợ phát video MP4.</video><p class="source-note">Video do nhóm dự án CHẠM CỬA VIỆT cung cấp.</p></div>`;
   }
   if (currentStep === 3 && id === 2) {
     // Chỉ hiển thị đúng video + ảnh chuyển từ Chạm 03; không dùng tư liệu Chạm 02 cũ.

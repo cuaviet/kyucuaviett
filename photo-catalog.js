@@ -310,27 +310,6 @@ const photoCatalog = {
       "Chạm 5"
     ]
   },
-  "media/cham-1-nghe-nguoi-ke.webp": {
-    "caption": "Khung hình trong video phỏng vấn ở Chạm 1.",
-    "label": "Khung hình của video do nhóm dự án cung cấp.",
-    "locations": [
-      "Chạm 1"
-    ]
-  },
-  "media/cham-4-phong-van-bac-chien.webp": {
-    "caption": "Khung hình trong video phỏng vấn bác Chiến.",
-    "label": "Khung hình của video do nhóm dự án cung cấp.",
-    "locations": [
-      "Chạm 4"
-    ]
-  },
-  "media/cham-5-1.webp?v=hd": {
-    "caption": "Hai người trẻ đứng trước bãi biển trong video Chạm 5.",
-    "label": "Khung hình của video do nhóm dự án cung cấp.",
-    "locations": [
-      "Chạm 5"
-    ]
-  },
   "assets/tu-lieu-51.webp": {
     "caption": "Thuyền nhỏ trên dải cát ven biển.",
     "label": "Bộ sưu tập của dự án. Chưa xác minh địa điểm chính xác, người chụp và ngày chụp.",

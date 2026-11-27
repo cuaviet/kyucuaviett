@@ -2,7 +2,7 @@
   "cham-1": [
     {
       "path": "media/cham-1-nghe-nguoi-ke.mp4",
-      "poster": "media/cham-1-nghe-nguoi-ke.webp",
+      "poster": "media/posters/cham-1-nghe-nguoi-ke.webp?v=1",
       "start": 0,
       "end": 204
     }
@@ -12,21 +12,23 @@
       "path": "media/interview-4733.mp4?v=hd",
       "start": 0,
       "end": 190,
-      "title": "Phỏng vấn mệ Trần Thị Lành (bí danh Trần Thị Quyền)"
+      "title": "Phỏng vấn mệ Trần Thị Lành (bí danh Trần Thị Quyền)",
+      "poster": "media/posters/interview-4733.webp?v=1"
     }
   ],
   "cham-2-tu-lieu": [
     {
       "path": "media/cham-2-tu-lieu-1.mp4?v=hd",
       "start": 0,
-      "end": 483
+      "end": 483,
+      "poster": "media/posters/cham-2-tu-lieu-1.webp?v=1"
     }
   ],
   "cham-3": [],
   "cham-4": [
     {
       "path": "media/cham-4-phong-van-bac-chien.mp4",
-      "poster": "media/cham-4-phong-van-bac-chien.webp",
+      "poster": "media/posters/cham-4-phong-van-bac-chien.webp?v=1",
       "start": 0,
       "end": 362,
       "title": "Phỏng vấn bác Chiến"
@@ -35,7 +37,7 @@
   "cham-5": [
     {
       "path": "media/cham-5-1.mp4?v=hd",
-      "poster": "media/cham-5-1.webp?v=hd",
+      "poster": "media/posters/cham-5-1.webp?v=1",
       "start": 0,
       "end": 216
     }
@@ -46,7 +48,8 @@
       "fallback": "media/interview-4745.mp4?v=hd",
       "start": 0,
       "end": 214,
-      "title": "Video mới – Khám phá mục a"
+      "title": "Video mới – Khám phá mục a",
+      "poster": "media/posters/Cham_3_Kham_pha_Phan_A.webp?v=1"
     }
   ]
 }
