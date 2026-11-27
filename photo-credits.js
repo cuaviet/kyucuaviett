@@ -27,7 +27,7 @@
     const src = img.getAttribute('src');
     if (!src || processed.get(img) === src || /^(data:|blob:)/i.test(src)) return;
     processed.set(img, src);
-    if (img.closest('.creative-photo-preview,.creative-photo-card,.svg-library')) return;
+    if (img.closest('.creative-photo-preview,.creative-photo-card,.svg-library,.journey-scene')) return;
     const photo = findPhoto(src) || unknown;
     const caption = photo.caption || img.alt;
     const button = img.closest('button[data-action="station-photo"],button[data-action="gallery"]');
