@@ -115,19 +115,20 @@ const creativeWritingTemplates = [
   {title: 'Một phút giới thiệu Cửa Việt', file: 'Mot_phut_gioi_thieu_Cua_Viet.txt', hint: 'Viết lời dẫn để đọc trong khoảng một phút. Đọc thử thành tiếng để chọn chi tiết đáng nhớ nhất.', fields: ['Mở đầu – Chào và giới thiệu chủ đề', 'Nội dung – Kể một câu chuyện hoặc giới thiệu một địa điểm', 'Kết – Gửi lời mời hoặc thông điệp']}
 ];
 
-function creativeWritingMarkup() {
-  return `<section aria-labelledby="creative-writing-heading"><h3 id="creative-writing-heading">Góc sáng tạo</h3>
-    <div class="station-topics">${creativeWritingTemplates.map((template, index) => `
-      <details><summary>${template.title}</summary><p>${template.hint}</p>
-        <form class="note-form" data-creative-writing="${index}">
-          ${template.fields.map((label, field) => `<label for="creative-${index}-${field}">${label}</label>
-            <textarea id="creative-${index}-${field}" rows="${index === 0 ? 5 : 3}" maxlength="2000" required></textarea>`).join('')}
-          <button class="btn btn-primary" type="submit">Tải bài về (.txt)</button>
-          <p role="status"></p>
-        </form>
-      </details>`).join('')}</div></section>`;
-}
-
+document.addEventListener('click', event => {
+  const button = event.target.closest('button[data-creative-template]');
+  if (!button) return;
+  const index = Number(button.dataset.creativeTemplate);
+  const template = creativeWritingTemplates[index];
+  if (!template) return;
+  showUtility(template.title, `<p>${template.hint}</p>
+    <form class="note-form" data-creative-writing="${index}">
+      ${template.fields.map((label, field) => `<label for="creative-${index}-${field}">${label}</label>
+        <textarea id="creative-${index}-${field}" rows="${index === 0 ? 5 : 3}" maxlength="2000" required></textarea>`).join('')}
+      <button class="btn btn-primary" type="submit">Tải bài về (.txt)</button>
+      <p role="status"></p>
+    </form>`);
+});
 document.addEventListener('submit', event => {
   const form = event.target;
   if (!form.matches('[data-creative-writing]')) return;

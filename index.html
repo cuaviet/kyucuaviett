@@ -34,6 +34,14 @@
     object-position: left 52% !important;
   }
 </style>
+<style>
+    .creation.creative-launch { display:grid; grid-template-columns:minmax(0,1fr); gap:22px; }
+    .creative-launch h2 { font-size:clamp(27px,3.7vw,46px); }
+    .creative-launch .creation-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .creative-launch .creation-options button { display:flex; flex-direction:column; align-items:flex-start; gap:8px; height:100%; padding:18px; }
+    .creative-launch .creative-open { margin-top:auto; padding-top:8px; color:#146075; font-weight:700; }
+    @media(max-width:700px) { .creative-launch .creation-options { grid-template-columns:minmax(0,1fr); } }
+  </style>
 </head>
 <body>
 <a class="skip-link" href="#main">Đến nội dung chính</a>
@@ -146,7 +154,14 @@
     </article>
   </div>
 </section>
-<section class="container creation"><div><p class="eyebrow">GÓC SÁNG TẠO · CHẠM 05</p><h2>Kể Cửa Việt<br>bằng <em>cách của bạn.</em></h2><p>Một tấm bưu thiếp, một bài viết, một câu chuyện nhỏ.<br>Chọn điều khiến bạn nhớ và bắt đầu kể.</p></div><div class="creation-options"><button data-action="project" data-type="Bưu thiếp quê hương"><b>01 / Bưu thiếp quê hương</b><span>Viết thông điệp bưu thiếp dài 50–80 chữ. ↗</span></button><button data-action="project" data-type="Phóng viên làng biển"><b>02 / Phóng viên làng biển</b><span>Chuẩn bị 3 câu hỏi mở để lắng nghe người dân. ↗</span></button><button data-action="project" data-type="Một phút giới thiệu Cửa Việt"><b>03 / Một phút giới thiệu Cửa Việt</b><span>Viết lời dẫn ngắn với một điều đã học và một lời mời. ↗</span></button></div></section>
+<section class="container creation creative-launch" aria-labelledby="creative-launch-title">
+    <div><p class="eyebrow">GÓC SÁNG TẠO · CHẠM 05</p><h2 id="creative-launch-title">Kể Cửa Việt <em>bằng cách của bạn</em></h2><p>Chọn một mẫu để bắt đầu viết.</p></div>
+    <div class="creation-options">
+      <button type="button" data-creative-template="0"><b>Bưu thiếp quê hương</b><span>Viết lời nhắn 50–80 chữ gửi một người bạn.</span><span class="creative-open">Mở mẫu →</span></button>
+      <button type="button" data-creative-template="1"><b>Phóng viên làng biển</b><span>Soạn 3 câu hỏi để nghe người dân kể chuyện.</span><span class="creative-open">Mở mẫu →</span></button>
+      <button type="button" data-creative-template="2"><b>Một phút giới thiệu Cửa Việt</b><span>Viết lời dẫn có một điều bạn đã học và một lời mời.</span><span class="creative-open">Mở mẫu →</span></button>
+    </div>
+  </section>
 <section class="section container community-section" id="community-board" aria-labelledby="community-heading" hidden>
   <div class="community-heading">
     <p class="eyebrow">GÓC CHIA SẺ · CỘNG ĐỒNG CHẠM CỬA VIỆT</p>
@@ -187,7 +202,7 @@
 <noscript><div class="noscript">Vui lòng bật JavaScript để dùng bản đồ tương tác và hộ chiếu. Các phần giới thiệu vẫn có thể đọc trên trang.</div></noscript>
 <script defer src="photo-catalog.js?v=20261126-boat-cham3"></script>
 <script defer src="app.js?v=20261126-cau-ngu-video"></script>
-<script defer src="navigation.js?v=20261126-nghe-cham3"></script>
+<script defer src="navigation.js?v=20261127-creative"></script>
 <script defer src="presentation.js?v=1"></script>
   <!-- Thống kê riêng tư: không chạy nếu chưa cấu hình Umami -->
   <script defer src="analytics-config.js?v=2"></script>
