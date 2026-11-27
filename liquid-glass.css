@@ -1496,3 +1496,105 @@ dialog::backdrop {
 @media (prefers-reduced-motion: reduce) {
   body::before { animation: none; }
 }
+
+/* ==========================================================================
+   Cột 8 bước trong mỗi Chạm: bước đang mở nổi bật, bước đã xem có dấu ✓,
+   vạch dọc nối các bước như thanh tiến trình.
+   ========================================================================== */
+.experience-dialog .step-nav {
+  --step-blue: #1279b0;
+  --step-blue-deep: #0b5785;
+  --step-dot: 22px;
+  background:
+    linear-gradient(180deg, rgb(225 243 253 / .95), rgb(208 233 248 / .9));
+  border-right-color: rgb(18 121 176 / .16);
+}
+
+.experience-dialog .step-nav .step-tab {
+  position: relative;
+  color: #3f6478;
+  font-weight: 600;
+  transition: background .25s, color .25s, box-shadow .3s, scale .4s var(--lg-spring);
+}
+
+.experience-dialog .step-nav .step-tab > span {
+  position: relative;
+  z-index: 1;
+  width: var(--step-dot);
+  height: var(--step-dot);
+  color: #5d8095;
+  background: #fff;
+  border: 1.5px solid #b9d6e8;
+  font-weight: 700;
+}
+
+.experience-dialog .step-nav .step-tab:hover:not(.active) {
+  background: rgb(18 121 176 / .09);
+  color: var(--step-blue-deep);
+}
+
+/* Bước đã xem */
+.experience-dialog .step-nav .step-tab.done {
+  color: #0f5279;
+}
+
+.experience-dialog .step-nav .step-tab.done > span {
+  font-size: 0;
+  color: #fff;
+  background: linear-gradient(145deg, #2aa0d6, var(--step-blue));
+  border-color: var(--step-blue);
+}
+
+.experience-dialog .step-nav .step-tab.done > span::before {
+  content: '✓';
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* Bước đang mở */
+.experience-dialog .step-nav .step-tab.active {
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgb(0 40 70 / .25);
+  background:
+    radial-gradient(120% 140% at 18% -20%, rgb(255 255 255 / .38), transparent 55%),
+    linear-gradient(135deg, #1f93cc, var(--step-blue-deep));
+  border: 1px solid rgb(255 255 255 / .55);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .55),
+    inset 0 -1px 0 rgb(0 50 90 / .25),
+    0 8px 20px -8px rgb(11 87 133 / .65);
+}
+
+.experience-dialog .step-nav .step-tab.active > span {
+  color: var(--step-blue-deep);
+  background: #fff;
+  border-color: #fff;
+  font-size: 10px;
+  box-shadow: 0 0 0 3px rgb(255 255 255 / .28);
+}
+
+/* Vạch nối giữa các bước */
+.experience-dialog .step-nav .step-tab:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(10px + var(--step-dot) / 2 - 1px);
+  top: calc(50% + var(--step-dot) / 2 + 3px);
+  width: 2px;
+  height: calc(100% + 5px - var(--step-dot) - 6px);
+  border-radius: 2px;
+  background: #c4dcea;
+  pointer-events: none;
+}
+
+.experience-dialog .step-nav .step-tab:is(.done, .active):has(+ .step-tab:is(.done, .active))::after {
+  background: linear-gradient(180deg, #2aa0d6, var(--step-blue));
+}
+
+@media (max-width: 900px) {
+  .experience-dialog .step-nav { --step-dot: 20px; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .experience-dialog .step-nav { background: #e3f2fb; }
+}
