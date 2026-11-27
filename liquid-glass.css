@@ -1566,6 +1566,15 @@ dialog::backdrop {
     0 8px 20px -8px rgb(11 87 133 / .65);
 }
 
+/* Màu xanh phủ kín cả hàng, từ mép trái tới mép phải cột */
+.experience-dialog .step-nav .step-tab.active {
+  --step-pad: calc(10px + var(--step-nav-inline, 16px));
+  margin-inline: calc(-1 * var(--step-nav-inline, 16px));
+  padding-inline: var(--step-pad) 14px;
+  border-radius: 0;
+  border-inline: 0;
+}
+
 .experience-dialog .step-nav .step-tab.active > span {
   color: var(--step-blue-deep);
   background: #fff;
@@ -1578,7 +1587,7 @@ dialog::backdrop {
 .experience-dialog .step-nav .step-tab:not(:last-child)::after {
   content: '';
   position: absolute;
-  left: calc(10px + var(--step-dot) / 2 - 1px);
+  left: calc(var(--step-pad, 10px) + var(--step-dot) / 2 - 1px);
   top: calc(50% + var(--step-dot) / 2 + 3px);
   width: 2px;
   height: calc(100% + 5px - var(--step-dot) - 6px);
@@ -1592,7 +1601,7 @@ dialog::backdrop {
 }
 
 @media (max-width: 900px) {
-  .experience-dialog .step-nav { --step-dot: 20px; }
+  .experience-dialog .step-nav { --step-dot: 20px; --step-nav-inline: 9px; }
 }
 
 @media (prefers-reduced-transparency: reduce) {
