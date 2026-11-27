@@ -317,11 +317,10 @@ const photoCatalog = {
       "Chạm 5"
     ]
   },
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_n%C4%83m_2018_%287%29.jpg/960px-C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_n%C4%83m_2018_%287%29.jpg": {
-    "caption": "Cổng chào Cửa Việt với những vòm cong hình con sóng, Tết 2018.",
-    "label": "Phương Huy, Wikimedia Commons",
-    "url": "https://commons.wikimedia.org/wiki/File:C%E1%BB%ADa_Vi%E1%BB%87t,_T%E1%BA%BFt_n%C4%83m_2018_(7).jpg",
-    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "https://bizweb.dktcdn.net/100/467/540/articles/khach-san-tai-bien-cua-viet-1.jpg": {
+    "caption": "Cổng chào hình con tôm ở biển Cửa Việt.",
+    "label": "Ảnh từ bài viết về khách sạn tại biển Cửa Việt (bizweb.dktcdn.net)",
+    "url": "https://bizweb.dktcdn.net/100/467/540/articles/khach-san-tai-bien-cua-viet-1.jpg?v=1759637739973",
     "locations": [
       "Chạm 5"
     ]
