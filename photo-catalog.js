@@ -295,6 +295,14 @@ const photoCatalog = {
       "Chạm 5"
     ]
   },
+  "assets/anh-nhom/img-3959.webp": {
+    "caption": "Các đội đua thuyền truyền thống lướt qua dưới chân cầu ở Cửa Việt.",
+    "label": "Bộ sưu tập của dự án CHẠM CỬA VIỆT. Chưa xác định người chụp và thời điểm chụp.",
+    "locations": [
+      "Chạm 3",
+      "Chạm 4"
+    ]
+  },
   "assets/anh-nhom/img-3961.webp": {
     "caption": "Cổng chào Cửa Việt nhìn từ trên cao, phía sau là đường và khu dân cư.",
     "label": "Bộ sưu tập của dự án. Chưa xác định người chụp và thời điểm chụp.",
