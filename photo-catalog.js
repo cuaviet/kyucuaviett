@@ -67,7 +67,8 @@ const photoCatalog = {
     "url": "https://xanhx.vn/du-lich-az/keo-luoi-rung-cung-ngu-dan-29723.html",
     "locations": [
       "Trang chủ",
-      "Chạm 3"
+      "Chạm 3",
+      "Chạm 5"
     ]
   },
   "https://baolaichau.vn/uploaded/post/2025/04/26/2ca9b30a-2103-4f94-9322-ce83c0503513.jpg": {
@@ -316,18 +317,49 @@ const photoCatalog = {
       "Chạm 5"
     ]
   },
-  "assets/tu-lieu-51.webp": {
-    "caption": "Thuyền nhỏ trên dải cát ven biển.",
-    "label": "Bộ sưu tập của dự án. Chưa xác minh địa điểm chính xác, người chụp và ngày chụp.",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_n%C4%83m_2018_%287%29.jpg/960px-C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_n%C4%83m_2018_%287%29.jpg": {
+    "caption": "Cổng chào Cửa Việt với những vòm cong hình con sóng, Tết 2018.",
+    "label": "Phương Huy, Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:C%E1%BB%ADa_Vi%E1%BB%87t,_T%E1%BA%BFt_n%C4%83m_2018_(7).jpg",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
     "locations": [
       "Chạm 5"
     ]
   },
-  "assets/tu-lieu-52.webp": {
-    "caption": "Hình ghép giới thiệu bãi biển, cổng chào và hoạt động dù lượn.",
-    "label": "Bộ sưu tập của dự án. Chưa rõ người thiết kế và nguồn từng ảnh thành phần.",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_2022_%28m%E1%BB%B1c_h%E1%BA%A5p_g%E1%BB%ABng%29_%282%29.jpg/960px-M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_2022_%28m%E1%BB%B1c_h%E1%BA%A5p_g%E1%BB%ABng%29_%282%29.jpg": {
+    "caption": "Mực hấp gừng, món hải sản ở Cửa Việt dịp Tết 2022.",
+    "label": "Phương Huy, Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t,_T%E1%BA%BFt_2022_(m%E1%BB%B1c_h%E1%BA%A5p_g%E1%BB%ABng)_(2).jpg",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
     "locations": [
-      "Chạm 5"
+      "Chạm 4"
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_2022_%28ngh%C3%AAu_h%E1%BA%A5p_s%E1%BA%A3_n%C6%B0%E1%BB%9Bc_lai_l%C3%A1ng_trong_d%C4%A9a%29_%281%29.jpg/960px-M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_2022_%28ngh%C3%AAu_h%E1%BA%A5p_s%E1%BA%A3_n%C6%B0%E1%BB%9Bc_lai_l%C3%A1ng_trong_d%C4%A9a%29_%281%29.jpg": {
+    "caption": "Nghêu hấp sả, món hải sản ở Cửa Việt dịp Tết 2022.",
+    "label": "Phương Huy, Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t,_T%E1%BA%BFt_2022_(ngh%C3%AAu_h%E1%BA%A5p_s%E1%BA%A3_n%C6%B0%E1%BB%9Bc_lai_l%C3%A1ng_trong_d%C4%A9a)_(1).jpg",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "locations": [
+      "Chạm 4"
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_2022_%28t%C3%B4_2_kh%E1%BB%A9a_c%C3%A1_m%C3%BA%29.jpg/960px-M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_2022_%28t%C3%B4_2_kh%E1%BB%A9a_c%C3%A1_m%C3%BA%29.jpg": {
+    "caption": "Tô cá mú, món hải sản ở Cửa Việt dịp Tết 2022.",
+    "label": "Phương Huy, Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t,_T%E1%BA%BFt_2022_(t%C3%B4_2_kh%E1%BB%A9a_c%C3%A1_m%C3%BA).jpg",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "locations": [
+      "Chạm 4"
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_2022_%28t%C3%B4_ch%C3%A1o_c%C3%A1_m%C3%BA%29_%283%29.jpg/960px-M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t%2C_T%E1%BA%BFt_2022_%28t%C3%B4_ch%C3%A1o_c%C3%A1_m%C3%BA%29_%283%29.jpg": {
+    "caption": "Cháo cá mú, món ăn làng biển ở Cửa Việt dịp Tết 2022.",
+    "label": "Phương Huy, Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:M%C3%B3n_%C4%83n_C%E1%BB%ADa_Vi%E1%BB%87t,_T%E1%BA%BFt_2022_(t%C3%B4_ch%C3%A1o_c%C3%A1_m%C3%BA)_(3).jpg",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "locations": [
+      "Chạm 4"
     ]
   }
 };
