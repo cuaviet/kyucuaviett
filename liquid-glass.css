@@ -1505,9 +1505,17 @@ dialog::backdrop {
   --step-blue: #1279b0;
   --step-blue-deep: #0b5785;
   --step-dot: 22px;
-  background:
-    linear-gradient(180deg, rgb(225 243 253 / .95), rgb(208 233 248 / .9));
-  border-right-color: rgb(18 121 176 / .16);
+  background: transparent;
+  border-right-color: transparent;
+}
+
+/* Nền xanh phủ kín cả cột bên trái, từ trên xuống tận đáy khung,
+   kể cả khi nội dung bên phải dài và phải cuộn. */
+@media (width > 800px) {
+  .experience-dialog .experience-layout::before {
+    background: linear-gradient(180deg, rgb(225 243 253), rgb(206 232 248));
+    border-inline-end: 1px solid rgb(18 121 176 / .18);
+  }
 }
 
 .experience-dialog .step-nav .step-tab {
@@ -1604,8 +1612,8 @@ dialog::backdrop {
   .experience-dialog .step-nav { --step-dot: 20px; --step-nav-inline: 9px; }
 }
 
-@media (prefers-reduced-transparency: reduce) {
-  .experience-dialog .step-nav { background: #e3f2fb; }
+@media (prefers-reduced-transparency: reduce) and (width > 800px) {
+  .experience-dialog .experience-layout::before { background: #e3f2fb; }
 }
 
 /* ==========================================================================
