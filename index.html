@@ -15,33 +15,8 @@
   <link rel="stylesheet" href="community.css?v=7">
   <link rel="stylesheet" href="photo-credits.css?v=4">
   <link rel="stylesheet" href="presentation.css?v=22">
-  <link rel="stylesheet" href="visual-tuning.css?v=1">
-  <link rel="stylesheet" href="liquid-glass.css?v=6">
-<style>
-  .compare-wrap:has(> img[src="assets/cham-3-steel-cv.webp"]) {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 10;
-    max-width: none;
-    border-radius: 14px;
-  }
-  .compare-wrap > img[src="assets/cham-3-steel-cv.webp"] {
-    object-fit: contain !important;
-    object-position: right center !important;
-    background: #e3ebed;
-  }
-  .compare-top > img[src="assets/cham-3-wood-cv.webp"] {
-    object-position: left 52% !important;
-  }
-</style>
-<style>
-    .creation.creative-launch { display:grid; grid-template-columns:minmax(0,1fr); gap:22px; }
-    .creative-launch h2 { font-size:clamp(27px,3.7vw,46px); }
-    .creative-launch .creation-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
-    .creative-launch .creation-options button { display:flex; flex-direction:column; align-items:flex-start; gap:8px; height:100%; padding:18px; }
-    .creative-launch .creative-open { margin-top:auto; padding-top:8px; color:#146075; font-weight:700; }
-    @media(max-width:700px) { .creative-launch .creation-options { grid-template-columns:minmax(0,1fr); } }
-  </style>
+  <link rel="stylesheet" href="visual-tuning.css?v=2">
+  <link rel="stylesheet" href="liquid-glass.css?v=7">
 </head>
 <body>
 <a class="skip-link" href="#main">Đến nội dung chính</a>
@@ -71,10 +46,10 @@
 <header class="site-header">
   <div class="nav-wrap">
     <a class="brand" href="#home" aria-label="Chạm Cửa Việt — Trang đầu"><span class="brand-symbol"><svg><use href="#i-wave"/></svg></span><span>CHẠM CỬA VIỆT</span></a>
-    <nav class="desktop-nav" aria-label="Điều hướng chính"><a href="#memory-map">5 điểm chạm</a><a href="#memory-map">Bản đồ ký ức</a><a href="#stories">Câu chuyện</a><a href="#about">Về dự án</a></nav>
+    <nav class="desktop-nav" aria-label="Điều hướng chính"><a href="#points">5 điểm chạm</a><a href="#memory-map">Bản đồ ký ức</a><a href="#stories">Câu chuyện</a><a href="#about">Về dự án</a></nav>
     <div class="nav-actions"><button class="btn btn-passport" data-action="passport" aria-label="Mở hộ chiếu của tôi"><svg class="icon"><use href="#i-book"/></svg><span>Hộ chiếu của tôi</span><b class="passport-count">0/5</b></button><button class="icon-btn menu-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-menu" data-action="menu"><svg class="icon"><use href="#i-menu"/></svg></button></div>
   </div>
-  <nav id="mobile-menu" class="mobile-menu" aria-label="Điều hướng điện thoại" hidden><a href="#memory-map">5 điểm chạm</a><a href="#memory-map">Bản đồ ký ức</a><a href="#stories">Lắng nghe Cửa Việt</a><a href="#about">Về dự án</a></nav>
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Điều hướng điện thoại" hidden><a href="#points">5 điểm chạm</a><a href="#memory-map">Bản đồ ký ức</a><a href="#stories">Lắng nghe Cửa Việt</a><a href="#about">Về dự án</a></nav>
 </header>
 
 <main id="main">
@@ -113,14 +88,14 @@
 <span class="map-caption">CỬA VIỆT / HÀNH TRÌNH KÝ ỨC</span>
 
 </div>
-<aside class="journey-editorial"><div class="editorial-image"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa biển Cửa Việt" loading="lazy"><span>QUẢNG TRỊ, VIỆT NAM</span></div><div class="editorial-copy"><p class="eyebrow">MỘT VÙNG ĐẤT · NĂM GÓC NHÌN</p><h3>Đi qua cảnh sắc.<br>Ở lại với <em>câu chuyện.</em></h3><p>Từ cửa biển đến ký ức con người, mỗi chạm mở ra một cách hiểu và yêu Cửa Việt.</p><div class="editorial-stats"><div><b>05</b><span>chạm khám phá</span></div><div><b>08</b><span>bước mỗi chạm</span></div></div><div class="editorial-note">Quan sát · Lắng nghe · Suy ngẫm<br>Ghi lại điều bạn muốn giữ.</div></div></aside>
+<aside class="journey-editorial"><div class="editorial-image"><img src="assets/toan-canh-cua-viet.webp" alt="Toàn cảnh vùng cửa biển Cửa Việt" loading="lazy"><span>QUẢNG TRỊ, VIỆT NAM</span></div><div class="editorial-copy"><p class="eyebrow">MỘT VÙNG ĐẤT · NĂM GÓC NHÌN</p><h3>Đi qua cảnh sắc. <br>Ở lại với <em>câu chuyện.</em></h3><p>Từ cửa biển đến ký ức con người, mỗi chạm mở ra một cách hiểu và yêu Cửa Việt.</p><div class="editorial-stats"><div><b>05</b><span>chạm khám phá</span></div><div><b>08</b><span>bước mỗi chạm</span></div></div><div class="editorial-note">Quan sát · Lắng nghe · Suy ngẫm <br>Ghi lại điều bạn muốn giữ.</div></div></aside>
 </div>
   <div class="map-footnote"><span><svg class="icon"><use href="#i-compass"/></svg> Sơ đồ kết nối chủ đề, vị trí mang tính minh họa; không dùng để chỉ đường.</span><a href="https://www.google.com/maps/search/?api=1&query=C%E1%BB%ADa+Vi%E1%BB%87t+Qu%E1%BA%A3ng+Tr%E1%BB%8B" target="_blank" rel="noopener noreferrer">Xem khu vực trên Google Maps <svg class="icon"><use href="#i-external"/></svg></a></div>
 </div></section>
 
-<section class="section container point-section" aria-labelledby="points-heading"><div class="section-heading compact"><div><h2 id="points-heading">Những điều chờ bạn <em>khám phá.</em></h2></div><p id="results-count" class="result-count" aria-live="polite">Hiển thị 5 điểm chạm</p></div><div id="point-grid" class="point-grid"></div><div id="empty-results" class="empty-state" hidden><svg class="icon"><use href="#i-search"/></svg><h3>Chưa tìm thấy điểm chạm</h3><p>Thử một từ khóa khác hoặc xem lại tất cả điểm chạm.</p><button class="btn btn-primary" data-action="reset-filter">Xem tất cả điểm chạm</button></div></section>
+<section class="section container point-section" id="points" aria-labelledby="points-heading"><div class="section-heading compact"><div><h2 id="points-heading">Những điều chờ bạn <em>khám phá.</em></h2></div><p id="results-count" class="result-count" aria-live="polite">Hiển thị 5 điểm chạm</p></div><div id="point-grid" class="point-grid"></div><div id="empty-results" class="empty-state" hidden><svg class="icon"><use href="#i-search"/></svg><h3>Chưa tìm thấy điểm chạm</h3><p>Thử một từ khóa khác hoặc xem lại tất cả điểm chạm.</p><button class="btn btn-primary" data-action="reset-filter">Xem tất cả điểm chạm</button></div></section>
 
-<section class="story-section" id="stories" aria-labelledby="story-heading"><div class="container story-layout"><div class="story-visual"><img src="assets/cang-ca.webp" alt="Tàu cá và người dân tấp nập ở bến" loading="lazy" width="1200" height="800"><span class="image-note">NHỮNG ĐIỀU BÌNH DỊ LÀM NÊN MỘT VÙNG ĐẤT</span><div class="story-label"><svg class="icon"><use href="#i-wave"/></svg><span>Biển có sóng.<br>Người có chuyện.</span></div></div><div class="story-copy"><p class="eyebrow">LẮNG NGHE CỬA VIỆT</p><h2 id="story-heading">Ký ức không chỉ<br>nằm trong <em>trang sách.</em></h2><p>Đó còn là nhịp thuyền về bến, một buổi chợ sớm và những câu chuyện được truyền từ thế hệ này sang thế hệ khác.</p><p>Hãy bắt đầu bằng một phút lắng nghe. Rồi tự hỏi: điều gì khiến bạn muốn tìm hiểu thêm về miền biển này?</p><div class="audio-card"><button class="audio-play" data-action="narrate" data-context="intro" aria-label="Nghe thuyết minh giới thiệu Cửa Việt"><svg class="icon"><use href="#i-play"/></svg></button><div class="audio-copy"><strong>Một phút chạm Cửa Việt</strong><small>Thuyết minh · Giọng đọc tiếng Việt</small><div class="waveform" aria-hidden="true"></div></div><span class="audio-indicator" aria-live="polite">Sẵn sàng</span></div><button class="text-btn" data-action="transcript">Đọc nội dung thuyết minh <svg class="icon"><use href="#i-arrow"/></svg></button><div class="story-shortcuts" id="story-shortcuts" aria-label="Mở video lời kể theo điểm chạm"></div><p class="source-note">Hình ảnh về nhịp sống Cửa Việt ở Chạm 04.</p></div></div></section>
+<section class="story-section" id="stories" aria-labelledby="story-heading"><div class="container story-layout"><div class="story-visual"><img src="assets/cang-ca.webp" alt="Tàu cá và người dân tấp nập ở bến" loading="lazy" width="1200" height="800"><span class="image-note">NHỮNG ĐIỀU BÌNH DỊ LÀM NÊN MỘT VÙNG ĐẤT</span><div class="story-label"><svg class="icon"><use href="#i-wave"/></svg><span>Biển có sóng. <br>Người có chuyện.</span></div></div><div class="story-copy"><p class="eyebrow">LẮNG NGHE CỬA VIỆT</p><h2 id="story-heading">Ký ức không chỉ <br>nằm trong <em>trang sách.</em></h2><p>Đó còn là nhịp thuyền về bến, một buổi chợ sớm và những câu chuyện được truyền từ thế hệ này sang thế hệ khác.</p><p>Hãy bắt đầu bằng một phút lắng nghe. Rồi tự hỏi: điều gì khiến bạn muốn tìm hiểu thêm về miền biển này?</p><div class="audio-card"><button class="audio-play" data-action="narrate" data-context="intro" aria-label="Nghe thuyết minh giới thiệu Cửa Việt"><svg class="icon"><use href="#i-play"/></svg></button><div class="audio-copy"><strong>Một phút chạm Cửa Việt</strong><small>Thuyết minh · Giọng đọc tiếng Việt</small><div class="waveform" aria-hidden="true"></div></div><span class="audio-indicator" aria-live="polite">Sẵn sàng</span></div><button class="text-btn" data-action="transcript">Đọc nội dung thuyết minh <svg class="icon"><use href="#i-arrow"/></svg></button><div class="story-shortcuts" id="story-shortcuts" aria-label="Mở video lời kể theo điểm chạm"></div><p class="source-note">Hình ảnh về nhịp sống Cửa Việt ở Chạm 04.</p></div></div></section>
 
 <section class="section container" id="gallery" aria-labelledby="gallery-heading">
   <div class="section-heading">
@@ -188,13 +163,13 @@
     </div>
   </div>
 </section>
-<section class="section container" id="passport" aria-labelledby="passport-heading"><div class="passport-banner"><div class="passport-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><div class="passport-book"><p>HÀNH TRÌNH CỦA RIÊNG BẠN</p><svg><use href="#i-compass"/></svg><h3>HỘ CHIẾU<br>KÝ ỨC</h3><span>CỬA VIỆT</span><small>EXPLORE · LEARN · REMEMBER</small></div><span class="paper-stamp">MỖI ĐIỂM ĐẾN<br><b>MỘT ĐIỀU NHỚ</b></span></div><div class="passport-copy"><p class="eyebrow">MANG KÝ ỨC THEO MÌNH</p><h2 id="passport-heading">Một chút Cửa Việt.<br><em>Dành riêng cho bạn.</em></h2><p>Hoàn thành 8 bước của một Chạm để nhận một huy hiệu. Đi đủ 5 Chạm để sưu tập trọn bộ 5 huy hiệu. Từng điều bạn học sẽ trở thành một phần hành trình.</p><div class="mini-stamps" id="mini-stamps" aria-label="Tiến trình hộ chiếu"></div><div class="passport-cta"><button class="btn btn-primary" data-action="passport">Mở hộ chiếu của tôi <svg class="icon"><use href="#i-arrow"/></svg></button><span><b id="passport-progress">0 / 5</b> huy hiệu đã sưu tập</span></div><small class="privacy-note"><svg class="icon"><use href="#i-lock"/></svg> Tiến trình và cảm nhận lưu riêng nằm trên trình duyệt này. Chỉ bài bạn chọn đăng và đồng ý mới hiển thị công khai.</small></div></div></section>
+<section class="section container" id="passport" aria-labelledby="passport-heading"><div class="passport-banner"><div class="passport-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><div class="passport-book"><p>HÀNH TRÌNH CỦA RIÊNG BẠN</p><svg><use href="#i-compass"/></svg><h3>HỘ CHIẾU <br>KÝ ỨC</h3><span>CỬA VIỆT</span><small>EXPLORE · LEARN · REMEMBER</small></div><span class="paper-stamp">MỖI ĐIỂM ĐẾN<br><b>MỘT ĐIỀU NHỚ</b></span></div><div class="passport-copy"><p class="eyebrow">MANG KÝ ỨC THEO MÌNH</p><h2 id="passport-heading">Một chút Cửa Việt.<br><em>Dành riêng cho bạn.</em></h2><p>Hoàn thành 8 bước của một Chạm để nhận một huy hiệu. Đi đủ 5 Chạm để sưu tập trọn bộ 5 huy hiệu. Từng điều bạn học sẽ trở thành một phần hành trình.</p><div class="mini-stamps" id="mini-stamps" aria-label="Tiến trình hộ chiếu"></div><div class="passport-cta"><button class="btn btn-primary" data-action="passport">Mở hộ chiếu của tôi <svg class="icon"><use href="#i-arrow"/></svg></button><span><b id="passport-progress">0 / 5</b> huy hiệu đã sưu tập</span></div><small class="privacy-note"><svg class="icon"><use href="#i-lock"/></svg> Tiến trình và cảm nhận lưu riêng nằm trên trình duyệt này. Chỉ bài bạn chọn đăng và đồng ý mới hiển thị công khai.</small></div></div></section>
 
 <section class="section about-section container" id="about" aria-labelledby="about-heading"><div class="about-intro"><p class="eyebrow">TỪ NGHIÊN CỨU ĐẾN TRẢI NGHIỆM</p><h2 id="about-heading">Hiểu để yêu.<br><em>Chạm để nhớ.</em></h2><p>CHẠM CỬA VIỆT là không gian học tập lịch sử và văn hóa địa phương, được phát triển theo định hướng của đề tài “Ký ức Cửa Việt trong mắt thế hệ trẻ”.</p><span class="project-tag"><span class="dot living"></span> Giáo dục di sản · Học qua trải nghiệm</span><figure class="station-monument"><img src="assets/cham-3-anh-tu-lieu/anh-5.webp" alt="Học sinh chụp ảnh cùng người kể chuyện trong chuyến đi thực tế tại Cửa Việt" loading="lazy"><figcaption>Học sinh Trường THCS và THPT Cửa Việt gặp gỡ, phỏng vấn người dân, ghi lại lời kể và sưu tầm hình ảnh cho website.</figcaption></figure></div><div class="about-accordions"><details open><summary>Trải nghiệm này dành cho ai?<span>+</span></summary><p>Học sinh, giáo viên và những người muốn tìm hiểu Cửa Việt. Học sinh có thể tự khám phá hoặc cùng giáo viên sử dụng các điểm chạm trong giờ học và hoạt động nhóm.</p></details><details><summary>Tôi bắt đầu như thế nào?<span>+</span></summary><p>Chọn một trong 5 điểm trên sơ đồ. Mỗi chạm có 8 bước: định vị, thử đoán, xem ảnh, lắng nghe, khám phá, kiểm tra, viết ký ức và chọn đường đi tiếp. Đi hết 8 bước của mỗi Chạm để nhận một huy hiệu trong Hộ chiếu ký ức.</p></details><details><summary>Hành trình gồm những gì?<span>+</span></summary><p>Năm điểm chạm giới thiệu cửa biển, lịch sử, người kể chuyện, làng biển và góc nhìn người trẻ.</p></details><details><summary>Nguồn tư liệu và hình ảnh<span>+</span></summary><p>Nội dung được biên soạn theo định hướng giáo dục di sản, kết hợp tìm hiểu lịch sử, văn hóa và đời sống Cửa Việt. Hình ảnh tham khảo từ các nguồn đã dẫn, gồm Báo Nông nghiệp và Môi trường, XANH EWEC, VOV và Báo Đầu tư; ảnh ngày nay không được giới thiệu như ảnh lịch sử.</p><button class="text-btn" data-action="sources">Xem nguồn và phạm vi nội dung <svg class="icon"><use href="#i-arrow"/></svg></button></details><details><summary>Cảm nhận của tôi có được công khai không?<span>+</span></summary><p>Ở Bước 7, biểu mẫu chia sẻ được hiển thị trực tiếp. Cảm nhận chỉ xuất hiện công khai khi bạn tích đồng ý và gửi bài, với tên hiển thị tự chọn hoặc dưới tên ẩn danh. Hãy bỏ thông tin nhận diện trong nội dung.</p></details></div></section>
-<section class="closing"><div class="container"><svg class="closing-wave"><use href="#i-wave"/></svg><h2>Hành trình bắt đầu<br>bằng một lần <em>chạm.</em></h2><button class="btn btn-gold" data-action="continue">Khám phá điểm chạm tiếp theo <svg class="icon"><use href="#i-arrow"/></svg></button></div></section>
+<section class="closing"><div class="container"><svg class="closing-wave"><use href="#i-wave"/></svg><h2>Hành trình bắt đầu <br>bằng một lần <em>chạm.</em></h2><button class="btn btn-gold" data-action="continue">Khám phá điểm chạm tiếp theo <svg class="icon"><use href="#i-arrow"/></svg></button></div></section>
 </main>
-<footer class="footer"><div class="container footer-top"><a class="brand" href="#home"><span class="brand-symbol"><svg><use href="#i-wave"/></svg></span><span>CHẠM CỬA VIỆT</span></a><p>Giữ một câu chuyện.<br>Nối những thế hệ.</p><div><a href="#memory-map">Khám phá</a><button data-action="sources">Nguồn tư liệu</button><a href="nguon-anh.html">Bảng đối chiếu ảnh</a><button data-action="privacy">Quyền riêng tư</button></div></div><div class="container footer-bottom"><span>© 2026 CHẠM CỬA VIỆT · Không gian trải nghiệm giáo dục</span><span>Được tạo để khám phá, học hỏi và gìn giữ.</span></div></footer>
-<nav class="mobile-bottom" aria-label="Truy cập nhanh"><a href="#memory-map"><svg class="icon"><use href="#i-compass"/></svg>Hành trình</a><a href="#memory-map"><svg class="icon"><use href="#i-pin"/></svg>Bản đồ</a><button data-action="passport"><svg class="icon"><use href="#i-book"/></svg>Hộ chiếu <b class="passport-count">0/5</b></button></nav>
+<footer class="footer"><div class="container footer-top"><a class="brand" href="#home"><span class="brand-symbol"><svg><use href="#i-wave"/></svg></span><span>CHẠM CỬA VIỆT</span></a><p>Giữ một câu chuyện. <br>Nối những thế hệ.</p><div><a href="#memory-map">Khám phá</a><button data-action="sources">Nguồn tư liệu</button><a href="nguon-anh.html">Bảng đối chiếu ảnh</a><button data-action="privacy">Quyền riêng tư</button></div></div><div class="container footer-bottom"><span>© 2026 CHẠM CỬA VIỆT · Không gian trải nghiệm giáo dục</span><span>Được tạo để khám phá, học hỏi và gìn giữ.</span></div></footer>
+<nav class="mobile-bottom" aria-label="Truy cập nhanh"><a href="#points"><svg class="icon"><use href="#i-compass"/></svg>Hành trình</a><a href="#memory-map"><svg class="icon"><use href="#i-pin"/></svg>Bản đồ</a><button data-action="passport"><svg class="icon"><use href="#i-book"/></svg>Hộ chiếu <b class="passport-count">0/5</b></button></nav>
 <button class="to-top icon-btn" data-action="top" aria-label="Về đầu trang" hidden><svg class="icon"><use href="#i-up"/></svg></button>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <dialog id="experience-dialog" class="experience-dialog" aria-labelledby="experience-title"><div id="experience-content"></div></dialog>
@@ -205,6 +180,7 @@
 <script defer src="navigation.js?v=20261127-creative-save"></script>
 <script defer src="presentation.js?v=1"></script>
 <script defer src="glass-refraction.js?v=1"></script>
+<script defer src="liquid-glass-fx.js?v=1"></script>
   <!-- Thống kê riêng tư: không chạy nếu chưa cấu hình Umami -->
   <script defer src="analytics-config.js?v=2"></script>
   <script defer src="analytics.js?v=2"></script>

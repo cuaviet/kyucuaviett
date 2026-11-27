@@ -113,3 +113,28 @@ body {
   .step-content :is(p, li, label, textarea) { line-height: 1.72; }
   .creative-photo-form :is(input, textarea) { font-size: 14px; }
 }
+
+
+/* Chuyển từ index.html (trước đây viết thẳng trong trang) */
+  .compare-wrap:has(> img[src="assets/cham-3-steel-cv.webp"]) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    max-width: none;
+    border-radius: 14px;
+  }
+  .compare-wrap > img[src="assets/cham-3-steel-cv.webp"] {
+    object-fit: contain !important;
+    object-position: right center !important;
+    background: #e3ebed;
+  }
+  .compare-top > img[src="assets/cham-3-wood-cv.webp"] {
+    object-position: left 52% !important;
+  }
+    .creation.creative-launch { display:grid; grid-template-columns:minmax(0,1fr); gap:22px; }
+    .creative-launch h2 { font-size:clamp(27px,3.7vw,46px); }
+    .creative-launch .creation-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .creative-launch .creation-options button { display:flex; flex-direction:column; align-items:flex-start; gap:8px; height:100%; padding:18px; }
+    .creative-launch .creative-open { margin-top:auto; padding-top:8px; color:#146075; font-weight:700; }
+    @media(max-width:700px) { .creative-launch .creation-options { grid-template-columns:minmax(0,1fr); } }
+  
