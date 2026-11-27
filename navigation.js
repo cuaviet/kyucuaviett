@@ -115,19 +115,34 @@ const creativeWritingTemplates = [
   {title: 'Một phút giới thiệu Cửa Việt', file: 'Mot_phut_gioi_thieu_Cua_Viet.txt', hint: 'Viết lời dẫn để đọc trong khoảng một phút. Đọc thử thành tiếng để chọn chi tiết đáng nhớ nhất.', fields: ['Mở đầu – Chào và giới thiệu chủ đề', 'Nội dung – Kể một câu chuyện hoặc giới thiệu một địa điểm', 'Kết – Gửi lời mời hoặc thông điệp']}
 ];
 
+const creativeStorageKey = index => 'cham-cua-viet-creative-' + index;
+function readCreativeEntry(index) {
+  try { return JSON.parse(localStorage.getItem(creativeStorageKey(index))); }
+  catch { return null; }
+}
+function creativeEntryMarkup(entry, template) {
+  if (!entry) return '';
+  return `<h3>Bài đã lưu</h3><p><strong>Họ và tên:</strong> ${esc(entry.name)}</p>
+    ${template.fields.map((label, i) => `<p><strong>${esc(label)}</strong><br>${esc(entry.answers[i]).replace(/\n/g, '<br>')}</p>`).join('')}`;
+}
 document.addEventListener('click', event => {
   const button = event.target.closest('button[data-creative-template]');
   if (!button) return;
   const index = Number(button.dataset.creativeTemplate);
   const template = creativeWritingTemplates[index];
   if (!template) return;
+  const saved = readCreativeEntry(index);
   showUtility(template.title, `<p>${template.hint}</p>
     <form class="note-form" data-creative-writing="${index}">
+      <label for="creative-author">Họ và tên</label>
+      <input id="creative-author" name="author" type="text" maxlength="100" autocomplete="name" value="${esc(saved?.name ?? '')}" required>
       ${template.fields.map((label, field) => `<label for="creative-${index}-${field}">${label}</label>
-        <textarea id="creative-${index}-${field}" rows="${index === 0 ? 5 : 3}" maxlength="2000" required></textarea>`).join('')}
-      <button class="btn btn-primary" type="submit">Tải bài về (.txt)</button>
+        <textarea id="creative-${index}-${field}" rows="${index === 0 ? 5 : 3}" maxlength="2000" required>${esc(saved?.answers?.[field] ?? '')}</textarea>`).join('')}
+      <button class="btn btn-primary" type="submit">Lưu bài</button>
+      <button class="btn btn-outline" type="submit" value="download">Tải bài về (.txt)</button>
+      <p>Họ tên và bài viết được lưu riêng trên trình duyệt này.</p>
       <p role="status"></p>
-    </form>`);
+    </form><section data-creative-saved>${creativeEntryMarkup(saved, template)}</section>`);
 });
 document.addEventListener('submit', event => {
   const form = event.target;
@@ -138,21 +153,38 @@ document.addEventListener('submit', event => {
   const fields = [...form.querySelectorAll('textarea')];
   const answers = fields.map(field => field.value.trim());
   const status = form.querySelector('[role="status"]');
+  const name = form.elements.author.value.trim();
+  if (!name) {
+    status.textContent = 'Hãy nhập họ và tên.';
+    form.elements.author.focus();
+    return;
+  }
   const emptyIndex = answers.findIndex(answer => !answer);
   if (emptyIndex >= 0) {
-    status.textContent = 'Hãy điền các mục còn trống trước khi tải.';
+    status.textContent = 'Hãy điền các mục còn trống trước khi tiếp tục.';
     fields[emptyIndex].focus();
     return;
   }
   if (index === 0) {
     const wordCount = answers[0].match(/[\p{L}\p{N}]+(?:[-’'][\p{L}\p{N}]+)*/gu)?.length || 0;
     if (wordCount < 50 || wordCount > 80) {
-      status.textContent = `Bài có ${wordCount} chữ. Hãy chỉnh về 50–80 chữ trước khi tải.`;
+      status.textContent = `Bài có ${wordCount} chữ. Hãy chỉnh về 50–80 chữ trước khi tiếp tục.`;
       fields[0].focus();
       return;
     }
   }
-  const content = [template.title, ...answers.map((answer, i) => template.fields[i] + '\n' + answer)].join('\n\n');
+  if (event.submitter?.value !== 'download') {
+    const entry = { name, answers };
+    try {
+      localStorage.setItem(creativeStorageKey(index), JSON.stringify(entry));
+      form.nextElementSibling.innerHTML = creativeEntryMarkup(entry, template);
+      status.textContent = 'Đã lưu bài.';
+    } catch {
+      status.textContent = 'Trình duyệt không cho lưu bài. Bạn có thể tải bài về.';
+    }
+    return;
+  }
+  const content = [template.title, 'Họ và tên: ' + name, ...answers.map((answer, i) => template.fields[i] + '\n' + answer)].join('\n\n');
   const url = URL.createObjectURL(new Blob([content], {type: 'text/plain;charset=utf-8'}));
   const link = document.createElement('a');
   link.href = url;
