@@ -1,0 +1,263 @@
+/* CHẠM CỬA VIỆT — Thế giới 3D phía sau toàn trang (world3d.js, world3d-scene.js) */
+
+/* ---------- Lớp 3D cố định phía sau trang ---------- */
+#world3d {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .9s ease, visibility 0s linear .9s;
+}
+html.world-3d #world3d {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .9s ease, visibility 0s;
+}
+#world3d .w3d-canvas,
+#world3d .w3d-dusk,
+#world3d .w3d-veil {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+}
+#world3d .w3d-canvas { display: block; }
+/* Hoàng hôn: nền trang ấm dần ở cuối hành trình */
+#world3d .w3d-dusk {
+  opacity: var(--w3d-dusk, 0);
+  background: radial-gradient(120% 85% at 50% 100%, #ffd3ae 0%, #ffe6cf 40%, #f8dde8 72%, #e9e5f7 100%);
+}
+/* Lớp mờ nhẹ phía trước cảnh 3D để chữ trên nền luôn dễ đọc */
+#world3d .w3d-veil {
+  opacity: var(--w3d-veil, 0);
+  background: linear-gradient(180deg, rgb(246 252 254 / .9), rgb(238 248 252 / .82));
+}
+
+/* ---------- Khung bản đồ thành ô cửa nhìn xuống sa bàn ---------- */
+html.world-3d .map-canvas {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  cursor: grab;
+  touch-action: pan-y;
+}
+html.world-3d .map-canvas:active { cursor: grabbing; }
+html.world-3d .map-canvas::before,
+html.world-3d .map-canvas::after { opacity: 0 !important; }
+.map-canvas :is(.landscape, #map-pins, .map-key) {
+  transition: opacity .5s ease, visibility 0s;
+}
+html.world-3d .map-canvas :is(.landscape, #map-pins, .map-key) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .5s ease, visibility 0s linear .5s;
+}
+
+/* ---------- Sân khấu cho sa bàn hoàng hôn ở phần kết ---------- */
+.w3d-stage { display: none; }
+html.world-3d .w3d-stage { display: block; height: clamp(240px, 46vh, 460px); pointer-events: none; }
+@media (max-width: 700px) { html.world-3d .w3d-stage { height: clamp(200px, 38vh, 320px); } }
+
+/* ---------- Nhãn 5 cột mốc ---------- */
+.world3d-ui {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+.world-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% calc(-100% - 12px);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 230px;
+  padding: 5px 13px 5px 5px;
+  border: 1px solid rgb(255 255 255 / .92);
+  border-radius: 999px;
+  background: rgb(255 255 255 / .88);
+  box-shadow: 0 8px 22px rgb(20 70 82 / .18), inset 0 1px 0 #fff;
+  color: #173a40;
+  font: 600 12.5px/1.2 'Be Vietnam Pro', system-ui, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform;
+  transition: opacity .35s ease, visibility 0s linear .35s, box-shadow .2s ease, background .2s ease;
+}
+.world-chip span { overflow: hidden; text-overflow: ellipsis; }
+.world-chip b {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--pin-color, #287e87);
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: .3px;
+}
+.world-chip::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  border-right: 1px solid rgb(255 255 255 / .92);
+  border-bottom: 1px solid rgb(255 255 255 / .92);
+  transform: translateX(-50%) rotate(45deg);
+}
+.world-chip.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .35s ease, visibility 0s, box-shadow .2s ease, background .2s ease;
+}
+.world-chip.is-shown.is-filtered { opacity: .42; }
+.world-chip.is-stamped b { background: #e3b04b; color: #23463c; }
+.world-chip.is-stamped b::after { content: '✓'; margin-left: 1px; font-size: 9px; }
+.world-chip:is(:hover, :focus-visible, .is-active) {
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pin-color, #287e87) 40%, transparent), 0 10px 24px rgb(20 70 82 / .24);
+}
+.world-chip:focus-visible { outline: 2px solid var(--pin-color, #287e87); outline-offset: 3px; }
+
+/* ---------- Nút điều khiển trong khung bản đồ ---------- */
+.world-map-tools,
+.world-map-hint,
+.world-map-switch { display: none; }
+html.world-3d .world-map-tools {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 6;
+  display: flex;
+  gap: 6px;
+}
+.world-map-tools button { display: inline-flex; }
+.world-map-tools button,
+.world-map-switch {
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid rgb(255 255 255 / .92);
+  border-radius: 999px;
+  background: rgb(255 255 255 / .86);
+  box-shadow: 0 6px 16px rgb(20 70 82 / .14);
+  color: #173a40;
+  font: 600 12px/1 'Be Vietnam Pro', system-ui, sans-serif;
+  cursor: pointer;
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.world-map-tools button:hover,
+.world-map-switch:hover { background: #fff; box-shadow: 0 8px 20px rgb(20 70 82 / .2); }
+.world-map-tools button:focus-visible,
+.world-map-switch:focus-visible { outline: 2px solid #17616a; outline-offset: 2px; }
+.world-map-tools svg,
+.world-map-switch svg { width: 18px; height: 18px; }
+html.world-3d .world-map-hint {
+  position: absolute;
+  left: 18px;
+  bottom: 22px;
+  z-index: 6;
+  display: block;
+  max-width: calc(100% - 260px);
+  margin: 0;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / .78);
+  color: #2b5158;
+  font: 500 12px/1.3 'Be Vietnam Pro', system-ui, sans-serif;
+  pointer-events: none;
+  transition: opacity .6s ease;
+}
+html.world-3d .world-map-hint.is-used { opacity: 0; }
+/* Bản đồ 2D đang hiện nhưng máy hỗ trợ 3D: mời xem sa bàn */
+html.w3d-supported:not(.world-3d) .world-map-switch {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 6;
+  display: inline-flex;
+}
+
+/* ---------- Nút bật/tắt 3D ---------- */
+.world-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 14px 0 12px;
+  border: 1px solid rgb(255 255 255 / .75);
+  border-radius: 999px;
+  background: rgb(255 255 255 / .6);
+  color: #173a40;
+  font: 700 11px/1 'Be Vietnam Pro', system-ui, sans-serif;
+  letter-spacing: .6px;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(12px) saturate(1.6);
+  backdrop-filter: blur(12px) saturate(1.6);
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.world-toggle svg { width: 18px; height: 18px; }
+.world-toggle[aria-pressed="true"] { background: #17616a; border-color: #17616a; color: #fff; }
+body.on-hero .world-toggle { background: rgb(255 255 255 / .16); border-color: rgb(255 255 255 / .4); color: #fff; }
+body.on-hero .world-toggle[aria-pressed="true"] { background: rgb(255 255 255 / .92); border-color: #fff; color: #17616a; }
+.world-toggle:focus-visible { outline: 2px solid #ecd8ab; outline-offset: 2px; }
+.world-toggle:disabled { opacity: .45; cursor: not-allowed; }
+/* Nhãn khung bản đồ: khi khung trong suốt thì cần nền riêng để chữ đủ tương phản */
+html.world-3d .map-canvas .map-caption { background: rgb(255 255 255 / .88); color: #2f5450; border-radius: 999px; padding: 5px 10px; }
+.world-toggle[aria-busy="true"] svg,
+.world-toggle-menu[aria-busy="true"] svg { animation: w3d-spin 1.1s linear infinite; }
+@keyframes w3d-spin { to { transform: rotate(360deg); } }
+.world-toggle-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 41px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: rgb(23 61 73);
+  font: 400 12px/1.3 'Be Vietnam Pro', system-ui, sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+.world-toggle-menu svg { width: 16px; height: 16px; flex: none; }
+
+/* Thanh trên cùng chỉ đủ chỗ cho nút 3D từ 1100px; màn nhỏ hơn dùng nút trong khung bản đồ / menu */
+@media (max-width: 1099px) {
+  .site-header .world-toggle { display: none; }
+}
+@media (max-width: 700px) {
+  .world-chip { max-width: 160px; gap: 5px; padding: 4px 10px 4px 4px; font-size: 11px; }
+  .world-chip b { width: 22px; height: 22px; font-size: 10px; }
+  html.world-3d .world-map-tools { right: 10px; bottom: 10px; gap: 4px; }
+  .world-map-tools button { min-width: 36px; height: 36px; padding: 0 10px; }
+  html.world-3d .world-map-hint { left: 10px; right: 10px; bottom: 54px; max-width: none; text-align: center; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .world-chip, .world-map-tools button, .world-map-switch, .world-toggle { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media print {
+  #world3d, .world3d-ui, .world-map-tools, .world-map-hint, .world-map-switch, .world-toggle { display: none !important; }
+}
