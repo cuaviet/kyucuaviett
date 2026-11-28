@@ -3,70 +3,70 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(assets/be-vietnam-400.woff) format('woff');
+  src: url(assets/be-vietnam-400.woff2) format("woff2"),url(assets/be-vietnam-400.woff) format("woff");
 }
 @font-face {
   font-family: 'Be Vietnam Pro';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(assets/be-vietnam-500.woff) format('woff');
+  src: url(assets/be-vietnam-500.woff2) format("woff2"),url(assets/be-vietnam-500.woff) format("woff");
 }
 @font-face {
   font-family: 'Be Vietnam Pro';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(assets/be-vietnam-600.woff) format('woff');
+  src: url(assets/be-vietnam-600.woff2) format("woff2"),url(assets/be-vietnam-600.woff) format("woff");
 }
 @font-face {
   font-family: 'Be Vietnam Pro';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(assets/be-vietnam-700.woff) format('woff');
+  src: url(assets/be-vietnam-700.woff2) format("woff2"),url(assets/be-vietnam-700.woff) format("woff");
 }
 @font-face {
   font-family: 'Be Vietnam Pro';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url(assets/be-vietnam-800.woff) format('woff');
+  src: url(assets/be-vietnam-800.woff2) format("woff2"),url(assets/be-vietnam-800.woff) format("woff");
 }
 @font-face {
   font-family: 'Playfair Display';
   font-style: italic;
   font-weight: 500;
   font-display: swap;
-  src: url(assets/playfair-italic-500.woff) format('woff');
+  src: url(assets/playfair-italic-500.woff2) format("woff2"),url(assets/playfair-italic-500.woff) format("woff");
 }
 @font-face {
   font-family: 'Playfair Display';
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url(assets/playfair-italic-600.woff) format('woff');
+  src: url(assets/playfair-italic-600.woff2) format("woff2"),url(assets/playfair-italic-600.woff) format("woff");
 }
 @font-face {
   font-family: 'Playfair Display';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(assets/playfair-500.woff) format('woff');
+  src: url(assets/playfair-500.woff2) format("woff2"),url(assets/playfair-500.woff) format("woff");
 }
 @font-face {
   font-family: 'Playfair Display';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(assets/playfair-600.woff) format('woff');
+  src: url(assets/playfair-600.woff2) format("woff2"),url(assets/playfair-600.woff) format("woff");
 }
 @font-face {
   font-family: 'Playfair Display';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(assets/playfair-700.woff) format('woff');
+  src: url(assets/playfair-700.woff2) format("woff2"),url(assets/playfair-700.woff) format("woff");
 }
 
 :root{--ink:#173e40;--muted:#687570;--green:#174d48;--dark:#103c3e;--cream:#f8f7f2;--gold:#edce93;--line:#e4e5dc;--rust:#a65b43;--olive:#55754c;--teal:#287e87;--sans:'Be Vietnam Pro',Arial,sans-serif;--serif:'Playfair Display',Georgia,serif;--radius:18px}
