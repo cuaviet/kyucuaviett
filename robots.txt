@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /bao-cao-khao-sat.html
+
+Sitemap: https://chamcuaviet.site/sitemap.xml

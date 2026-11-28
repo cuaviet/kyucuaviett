@@ -1,0 +1,11 @@
+{
+  "name": "CHẠM CỬA VIỆT",
+  "short_name": "Chạm Cửa Việt",
+  "description": "Khám phá lịch sử, văn hóa và con người Cửa Việt qua 5 điểm chạm tương tác.",
+  "lang": "vi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e9f5fa",
+  "theme_color": "#e9f5fa",
+  "icons": [{ "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }]
+}
