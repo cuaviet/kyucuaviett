@@ -45,32 +45,11 @@
     update();
   }
 
-  /* 1c. Đặt rặng phi lao sao cho cành cây chỉ đè lên phần cuối chữ "Cửa Việt" (máy tính) */
+  /* 1c. Việc đặt rặng phi lao (máy tính) đã chuyển vào đoạn script nhỏ ngay sau phần đầu trang
+         trong index.html, để chạy trước lần vẽ đầu tiên và trang không bị nhảy bố cục (CLS). */
   const photo = document.querySelector('.hero-v2 .hero-photo');
   const trees = document.querySelector('.hero-v2 .hero-fg');
   const title = document.getElementById('hero-heading');
-  if (hero && photo && trees && title) {
-    const CW = 4000, CH = 1800, TREE_X = 2206; // mép trái rặng cây trong ảnh gốc (px)
-    const place = () => {
-      const wide = window.matchMedia('(min-width: 901px)').matches;
-      for (const el of [photo, trees]) el.classList.toggle('is-placed', wide);
-      if (!wide) { for (const el of [photo, trees]) el.removeAttribute('style'); return; }
-      const W = hero.clientWidth, H = hero.clientHeight;
-      const t = title.getBoundingClientRect(), h = hero.getBoundingClientRect();
-      const fs = parseFloat(getComputedStyle(title).fontSize) || 100;
-      const target = t.left - h.left + title.querySelector('strong').getBoundingClientRect().width - fs * 0.55;
-      let s = H / CH;
-      let left = target - TREE_X * s;
-      if (left + CW * s < W) s = (W - target) / (CW - TREE_X), left = target - TREE_X * s; // không để hở bên phải
-      if (left > 0) left = 0;
-      const css = `left:${left.toFixed(1)}px;bottom:0;top:auto;width:${(CW * s).toFixed(1)}px;height:${(CH * s).toFixed(1)}px`;
-      for (const el of [photo, trees]) el.style.cssText = css;
-    };
-    window.addEventListener('resize', place);
-    if (document.fonts) document.fonts.ready.then(place);
-    window.addEventListener('load', place);
-    place();
-  }
 
   /* 1d. Di chuột ở đầu trang: các lớp ảnh trượt theo với độ lệch khác nhau (chiều sâu),
          thẻ kính nghiêng theo con trỏ. Chỉ bật trên máy có chuột. */

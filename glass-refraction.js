@@ -14,6 +14,7 @@
   let mapRaster;
   let coverSignature;
   let frame = 0;
+  let ready = false; // phần vẽ nặng chỉ bắt đầu sau khi trang tải xong
 
   function edgeCanvas(target) {
     if (lenses.has(target)) return lenses.get(target);
@@ -79,15 +80,24 @@
     const sourceY = targetBounds.top - sourceBounds.top;
     const scaleX = source.width / sourceBounds.width;
     const scaleY = source.height / sourceBounds.height;
+    const maxRadius = Math.max(...radii);
+    // Cột đầu tiên của dải sát mép phải; dùng để nhảy qua phần giữa trong suốt.
+    const rightBand = Math.floor(shapeBounds.width - depth - offsetX - .5);
 
     for (let row = 0; row < height; row++) {
       const y = row + offsetY + .5;
       const onTop = y < shapeBounds.height / 2;
       const vertical = onTop ? y : shapeBounds.height - y;
+      // Hàng nằm xa các góc bo: chỉ hai dải rộng `depth` sát mép trái/phải có điểm ảnh cần vẽ.
+      const edgeOnly = vertical > maxRadius + depth;
       for (let column = 0; column < width; column++) {
         const x = column + offsetX + .5;
         const onLeft = x < shapeBounds.width / 2;
         const horizontal = onLeft ? x : shapeBounds.width - x;
+        if (edgeOnly && horizontal >= depth) {
+          if (column < rightBand) column = rightBand;
+          continue;
+        }
         const radius = radii[onTop ? (onLeft ? 0 : 1) : (onLeft ? 3 : 2)];
         if (horizontal > radius + depth || vertical > radius + depth) {
           if (Math.min(horizontal, vertical) >= depth) continue;
@@ -153,7 +163,7 @@
   }
 
   function schedule() {
-    if (!frame) frame = requestAnimationFrame(draw);
+    if (ready && !frame) frame = requestAnimationFrame(draw);
   }
 
   function prepareMapImage() {
@@ -195,8 +205,14 @@
     if (event.propertyName === 'transform') schedule();
   });
   reduceTransparency.addEventListener('change', schedule);
-  prepareMapImage();
-  schedule();
+  // Gắn lớp kính cho ảnh đầu trang ngay từ đầu (CSS dựa vào lớp này để tắt hiệu ứng ảnh chạy vào),
+  // còn phần tính toán điểm ảnh nặng thì chờ trang tải xong và trình duyệt rảnh,
+  // để không làm chậm lúc ảnh đầu trang hiện ra trên điện thoại.
+  if (!reduceTransparency.matches) edgeCanvas(coverWindow);
+  const start = () => { ready = true; prepareMapImage(); schedule(); };
+  const whenIdle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 1200 }) : setTimeout(start, 200));
+  if (document.readyState === 'complete') whenIdle();
+  else window.addEventListener('load', whenIdle, { once: true });
 
   // A single rounded lens travels between the existing controls.
   for (const nav of document.querySelectorAll('.desktop-nav, .mobile-bottom')) {
