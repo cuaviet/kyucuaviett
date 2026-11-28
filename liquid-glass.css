@@ -2587,3 +2587,35 @@ body.on-hero .site-header {
     margin-left: auto;
   }
 }
+
+/* ==========================================================================
+   Hiệu năng cuộn trang
+   - Nền màu phía sau đứng yên: nếu nền chuyển động, mọi tấm kính phải vẽ lại
+     ở từng khung hình, gây giật khi cuộn.
+   - Nền được ghim cố định và tách lớp riêng để trình duyệt không vẽ lại.
+   ========================================================================== */
+body::before {
+  animation: none;
+  transform: translateZ(0);
+}
+
+
+
+/* Kính lồng trong kính: tấm bên trong không cần làm mờ thêm (tấm ngoài đã mờ),
+   bỏ đi giúp cuộn mượt hơn nhiều mà nhìn gần như không khác. */
+:is(.story-layout, .creative-launch, .community-section, .passport-banner, .about-section,
+    .footer, .journey-editorial, .map-canvas) :is(*, *::before, *::after) {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+:root {
+  --lg-blur-panel: 20px;
+}
+
+/* Hiệu ứng trượt vào khi cuộn: bỏ trên các tấm kính (vừa trượt vừa làm mờ nền rất nặng),
+   chỉ giữ cho chữ và ảnh. */
+:is(.point-card, .journey-editorial, .map-canvas, .passport-banner, .about-accordions details,
+    .creation-options button, .closing .btn, .new-gallery button)[data-reveal-entry] {
+  animation: none !important;
+}

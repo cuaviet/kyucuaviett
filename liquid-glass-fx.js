@@ -23,6 +23,21 @@
   if (header && 'ResizeObserver' in window) new ResizeObserver(syncHeader).observe(header);
   else window.addEventListener('resize', syncHeader);
 
+  /* 1b. Đánh dấu lúc đang cuộn để tạm tắt hiệu ứng nặng */
+  let scrollTimer = 0;
+  window.addEventListener('scroll', () => {
+    if (!scrollTimer) {
+      root.classList.add('is-scrolling');
+      document.dispatchEvent(new Event('lg:scrollstart'));
+    }
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      scrollTimer = 0;
+      root.classList.remove('is-scrolling');
+      document.dispatchEvent(new Event('lg:scrollend'));
+    }, 160);
+  }, { passive: true });
+
   /* 2. Vệt sáng theo con trỏ */
   const SHINE = [
     '.site-header', '.mobile-bottom', '.hero-card', '.hero-play-icon', '.btn', '.filter', '.icon-btn',
@@ -44,7 +59,7 @@
   }
 
   function track(event) {
-    if (reduceMotion.matches || !event.target.closest) return;
+    if (reduceMotion.matches || scrollTimer || !event.target.closest) return;
     const el = event.target.closest(SHINE);
     if (!el) return;
     pending = { el, x: event.clientX, y: event.clientY };
@@ -210,6 +225,15 @@
       el.classList.remove('lg-refract');
     }
   }
+
+  // Tạm bỏ khúc xạ trong lúc cuộn (khúc xạ phải tính lại từng khung hình), bật lại khi dừng.
+  document.addEventListener('lg:scrollstart', () => {
+    for (const [el] of lenses) el.style.removeProperty('--lg-refract');
+  });
+  document.addEventListener('lg:scrollend', () => {
+    if (reduceTransparency.matches) return;
+    for (const [el, lens] of lenses) if (lens.signature) el.style.setProperty('--lg-refract', `url(#${lens.id})`);
+  });
 
   reduceTransparency.addEventListener('change', () => (reduceTransparency.matches ? detach() : attach()));
   if (document.readyState === 'complete') attach();
