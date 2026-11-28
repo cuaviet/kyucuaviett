@@ -123,6 +123,12 @@
   sendButton.disabled = true;
   statusText(status, 'Đang kết nối nơi lưu giữ ký ức…', false);
 
+  // Tải Firebase (~400 KB) sau khi trang đã tải xong, để ảnh đầu trang hiện ra nhanh hơn trên điện thoại.
+  await new Promise(resolve => {
+    const go = () => ('requestIdleCallback' in window ? requestIdleCallback(resolve, { timeout: 1500 }) : setTimeout(resolve, 1));
+    if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });
+  });
+
   try {
     const modules = await Promise.all([
       import('https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js'),
