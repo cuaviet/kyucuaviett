@@ -50,7 +50,7 @@
   const trees = document.querySelector('.hero-v2 .hero-fg');
   const title = document.getElementById('hero-heading');
   if (hero && photo && trees && title) {
-    const CW = 3000, CH = 1350, TREE_X = 1700; // mép trái rặng cây trong ảnh gốc (px)
+    const CW = 4000, CH = 1800, TREE_X = 2206; // mép trái rặng cây trong ảnh gốc (px)
     const place = () => {
       const wide = window.matchMedia('(min-width: 901px)').matches;
       for (const el of [photo, trees]) el.classList.toggle('is-placed', wide);
