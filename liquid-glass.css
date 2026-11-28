@@ -2575,3 +2575,15 @@ body.on-hero .site-header {
     object-position: 66% 100%;
   }
 }
+
+/* Thanh trên (máy tính): menu dồn sang phải, đứng cạnh nút Hộ chiếu, giống mẫu */
+@media (min-width: 901px) {
+  .site-header .nav-wrap {
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .site-header .desktop-nav {
+    margin-left: auto;
+  }
+}
