@@ -2661,3 +2661,7 @@ body::before {
 .hero.hero-v2 .hero-fg {
   filter: none;
 }
+
+.hero.hero-v2 :is(.hero-photo, .hero-fg) {
+  transform-origin: 50% 60%;
+}

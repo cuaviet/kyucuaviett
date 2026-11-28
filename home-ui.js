@@ -83,12 +83,12 @@
     let tx = 0, ty = 0, x = 0, y = 0, frame = 0, moving = false;
 
     const apply = () => {
-      x += (tx - x) * 0.08;
-      y += (ty - y) * 0.08;
-      photo.style.transform = `translate3d(${(x * -10).toFixed(2)}px, ${(y * -6).toFixed(2)}px, 0) scale(1.03)`;
-      trees.style.transform = `translate3d(${(x * -26).toFixed(2)}px, ${(y * -12).toFixed(2)}px, 0) scale(1.03)`;
-      if (content) content.style.transform = `translate3d(${(x * 8).toFixed(2)}px, ${(y * 5).toFixed(2)}px, 0)`;
-      if (side) side.style.transform = `translate3d(${(x * 12).toFixed(2)}px, ${(y * 7).toFixed(2)}px, 0)`;
+      x += (tx - x) * 0.1;
+      y += (ty - y) * 0.1;
+      photo.style.transform = `translate3d(${(x * -18).toFixed(2)}px, ${(y * -8).toFixed(2)}px, 0) scale(1.05)`;
+      trees.style.transform = `translate3d(${(x * -46).toFixed(2)}px, ${(y * -12).toFixed(2)}px, 0) scale(1.05)`;
+      if (content) content.style.transform = `translate3d(${(x * 14).toFixed(2)}px, ${(y * 7).toFixed(2)}px, 0)`;
+      if (side) side.style.transform = `translate3d(${(x * 20).toFixed(2)}px, ${(y * 9).toFixed(2)}px, 0)`;
       if (Math.abs(tx - x) > 0.001 || Math.abs(ty - y) > 0.001) {
         frame = requestAnimationFrame(apply);
       } else {
@@ -101,8 +101,8 @@
       if (!frame) frame = requestAnimationFrame(apply);
     };
 
-    // Máy yếu (ít nhân CPU) chỉ giữ hiệu ứng nghiêng thẻ, không trượt ảnh.
-    const lowPower = (navigator.hardwareConcurrency || 8) <= 4;
+    // Máy rất yếu (2 nhân CPU trở xuống) chỉ giữ hiệu ứng nghiêng thẻ, không trượt ảnh.
+    const lowPower = (navigator.hardwareConcurrency || 8) <= 2;
     hero.addEventListener('pointermove', event => {
       if (lowPower || !canHover.matches || calm.matches || event.pointerType !== 'mouse') return;
       const r = hero.getBoundingClientRect();
@@ -118,8 +118,8 @@
         const r = card.getBoundingClientRect();
         const px = (event.clientX - r.left) / r.width - 0.5;
         const py = (event.clientY - r.top) / r.height - 0.5;
-        card.style.setProperty('--tilt-x', (py * -8).toFixed(2) + 'deg');
-        card.style.setProperty('--tilt-y', (px * 10).toFixed(2) + 'deg');
+        card.style.setProperty('--tilt-x', (py * -12).toFixed(2) + 'deg');
+        card.style.setProperty('--tilt-y', (px * 14).toFixed(2) + 'deg');
       }, { passive: true });
       card.addEventListener('pointerleave', () => {
         card.style.removeProperty('--tilt-x');
