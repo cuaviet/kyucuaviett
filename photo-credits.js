@@ -36,6 +36,20 @@
       button.setAttribute('aria-label', 'Xem ảnh lớn: ' + caption);
     }
     if (img.closest('.map-pin')) { img.title = caption; return; }
+    const heroCard = img.closest('.hero-card');
+    if (heroCard) {
+      // Thẻ kính ở đầu trang: ghi nguồn vào ô "Nguồn ảnh" thay vì đè chữ lên thẻ.
+      img.alt = caption || '';
+      const box = document.getElementById('hero-credit');
+      if (box) {
+        box.querySelector('[data-for="' + heroCard.dataset.id + '"]')?.remove();
+        const line = sourceLine(photo, 'hero-card-credit');
+        line.dataset.for = heroCard.dataset.id;
+        line.prepend((heroCard.dataset.label || 'Ảnh thẻ') + ': ');
+        box.append(line);
+      }
+      return;
+    }
     if (caption) img.alt = caption;
     if (img.closest('.compare-wrap')) return;
     const figure = img.closest('figure');

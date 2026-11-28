@@ -25,7 +25,7 @@
 
   /* 2. Vệt sáng theo con trỏ */
   const SHINE = [
-    '.site-header', '.mobile-bottom', '.hero .hero-content', '.btn', '.filter', '.icon-btn',
+    '.site-header', '.mobile-bottom', '.hero-card', '.hero-play-icon', '.btn', '.filter', '.icon-btn',
     '.btn-passport', '.point-card', '.gallery-card button', '.creation-options button',
     '.journey-editorial', '.audio-card', '.about-accordions details', '.search',
     '.story-shortcuts a', '.community-form'
@@ -70,12 +70,11 @@
   // [bộ chọn, độ rộng mép cong (px), độ bẻ cong]
   const LENSES = [
     ['.site-header', 24, 56],
-    ['.hero .hero-content', 46, 96],
     ['.hero-actions .btn', 20, 44],
+    ['.hero-play-icon', 14, 30],
+    ['.hero-card', 22, 46],
     ['.btn-passport', 16, 34],
-    ['.mobile-bottom', 24, 52],
-    ['.hero .cover-frame figcaption > *', 12, 24],
-    ['.cover-postcard', 20, 40]
+    ['.mobile-bottom', 24, 52]
   ];
 
   const SVG = 'http://www.w3.org/2000/svg';

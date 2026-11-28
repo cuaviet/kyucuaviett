@@ -28,6 +28,23 @@
     });
   }
 
+  /* 1b. Thanh trên cùng trong suốt khi đang ở ảnh đầu trang */
+  const hero = document.querySelector('.hero');
+  const topBar = document.querySelector('.site-header');
+  if (hero && topBar) {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const limit = hero.offsetTop + hero.offsetHeight - topBar.offsetHeight - 24;
+      document.body.classList.toggle('on-hero', window.scrollY < limit);
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
   /* 2. Danh sách 5 chạm */
   const section = document.getElementById('points');
   const toggle = section?.querySelector('.points-toggle');

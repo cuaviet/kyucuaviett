@@ -29,9 +29,9 @@
   <link rel="stylesheet" href="photo-credits.css?v=4">
   <link rel="stylesheet" href="presentation.css?v=22">
   <link rel="stylesheet" href="visual-tuning.css?v=2">
-  <link rel="stylesheet" href="liquid-glass.css?v=12">
+  <link rel="stylesheet" href="liquid-glass.css?v=13">
 </head>
-<body>
+<body class="on-hero">
 <a class="skip-link" href="#main">Đến nội dung chính</a>
 <svg class="svg-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
   <symbol id="i-wave" viewBox="0 0 32 32"><path d="M3 13c5-8 10 8 15 0s8-2 11 0M3 22c5-8 10 8 15 0s8-2 11 0"/></symbol>
@@ -59,28 +59,46 @@
 <header class="site-header">
   <div class="nav-wrap">
     <a class="brand" href="#home" aria-label="Chạm Cửa Việt — Trang đầu"><span class="brand-symbol"><svg><use href="#i-wave"/></svg></span><span>CHẠM CỬA VIỆT</span></a>
-    <nav class="desktop-nav" aria-label="Điều hướng chính"><a href="#memory-map">Bản đồ ký ức</a><a href="#stories">Câu chuyện</a><a href="#about">Về dự án</a></nav>
+    <nav class="desktop-nav" aria-label="Điều hướng chính"><a href="#memory-map"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Bản đồ ký ức</a><a href="#stories"><svg class="icon" aria-hidden="true"><use href="#i-headphones"/></svg>Câu chuyện</a><a href="#about"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg>Về dự án</a></nav>
     <div class="nav-actions"><button class="btn btn-passport" data-action="passport" aria-label="Mở hộ chiếu của tôi"><svg class="icon"><use href="#i-book"/></svg><span>Hộ chiếu của tôi</span><b class="passport-count">0/5</b></button><button class="icon-btn menu-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-menu" data-action="menu"><svg class="icon"><use href="#i-menu"/></svg></button></div>
   </div>
   <nav id="mobile-menu" class="mobile-menu" aria-label="Điều hướng điện thoại" hidden><a href="#memory-map">Bản đồ ký ức</a><a href="#stories">Lắng nghe Cửa Việt</a><a href="#about">Về dự án</a></nav>
 </header>
 
 <main id="main">
-<section class="hero" id="home" aria-labelledby="hero-heading">
-  <div class="hero-shade"></div>
-  <div class="tide-lines" aria-hidden="true"></div>
+<section class="hero hero-v2" id="home" aria-labelledby="hero-heading">
+  <figure class="cover-frame">
+    <div class="cover-image"><img class="hero-photo" src="assets/cham-1-toan-canh-cua-viet.webp" alt="Toàn cảnh cửa sông và cảng Cửa Việt nhìn từ trên cao" fetchpriority="high" width="1920" height="1079"></div>
+    <button class="hero-credit-toggle" type="button" aria-expanded="false" aria-controls="hero-credit"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.6v.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Nguồn ảnh</button>
+    <figcaption id="hero-credit"><a class="photo-credit" href="#cham-1">Toàn cảnh cửa sông Cửa Việt · Chạm 01 <span aria-hidden="true">↗</span></a></figcaption>
+  </figure>
+  <div class="hero-shade" aria-hidden="true"></div>
   <div class="container hero-content">
     <p class="eyebrow hero-eyebrow"><span></span> CỬA VIỆT, QUẢNG TRỊ</p>
     <h1 id="hero-heading"><span>Chạm</span> <strong>Cửa Việt</strong></h1>
-    <p class="hero-tagline">Chạm địa điểm – lắng nghe ký ức – hiểu thêm về Cửa Việt</p><p class="hero-desc">Có những câu chuyện chỉ chờ bạn lắng nghe.<br> Cùng khám phá lịch sử, con người và nhịp sống<br class="desktop-break"> Cửa Việt — qua từng điểm chạm.</p>
-    <div class="hero-actions"><a class="btn btn-gold" href="#memory-map">Khám phá 5 điểm chạm <svg class="icon"><use href="#i-arrow"/></svg></a><button class="btn btn-glass" data-action="intro"><svg class="icon"><use href="#i-play"/></svg> Cửa Việt có gì?</button></div>
+    <p class="hero-tagline">Chạm địa điểm – lắng nghe ký ức – hiểu thêm về Cửa Việt</p>
+    <p class="hero-desc">Có những câu chuyện chỉ chờ bạn lắng nghe. Cùng khám phá lịch sử, con người và nhịp sống Cửa Việt — qua từng điểm chạm.</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold hero-cta" href="#memory-map"><i class="hero-dot" aria-hidden="true"></i>Khám phá 5 điểm chạm</a>
+      <button class="hero-play" type="button" data-action="intro"><span class="hero-play-icon"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></span><span>Cửa Việt có gì?</span></button>
+    </div>
   </div>
-  <figure class="cover-frame">
-    <div class="cover-image"><img class="hero-photo" src="assets/bien-cua-viet.webp" alt="Sóng trắng và bãi cát Cửa Việt nhìn từ trên cao" fetchpriority="high" width="1300" height="866"></div>
-    <button class="hero-credit-toggle" type="button" aria-expanded="false" aria-controls="hero-credit"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.6v.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Nguồn ảnh</button>
-    <figcaption id="hero-credit"><a class="photo-credit" href="#cham-5/kham-pha">Bờ biển Cửa Việt · Chạm 05: Góc nhìn hôm nay <span aria-hidden="true">↗</span></a></figcaption>
-  </figure>
-  <div class="cover-postcard"><img src="assets/anh-nhom/img-3986.webp" alt="" width="960" height="662"></div>
+  <aside class="hero-side" aria-label="Gợi ý điểm chạm">
+    <div class="hero-stats">
+      <p><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Điểm chạm<b>5 nơi</b></span></p>
+      <p><svg class="icon" aria-hidden="true"><use href="#i-compass"/></svg><span>Mỗi chạm<b>8 bước</b></span></p>
+    </div>
+    <a class="hero-card" href="#cham-2" data-id="2" data-label="Thẻ Chạm 02">
+      <span class="hero-card-img"><img src="assets/cham-2-tran-cua-viet-1973.jpg" alt="" width="627" height="352" decoding="async"></span>
+      <span class="hero-card-text"><small>Chạm 02 · Lịch sử</small><strong>Dấu ấn lịch sử Cửa Việt</strong></span>
+      <span class="hero-card-go" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+    </a>
+    <a class="hero-card" href="#cham-4" data-id="4" data-label="Thẻ Chạm 04">
+      <span class="hero-card-img"><img src="assets/nhip-song-ben-ca.webp" alt="" width="1200" height="800" decoding="async"></span>
+      <span class="hero-card-text"><small>Chạm 04 · Ký ức sống</small><strong>Nhịp sống làng biển</strong></span>
+      <span class="hero-card-go" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+    </a>
+  </aside>
 </section>
 
 <section class="map-section" id="memory-map" aria-labelledby="map-heading"><div class="container">
@@ -194,8 +212,8 @@
 <script defer src="navigation.js?v=20261127-poster"></script>
 <script defer src="presentation.js?v=1"></script>
 <script defer src="glass-refraction.js?v=1"></script>
-<script defer src="liquid-glass-fx.js?v=1"></script>
-<script defer src="home-ui.js?v=1"></script>
+<script defer src="liquid-glass-fx.js?v=2"></script>
+<script defer src="home-ui.js?v=2"></script>
   <!-- Thống kê riêng tư: không chạy nếu chưa cấu hình Umami -->
   <script defer src="analytics-config.js?v=2"></script>
   <script defer src="analytics.js?v=2"></script>
@@ -205,6 +223,6 @@
   <script defer src="community.js?v=13"></script>
   <script defer src="community-collapse.js?v=1"></script>
   <script defer src="community-photos.js?v=5"></script>
-  <script defer src="photo-credits.js?v=10"></script>
+  <script defer src="photo-credits.js?v=20261128-hero"></script>
 </body>
 </html>
