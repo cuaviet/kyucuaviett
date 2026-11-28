@@ -2619,3 +2619,45 @@ body::before {
     .creation-options button, .closing .btn, .new-gallery button)[data-reveal-entry] {
   animation: none !important;
 }
+
+/* Hiệu ứng rê chuột ở đầu trang */
+.hero.hero-v2 :is(.hero-photo, .hero-fg) {
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+.hero.hero-v2 .hero-side {
+  perspective: 900px;
+}
+
+.hero.hero-v2 .hero-card {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition:
+    transform .5s cubic-bezier(.2, .8, .2, 1),
+    translate .45s var(--lg-spring), box-shadow .35s, background .3s;
+}
+
+.hero.hero-v2 .hero-card:hover {
+  transition:
+    transform .12s linear,
+    translate .45s var(--lg-spring), box-shadow .35s, background .3s;
+}
+
+/* Nút chính hơi phồng và sáng lên khi rê chuột */
+@media (hover: hover) {
+  .hero.hero-v2 .hero-actions .hero-cta:hover {
+    scale: 1.04;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .7), 0 0 0 6px rgb(255 255 255 / .08), 0 18px 40px -14px rgb(0 0 0 / .6);
+  }
+
+  .hero.hero-v2 .hero-actions .hero-cta:hover .hero-dot {
+    background: #fff;
+  }
+}
+
+/* Màu đã được chỉnh sẵn trong ảnh: bỏ bộ lọc để rê chuột và cuộn nhẹ hơn */
+.hero.hero-v2 .cover-frame .hero-photo,
+.hero.hero-v2 .hero-fg {
+  filter: none;
+}

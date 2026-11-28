@@ -72,6 +72,62 @@
     place();
   }
 
+  /* 1d. Di chuột ở đầu trang: các lớp ảnh trượt theo với độ lệch khác nhau (chiều sâu),
+         thẻ kính nghiêng theo con trỏ. Chỉ bật trên máy có chuột. */
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (hero && photo && trees && title) {
+    const content = hero.querySelector('.hero-content');
+    const side = hero.querySelector('.hero-side');
+    const cards = [...hero.querySelectorAll('.hero-card')];
+    let tx = 0, ty = 0, x = 0, y = 0, frame = 0, moving = false;
+
+    const apply = () => {
+      x += (tx - x) * 0.08;
+      y += (ty - y) * 0.08;
+      photo.style.transform = `translate3d(${(x * -10).toFixed(2)}px, ${(y * -6).toFixed(2)}px, 0) scale(1.03)`;
+      trees.style.transform = `translate3d(${(x * -26).toFixed(2)}px, ${(y * -12).toFixed(2)}px, 0) scale(1.03)`;
+      if (content) content.style.transform = `translate3d(${(x * 8).toFixed(2)}px, ${(y * 5).toFixed(2)}px, 0)`;
+      if (side) side.style.transform = `translate3d(${(x * 12).toFixed(2)}px, ${(y * 7).toFixed(2)}px, 0)`;
+      if (Math.abs(tx - x) > 0.001 || Math.abs(ty - y) > 0.001) {
+        frame = requestAnimationFrame(apply);
+      } else {
+        frame = 0;
+        if (moving) { moving = false; document.dispatchEvent(new Event('lg:scrollend')); }
+      }
+    };
+    const kick = () => {
+      if (!moving) { moving = true; document.dispatchEvent(new Event('lg:scrollstart')); }
+      if (!frame) frame = requestAnimationFrame(apply);
+    };
+
+    // Máy yếu (ít nhân CPU) chỉ giữ hiệu ứng nghiêng thẻ, không trượt ảnh.
+    const lowPower = (navigator.hardwareConcurrency || 8) <= 4;
+    hero.addEventListener('pointermove', event => {
+      if (lowPower || !canHover.matches || calm.matches || event.pointerType !== 'mouse') return;
+      const r = hero.getBoundingClientRect();
+      tx = ((event.clientX - r.left) / r.width - 0.5) * 2;
+      ty = ((event.clientY - r.top) / r.height - 0.5) * 2;
+      kick();
+    }, { passive: true });
+    hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
+
+    for (const card of cards) {
+      card.addEventListener('pointermove', event => {
+        if (!canHover.matches || calm.matches || event.pointerType !== 'mouse') return;
+        const r = card.getBoundingClientRect();
+        const px = (event.clientX - r.left) / r.width - 0.5;
+        const py = (event.clientY - r.top) / r.height - 0.5;
+        card.style.setProperty('--tilt-x', (py * -8).toFixed(2) + 'deg');
+        card.style.setProperty('--tilt-y', (px * 10).toFixed(2) + 'deg');
+      }, { passive: true });
+      card.addEventListener('pointerleave', () => {
+        card.style.removeProperty('--tilt-x');
+        card.style.removeProperty('--tilt-y');
+      });
+    }
+  }
+
   /* 2. Danh sách 5 chạm */
   const section = document.getElementById('points');
   const toggle = section?.querySelector('.points-toggle');
