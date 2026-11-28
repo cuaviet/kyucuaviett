@@ -2460,3 +2460,118 @@ body.on-hero .site-header::after {
 body.on-hero .site-header {
   background: none;
 }
+
+/* ==========================================================================
+   Đầu trang · ảnh rặng phi lao có chiều sâu (giống mẫu Sylva)
+   Thứ tự lớp: ảnh nền → chữ "Chạm Cửa Việt" → rặng cây (tách từ ảnh) → nút, thẻ kính
+   ========================================================================== */
+.hero.hero-v2 {
+  background: #4f8fd8;
+}
+
+.hero.hero-v2 .cover-frame .hero-photo,
+.hero.hero-v2 .hero-fg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 100% 100%;
+  animation: none;
+  transform: none;
+  filter: saturate(1.08);
+}
+
+.hero.hero-v2 .hero-fg {
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  filter: saturate(1.08) drop-shadow(0 18px 30px rgb(0 30 40 / .22));
+}
+
+/* Lớp tối nhẹ chỉ phủ ảnh nền (cây phía trước vẫn sáng, tạo chiều sâu) */
+.hero.hero-v2 .cover-image::after {
+  background:
+    linear-gradient(90deg, rgb(6 38 70 / .55) 0%, rgb(6 38 70 / .32) 32%, rgb(6 38 70 / 0) 58%),
+    linear-gradient(180deg, rgb(6 38 70 / .38) 0%, rgb(6 38 70 / 0) 20%),
+    linear-gradient(0deg, rgb(20 40 50 / .5) 0%, rgb(20 40 50 / 0) 30%);
+}
+
+/* Chữ to nằm sau rặng cây, phần còn lại nằm trên */
+.hero.hero-v2 .hero-content {
+  z-index: auto;
+}
+
+.hero.hero-v2 .hero-content > * {
+  position: relative;
+  z-index: 3;
+}
+
+.hero.hero-v2 .hero-content > h1 {
+  z-index: 1;
+  text-shadow: 0 2px 28px rgb(0 30 60 / .35);
+}
+
+.hero.hero-v2 .hero-side {
+  z-index: 3;
+}
+
+.hero.hero-v2 .hero-credit-toggle,
+.hero.hero-v2 .cover-frame figcaption {
+  z-index: 4;
+}
+
+/* Thẻ kính trên nền trời sáng: tối hơn một chút cho chữ rõ */
+.hero.hero-v2 .hero-card {
+  background:
+    radial-gradient(120% 120% at var(--lg-x, 20%) var(--lg-y, -30%), rgb(255 255 255 / .22), rgb(255 255 255 / 0) 55%),
+    linear-gradient(160deg, rgb(255 255 255 / .14), rgb(255 255 255 / .03)),
+    rgb(10 40 52 / .42);
+}
+
+@media (max-width: 900px) {
+  .hero.hero-v2 .cover-frame .hero-photo,
+  .hero.hero-v2 .hero-fg {
+    object-position: 74% 100%;
+  }
+
+  /* Điện thoại: không đè cây lên chữ để chữ luôn dễ đọc */
+  .hero.hero-v2 .hero-fg {
+    display: none;
+  }
+
+  .hero.hero-v2 .cover-image::after {
+    background:
+      linear-gradient(180deg, rgb(6 38 70 / .62) 0%, rgb(6 38 70 / .38) 42%, rgb(6 38 70 / .12) 60%, rgb(14 36 46 / .66) 100%);
+  }
+}
+
+@media (min-width: 901px) {
+  .hero.hero-v2 .cover-frame .hero-photo,
+  .hero.hero-v2 .hero-fg {
+    object-position: 0% 100%;
+  }
+}
+
+.hero.hero-v2 .hero-fg {
+  filter: saturate(1.08);
+}
+
+@media (min-width: 901px) {
+  .hero.hero-v2 .cover-frame .hero-photo,
+  .hero.hero-v2 .hero-fg {
+    object-position: 100% 100%;
+  }
+}
+
+.hero.hero-v2 :is(.hero-photo, .hero-fg).is-placed {
+  inset: auto;
+  max-width: none;
+  object-fit: fill;
+}
+
+@media (max-width: 900px) {
+  .hero.hero-v2 .cover-frame .hero-photo {
+    object-position: 66% 100%;
+  }
+}

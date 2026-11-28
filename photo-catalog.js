@@ -1,5 +1,14 @@
 /* Hồ sơ ảnh biên tập của CHẠM CỬA VIỆT. Ngày đối chiếu 25/11/2026. */
 const photoCatalog = {
+  "assets/hero-phi-lao-nen.webp": {
+    "caption": "Rặng phi lao bên bãi biển Cửa Việt, Tết 2022.",
+    "label": "Phương Huy, Wikimedia Commons. Nhóm dự án tách lớp cây và mở rộng phần trời, bãi cát để làm ảnh đầu trang",
+    "url": "https://commons.wikimedia.org/wiki/File:Bi%E1%BB%83n_C%E1%BB%ADa_Vi%E1%BB%87t_T%E1%BA%BFt_2022_(c%C3%A2y_phi_lao)_(7).jpg",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "locations": [
+      "Trang chủ"
+    ]
+  },
   "assets/cham-3-wood-cv.webp": {"caption":"Thuyền gỗ nhỏ cùng ngư cụ bên bờ sông.","label":"Ảnh do đội KHKT CHẠM CỬA VIỆT cung cấp.","locations":["Chạm 3"]},
   "assets/cham-3-steel-cv.webp": {"caption":"Tàu cá vỏ thép tại Quảng Trị.","label":"Báo Nhân Dân","url":"https://nhandan.vn/quang-tri-ban-giao-tau-vo-thep-dau-tien-dong-moi-theo-nghi-dinh-67cp-post259395.html","locations":["Chạm 3"]},
   "assets/cham-3-cau-cua-viet.webp": {
